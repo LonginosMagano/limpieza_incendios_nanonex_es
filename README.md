@@ -1,53 +1,61 @@
 # limpieza_incendios_nanonex_es
 
-Proyecto para **convertir un sitio WordPress en una web HTML estática**,
+Conversión del sitio WordPress **Limpiezas de Incendios Nano Nex**
+(`limpiezaincendiosnanonex.es`, hecho con Divi) a una **web HTML estática**
 optimizada para SEO.
 
-## Estrategia
-
-1. **Extraer el contenido** del WordPress original (textos, datos y fotos).
-2. **Generar una web estática** con un generador de sitios (Eleventy/Hugo),
-   que produce HTML puro: carga rápida, control de meta-tags, `sitemap.xml`,
-   `robots.txt` y URLs limpias → ideal para SEO.
-
-## Qué subir y dónde
+## Estructura del repositorio
 
 ```
 origen-wordpress/
-├── export/      ← aquí el Export XML (WXR) de WordPress  → contenido + SEO
-└── uploads/     ← aquí la carpeta wp-content/uploads      → fotos/imágenes
-
-web-html/        ← aquí se construirá la web HTML final
-docs/            ← documentación y notas del proyecto
+└── export/      Export XML (WXR) original de WordPress  [fuente]
+tools/
+└── generar_sitio.py   Generador: XML -> HTML estático
+web-html/        Web HTML estática generada  [resultado]
+├── index.html           portada
+├── <permalinks>/        páginas y entradas (misma URL que el original)
+├── blog/                índice del blog
+├── zonas/               índice de páginas por ciudad
+├── assets/estilo.css    estilos
+├── sitemap.xml
+└── robots.txt
+docs/            Documentación
 ```
 
-### 1. Export XML (WXR) — el contenido
+## Qué hace el generador
 
-En tu WordPress: **Escritorio → Herramientas → Exportar → Todo el contenido**.
-Descarga el `.xml` y colócalo en `origen-wordpress/export/`.
+`tools/generar_sitio.py` lee el XML y:
 
-Contiene: títulos, textos, páginas, entradas, categorías, etiquetas, fechas,
-autores y los **metadatos SEO** (títulos y meta descriptions de Yoast/RankMath).
+- Extrae el contenido limpio de los **módulos Divi** (`et_pb_text`, `et_pb_image`,
+  `et_pb_blurb`, botones, CTA, formularios…) y de las entradas Gutenberg.
+- Conserva los **permalinks** originales (no se pierde SEO).
+- Mantiene los **meta-tags SEO de Yoast/RankMath** (`<title>` y meta description).
+- Genera `sitemap.xml` y `robots.txt`.
 
-### 2. Carpeta uploads — las fotos
+Resultado: **28 páginas + 209 entradas** de blog + índices.
 
-El XML solo **enlaza** las imágenes por URL, no las incluye. Copia la carpeta
-`wp-content/uploads` (por FTP o desde tu backup) a `origen-wordpress/uploads/`.
-
-## Cómo subir los archivos
+## Regenerar la web
 
 ```bash
-# copia tus archivos en las carpetas indicadas, luego:
-git add .
-git commit -m "Añadir datos del WordPress (export + uploads)"
-git push
+python3 tools/generar_sitio.py
 ```
 
-> ⚠️ Si los `uploads` pesan mucho (cientos de MB), avísame: conviene usar
-> Git LFS o subirlos por lotes.
+## Previsualizar en local
 
-## Siguientes pasos (una vez subido el contenido)
+```bash
+cd web-html
+python3 -m http.server 8000
+# abre http://localhost:8000 en el navegador
+```
 
-- Parsear el XML y convertir las entradas/páginas a Markdown/HTML.
-- Montar el generador estático en `web-html/` con plantillas y SEO.
-- Mantener los **permalinks** originales y generar `sitemap.xml` + `robots.txt`.
+## Imágenes (pendiente)
+
+El XML solo **enlaza** las imágenes; ahora mismo el HTML apunta a las URLs
+en vivo de `limpiezaincendiosnanonex.es` (la web se ve completa). Para
+hacerla 100 % autónoma hay que **localizar** las imágenes:
+
+1. Subir la carpeta `wp-content/uploads` a `origen-wordpress/uploads/`, **o**
+2. Permitir el dominio en la política de red del entorno para descargarlas.
+
+Una vez disponibles, se añade un paso al generador para reescribir los `src`
+a rutas locales (`/wp-content/uploads/...`).
