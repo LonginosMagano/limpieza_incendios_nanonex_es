@@ -1,0 +1,7 @@
+echo "# limpieza_incendios_nanonex_es" >> README.md 
+git init 
+git add README.md 
+git commit -m "first commit" 
+git branch -M main 
+git remote add origin https://github.com/LonginosMagano/limpieza_incendios_nanonex_es.git
+ git push -u origin main
