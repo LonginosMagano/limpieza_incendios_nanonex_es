@@ -155,10 +155,21 @@ def primer_texto(htmltxt, n=160):
     t = html.unescape(re.sub(r'\s+', ' ', t)).strip()
     return (t[:n].rsplit(' ', 1)[0] + '…') if len(t) > n else t
 
-def plantilla(titulo, descripcion, canonical, cuerpo, ruta_actual):
+def prefijo_rel(ruta):
+    """Prefijo relativo a la raíz según la profundidad de la ruta."""
+    d = len([s for s in ruta.split("/") if s])
+    return "../" * d
+
+def rel(path, prefijo):
+    """Convierte una ruta absoluta '/x/' en relativa según el prefijo."""
+    return (prefijo + path.lstrip("/")) or "./"
+
+def plantilla(titulo, descripcion, canonical, cuerpo, ruta_actual, nav_activo=None):
+    pf = prefijo_rel(ruta_actual)
+    activo = nav_activo or ruta_actual
     def _enlace(e, r):
-        cls = ' class="act"' if r == ruta_actual else ''
-        return f'<a href="{r}"{cls}>{html.escape(e)}</a>'
+        cls = ' class="act"' if r == activo else ''
+        return f'<a href="{rel(r, pf)}"{cls}>{html.escape(e)}</a>'
     nav = "".join(_enlace(e, r) for e, r in NAV)
     desc = html.escape(descripcion or "")
     return f"""<!DOCTYPE html>
@@ -174,12 +185,12 @@ def plantilla(titulo, descripcion, canonical, cuerpo, ruta_actual):
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{canonical}">
 <meta property="og:locale" content="es_ES">
-<link rel="stylesheet" href="/assets/estilo.css">
+<link rel="stylesheet" href="{pf}assets/estilo.css">
 </head>
 <body>
 <header class="cab">
   <div class="cont">
-    <a class="logo" href="/">Limpiezas Incendios <b>Nano Nex</b></a>
+    <a class="logo" href="{rel('/', pf)}">Limpiezas Incendios <b>Nano Nex</b></a>
     <nav>{nav}</nav>
   </div>
 </header>
@@ -190,9 +201,9 @@ def plantilla(titulo, descripcion, canonical, cuerpo, ruta_actual):
   <div class="cont">
     <p>&copy; {datetime.now().year} Limpiezas de Incendios Nano Nex · Limpieza de incendios y post-incendios en toda España.</p>
     <p class="legal">
-      <a href="/politica-de-privacidad/">Política de privacidad</a> ·
-      <a href="/politica-de-cookies/">Política de cookies</a> ·
-      <a href="/contacto/">Contacto</a>
+      <a href="{rel('/politica-de-privacidad/', pf)}">Política de privacidad</a> ·
+      <a href="{rel('/politica-de-cookies/', pf)}">Política de cookies</a> ·
+      <a href="{rel('/contacto/', pf)}">Contacto</a>
     </p>
   </div>
 </footer>
@@ -267,11 +278,13 @@ def main():
                   f"<p class='meta'>Publicado el {fecha_txt}</p>{cuerpo}</article>")
         desc = e["seo_desc"] or primer_texto(cuerpo)
         canonical = DOMINIO + e["ruta"]
-        escribir(e["ruta"], plantilla(e["seo_title"], desc, canonical, cuerpo, "/blog/"))
+        escribir(e["ruta"], plantilla(e["seo_title"], desc, canonical, cuerpo,
+                                      e["ruta"], nav_activo="/blog/"))
 
     # --- Índice del blog ---
+    pf_blog = prefijo_rel("/blog/")
     lista = "".join(
-        f'<li><a href="{e["ruta"]}">{html.escape(e["titulo"])}</a> '
+        f'<li><a href="{rel(e["ruta"], pf_blog)}">{html.escape(e["titulo"])}</a> '
         f'<span class="fecha">{e["fecha"][:10]}</span></li>'
         for e in entradas
     )
@@ -283,7 +296,8 @@ def main():
     # --- Página de zonas (ciudades) ---
     ciudades = [p for p in paginas if "incendios" in p["titulo"].lower()
                 and p["ruta"] not in ("/",)]
-    enl = "".join(f'<li><a href="{p["ruta"]}">{html.escape(p["titulo"])}</a></li>'
+    pf_zonas = prefijo_rel("/zonas/")
+    enl = "".join(f'<li><a href="{rel(p["ruta"], pf_zonas)}">{html.escape(p["titulo"])}</a></li>'
                   for p in sorted(ciudades, key=lambda x: x["titulo"]))
     cuerpo = (f"<article><h1>Zonas donde trabajamos</h1>"
               f"<p>Servicio de limpieza de incendios y post-incendios en toda España.</p>"
