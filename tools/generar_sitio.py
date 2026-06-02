@@ -16,6 +16,8 @@ from datetime import datetime
 RAIZ      = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 XML       = glob.glob(os.path.join(RAIZ, "origen-wordpress", "export", "*.xml"))
 SALIDA    = os.path.join(RAIZ, "web-html")
+UPLOADS   = os.path.join(RAIZ, "origen-wordpress", "uploads")
+IMG_DIR   = os.path.join(SALIDA, "imagenes")   # imágenes localizadas
 DOMINIO   = "https://limpiezaincendiosnanonex.es"   # dominio final (canonical)
 NS = {
     "wp":      "http://wordpress.org/export/1.2/",
@@ -148,6 +150,51 @@ def convertir(contenido):
     return texto_a_parrafos(limpiar_gutenberg(contenido))
 
 # ============================================================================
+#  Localización de imágenes (URLs en vivo -> archivos locales subidos)
+# ============================================================================
+import shutil
+
+def _clave_img(nombre):
+    s = os.path.splitext(nombre)[0].lower()
+    s = re.sub(r'-\d+x\d+', '', s)            # quitar -1024x576
+    s = re.sub(r'-(copia|scaled)', '', s)
+    s = re.sub(r'-\d+$', '', s)               # sufijo numérico final
+    return re.sub(r'[^a-z0-9]+', '', s)
+
+def cargar_indice_imgs():
+    """Devuelve {clave_normalizada: nombre_archivo} de los uploads disponibles."""
+    if not os.path.isdir(UPLOADS):
+        return {}
+    idx = {}
+    for f in sorted(os.listdir(UPLOADS)):
+        if f.startswith('.'):
+            continue
+        idx.setdefault(_clave_img(f), f)
+    return idx
+
+IDX_IMG = cargar_indice_imgs()
+_COPIADAS = set()
+LOC = {"ok": set(), "falta": set()}
+
+def localizar_imgs(cuerpo, prefijo):
+    """Reescribe los <img src> en vivo a rutas locales cuando hay archivo."""
+    patron = re.compile(r'(https://limpiezaincendiosnanonex\.es/wp-content/uploads/([^"\']+))')
+    def _sub(m):
+        url, resto = m.group(1), m.group(2)
+        base = os.path.basename(resto)
+        local = IDX_IMG.get(_clave_img(base))
+        if not local:
+            LOC["falta"].add(base)
+            return url  # se queda en vivo
+        if local not in _COPIADAS:
+            os.makedirs(IMG_DIR, exist_ok=True)
+            shutil.copy2(os.path.join(UPLOADS, local), os.path.join(IMG_DIR, local))
+            _COPIADAS.add(local)
+        LOC["ok"].add(base)
+        return f"{prefijo}imagenes/{local}"
+    return patron.sub(_sub, cuerpo)
+
+# ============================================================================
 #  Plantilla HTML
 # ============================================================================
 def primer_texto(htmltxt, n=160):
@@ -266,6 +313,7 @@ def main():
             cuerpo = f"<article>{cuerpo}</article>"
         else:
             cuerpo = f"<article><h1>{html.escape(p['titulo'])}</h1>{cuerpo}</article>"
+        cuerpo = localizar_imgs(cuerpo, prefijo_rel(p["ruta"]))
         desc = p["seo_desc"] or primer_texto(cuerpo)
         canonical = DOMINIO + p["ruta"]
         escribir(p["ruta"], plantilla(p["seo_title"], desc, canonical, cuerpo, p["ruta"]))
@@ -276,6 +324,7 @@ def main():
         fecha_txt = e["fecha"][:10]
         cuerpo = (f"<article><h1>{html.escape(e['titulo'])}</h1>"
                   f"<p class='meta'>Publicado el {fecha_txt}</p>{cuerpo}</article>")
+        cuerpo = localizar_imgs(cuerpo, prefijo_rel(e["ruta"]))
         desc = e["seo_desc"] or primer_texto(cuerpo)
         canonical = DOMINIO + e["ruta"]
         escribir(e["ruta"], plantilla(e["seo_title"], desc, canonical, cuerpo,
@@ -324,6 +373,13 @@ def main():
 
     print(f"OK: {len(paginas)} páginas + {len(entradas)} entradas + blog + zonas")
     print(f"Total URLs en sitemap: {len(urls)}")
+    total = len(LOC["ok"]) + len(LOC["falta"])
+    print(f"Imágenes: {len(LOC['ok'])}/{total} localizadas, "
+          f"{len(LOC['falta'])} siguen en vivo (faltan en uploads)")
+    if LOC["falta"]:
+        with open(os.path.join(RAIZ, "docs", "imagenes-faltantes.txt"), "w", encoding="utf-8") as f:
+            f.write("\n".join(sorted(LOC["falta"])))
+        print("  -> lista en docs/imagenes-faltantes.txt")
 
 if __name__ == "__main__":
     main()
