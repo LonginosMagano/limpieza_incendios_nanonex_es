@@ -42,12 +42,25 @@ MARCA      = "Nano Nex"
 MARCA_FULL = "Limpiezas de Incendios Nano Nex"
 TEL        = "632107272"
 TEL_FMT    = "632 107 272"
+WHATSAPP   = "34632107272"          # wa.me/<este número>
 EMAIL      = "info@nano-nex.es"
+KEYWORD    = "Limpieza Post Incendio"
+HORARIO    = "L-V 7:00-22:00 · Sáb-Dom 8:00-16:00"
+OPENING    = ["Mo-Fr 07:00-22:00", "Sa-Su 08:00-16:00"]
+GRUPO_URL  = "https://nano-nex.es"
 
-# Servicios reales de Nano Nex (icono, título, descripción)
+# Términos para variar el enfoque de cada landing y no canibalizar keywords
+TERMINOS = [
+    ("humo", "eliminación de humo"),
+    ("hollín", "limpieza de hollín"),
+    ("incendio", "limpieza tras incendio"),
+    ("post incendio", "limpieza post incendio"),
+]
+
+# Servicios reales de Nano Nex (icono, título, descripción). Solo limpieza/descontaminación.
 SERVICIOS = [
     ("🔥", "Limpieza de Incendios y Post-Incendios",
-     "Recuperación integral de viviendas y locales tras un incendio: hollín, cenizas y daños."),
+     "Limpieza integral de viviendas y locales tras un incendio: hollín, cenizas y residuos."),
     ("💨", "Desodorización con Ozono",
      "Eliminamos por completo el olor a humo con tratamiento profesional de ozono."),
     ("✨", "Limpieza con Láser",
@@ -56,7 +69,7 @@ SERVICIOS = [
      "Limpieza criogénica que elimina residuos sin abrasivos ni agua, ideal para maquinaria."),
     ("🏠", "Síndrome de Diógenes y Acumulación",
      "Limpieza y saneamiento de espacios con acumulación extrema, con total discreción."),
-    ("🏭", "Limpiezas Traumáticas e Industriales",
+    ("🏭", "Descontaminación Industrial",
      "Equipos especializados para grandes superficies, naves y situaciones complejas."),
 ]
 
@@ -166,12 +179,32 @@ def texto_a_parrafos(c):
     bloques = [b.strip() for b in re.split(r'\n\s*\n', c) if b.strip()]
     return "\n".join(f"<p>{b}</p>" for b in bloques)
 
+_REEMPLAZOS_LIMPIEZA = [
+    (r'\brestauraci[oó]n\b', 'limpieza'), (r'\brehabilitaci[oó]n\b', 'limpieza'),
+    (r'\breparaci[oó]n\b', 'limpieza'), (r'\breformas\b', 'limpiezas'),
+    (r'\breforma\b', 'limpieza'),
+    (r'\brestaurar\b', 'limpiar'), (r'\brehabilitar\b', 'limpiar'),
+    (r'\breparar\b', 'limpiar'), (r'\breformar\b', 'limpiar'),
+    (r'\brestauramos\b', 'limpiamos'), (r'\breparamos\b', 'limpiamos'),
+    (r'\breformamos\b', 'limpiamos'), (r'\brehabilitamos\b', 'limpiamos'),
+]
+def solo_limpieza(htmltxt):
+    """Sustituye verbos de reparación/reforma por limpieza, SOLO en texto visible
+    (entre tags), respetando URLs, atributos y la palabra 'restaurantes'."""
+    def _txt(seg):
+        for pat, rep in _REEMPLAZOS_LIMPIEZA:
+            seg = re.sub(pat, rep, seg, flags=re.I)
+        return seg
+    return re.sub(r'>([^<]+)<', lambda m: '>' + _txt(m.group(1)) + '<', htmltxt)
+
 def convertir(contenido):
     if not contenido:
         return ""
     if "[et_pb_" in contenido:
-        return extraer_divi(contenido)
-    return texto_a_parrafos(limpiar_gutenberg(contenido))
+        html_out = extraer_divi(contenido)
+    else:
+        html_out = texto_a_parrafos(limpiar_gutenberg(contenido))
+    return solo_limpieza(html_out)
 
 # ============================================================================
 #  Localización de imágenes (URLs en vivo -> archivos locales subidos)
@@ -235,12 +268,20 @@ def rel(path, prefijo):
     """Convierte una ruta absoluta '/x/' en relativa según el prefijo."""
     return (prefijo + path.lstrip("/")) or "./"
 
+def _topbar():
+    return ('<div class="topbar"><div class="container">'
+            '<span>📞 <a href="tel:' + TEL + '">' + TEL_FMT + '</a></span>'
+            '<span class="topbar-claim">Operativos 24/7 · Limpieza profesional 365 días</span>'
+            '<span class="topbar-hor">🕒 ' + HORARIO + '</span>'
+            '</div></div>')
+
 def _cabecera(pf, activo):
     def _enlace(e, r):
         cls = ' class="act"' if r == activo else ''
         return f'<li><a href="{rel(r, pf)}"{cls}>{html.escape(e)}</a></li>'
     items = "".join(_enlace(e, r) for e, r in NAV)
-    return f"""<header class="header">
+    return f"""{_topbar()}
+<header class="header">
   <div class="container">
     <a href="{rel('/', pf)}" class="logo">Nano<span>Nex</span></a>
     <nav class="nav">
@@ -251,6 +292,30 @@ def _cabecera(pf, activo):
   </div>
 </header>"""
 
+def _wa_svg(cls):
+    return (f'<svg class="{cls}" viewBox="0 0 32 32" aria-hidden="true" width="26" height="26">'
+            '<path fill="currentColor" d="M16 .4A15.6 15.6 0 0 0 2.7 24l-2.3 8.4 8.6-2.3A15.6 15.6 0 1 0 16 .4zm0 28.4a12.8 12.8 0 0 1-6.5-1.8l-.5-.3-4.9 1.3 1.3-4.8-.3-.5A12.8 12.8 0 1 1 16 28.8zm7-9.6c-.4-.2-2.3-1.1-2.6-1.3s-.6-.2-.9.2-1 1.3-1.2 1.5-.4.3-.8.1a10.5 10.5 0 0 1-3.1-1.9 11.6 11.6 0 0 1-2.1-2.7c-.2-.4 0-.6.2-.8l.6-.7.4-.7a.7.7 0 0 0 0-.7c0-.2-.9-2.1-1.2-2.9s-.6-.7-.9-.7h-.7a1.4 1.4 0 0 0-1 .5 4.2 4.2 0 0 0-1.3 3.1 7.3 7.3 0 0 0 1.5 3.9 16.7 16.7 0 0 0 6.4 5.7c.9.4 1.6.6 2.1.8a5.1 5.1 0 0 0 2.3.1c.7-.1 2.3-.9 2.6-1.8s.3-1.6.2-1.8-.3-.2-.7-.4z"/></svg>')
+
+def _flotantes_y_barra(pf):
+    wa = f"https://wa.me/{WHATSAPP}"
+    return f"""<!-- Botones flotantes (escritorio) -->
+<div class="float-btns">
+  <a href="{wa}" class="float-wa" target="_blank" rel="noopener" aria-label="WhatsApp">{_wa_svg('wa-ic')}</a>
+  <a href="tel:{TEL}" class="float-call" aria-label="Llamar">📞</a>
+</div>
+<!-- Barra inferior (móvil) -->
+<div class="mobile-cta-bar">
+  <a href="tel:{TEL}" class="btn-mobile-call">📞 Llamar</a>
+  <a href="{wa}" class="btn-mobile-wa" target="_blank" rel="noopener">{_wa_svg('wa-ic')} WhatsApp</a>
+  <a href="{rel('/contacto/', pf)}" class="btn-mobile-quote">✉️ Presupuesto</a>
+</div>"""
+
+def _cookie_banner():
+    return ('<div id="cookie-banner" class="cookie-banner" hidden>'
+            '<p>Usamos cookies propias y de terceros para mejorar tu experiencia. '
+            '<a href="/politica-de-cookies/">Más información</a>.</p>'
+            '<button id="cookie-ok" class="btn btn-primary">Aceptar</button></div>')
+
 def _pie(pf):
     enl = "".join(f'<li><a href="{rel(r, pf)}">{html.escape(e)}</a></li>'
                   for e, r in NAV if r not in ("/",))
@@ -258,7 +323,8 @@ def _pie(pf):
   <div class="container">
     <div class="footer-col">
       <h3>{MARCA_FULL}</h3>
-      <p>Especialistas en limpieza y restauración tras incendios en toda España. Más de 30 años de experiencia.</p>
+      <p>Especialistas en {KEYWORD.lower()}: limpieza y descontaminación de viviendas y locales tras un incendio. Más de 30 años de experiencia.</p>
+      <p>🕒 {HORARIO}</p>
       <div class="social-links"><a href="#" aria-label="Facebook">F</a><a href="#" aria-label="Instagram">I</a><a href="#" aria-label="Twitter">T</a></div>
     </div>
     <div class="footer-col">
@@ -269,37 +335,60 @@ def _pie(pf):
       <h3>Contacto</h3>
       <ul>
         <li><a href="tel:{TEL}">📞 {TEL_FMT}</a></li>
+        <li><a href="https://wa.me/{WHATSAPP}" target="_blank" rel="noopener">💬 WhatsApp</a></li>
         <li><a href="mailto:{EMAIL}">✉️ {EMAIL}</a></li>
         <li><a href="{rel('/politica-de-privacidad/', pf)}">Política de privacidad</a></li>
         <li><a href="{rel('/politica-de-cookies/', pf)}">Política de cookies</a></li>
+        <li><a href="{rel('/aviso-legal/', pf)}">Aviso legal</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
     <p>&copy; <span id="currentYear">{datetime.now().year}</span> {MARCA_FULL}. Todos los derechos reservados.</p>
+    <p class="grupo">{MARCA_FULL} forma parte del <a href="{GRUPO_URL}" target="_blank" rel="noopener">Grupo Nano Nex</a>.</p>
   </div>
 </footer>
-<div class="mobile-cta-bar">
-  <a href="tel:{TEL}" class="btn-mobile-call">📞 Llamar</a>
-  <a href="{rel('/contacto/', pf)}" class="btn-mobile-quote">✉️ Presupuesto</a>
-</div>"""
+{_flotantes_y_barra(pf)}
+{_cookie_banner()}"""
 
 def _schema_local(ciudad, canonical):
-    loc = ciudad or "España"
+    loc = ciudad or "tu localidad"
+    horario = ",".join(f'"{h}"' for h in OPENING)
     return f"""<script type="application/ld+json">
 {{"@context":"https://schema.org","@type":"LocalBusiness","name":"{MARCA_FULL}",
 "@id":"{DOMINIO}/#organization","url":"{canonical}","telephone":"+34{TEL}",
-"email":"{EMAIL}","areaServed":"{loc}","priceRange":"€€",
-"address":{{"@type":"PostalAddress","addressLocality":"{loc}","addressCountry":"ES"}}}}
+"email":"{EMAIL}","priceRange":"€€","areaServed":"{html.escape(loc)}",
+"openingHours":[{horario}],
+"address":{{"@type":"PostalAddress","addressLocality":"{html.escape(loc)}","addressCountry":"ES"}}}}
+</script>"""
+
+def _schema_home(canonical):
+    horario = ",".join(f'"{h}"' for h in OPENING)
+    return f"""<script type="application/ld+json">
+{{"@context":"https://schema.org","@graph":[
+{{"@type":"Organization","@id":"{DOMINIO}/#organization","name":"{MARCA_FULL}","url":"{DOMINIO}/",
+"telephone":"+34{TEL}","email":"{EMAIL}","sameAs":["{GRUPO_URL}"],
+"aggregateRating":{{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"127","bestRating":"5"}}}},
+{{"@type":"WebSite","@id":"{DOMINIO}/#website","url":"{DOMINIO}/","name":"{MARCA_FULL}","publisher":{{"@id":"{DOMINIO}/#organization"}}}},
+{{"@type":"LocalBusiness","name":"{MARCA_FULL}","url":"{DOMINIO}/","telephone":"+34{TEL}","priceRange":"€€","openingHours":[{horario}]}}
+]}}
+</script>"""
+
+def _schema_breadcrumb(titulo, canonical):
+    return f"""<script type="application/ld+json">
+{{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+{{"@type":"ListItem","position":1,"name":"Inicio","item":"{DOMINIO}/"}},
+{{"@type":"ListItem","position":2,"name":"{html.escape(titulo)}","item":"{canonical}"}}]}}
 </script>"""
 
 def plantilla(titulo, descripcion, canonical, cuerpo, ruta_actual,
-              nav_activo=None, schema=None):
-    pf = prefijo_rel(ruta_actual)
+              nav_activo=None, schema=None, pf_override=None):
+    pf = pf_override if pf_override is not None else prefijo_rel(ruta_actual)
     activo = nav_activo or ruta_actual
     desc = html.escape(descripcion or "")
     og_img = f"{DOMINIO}/assets/img/hero.webp"
     schema_html = schema or ""
+    fuentes = "https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap"
     return f"""<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -307,19 +396,26 @@ def plantilla(titulo, descripcion, canonical, cuerpo, ruta_actual,
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{html.escape(titulo)}</title>
 <meta name="description" content="{desc}">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="{canonical}">
+<link rel="icon" href="{pf}assets/favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="{MARCA_FULL}">
 <meta property="og:url" content="{canonical}">
 <meta property="og:title" content="{html.escape(titulo)}">
 <meta property="og:description" content="{desc}">
 <meta property="og:image" content="{og_img}">
 <meta property="og:locale" content="es_ES">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{html.escape(titulo)}">
+<meta name="twitter:description" content="{desc}">
+<meta name="twitter:image" content="{og_img}">
 {schema_html}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="{pf}assets/css/style.css">
+<link rel="preload" as="style" href="{fuentes}">
+<link href="{fuentes}" rel="stylesheet">
 <link rel="stylesheet" href="{pf}assets/css/style.css">
 <link rel="stylesheet" href="{pf}assets/css/contenido.css">
 </head>
@@ -358,7 +454,12 @@ def _zonas_grid(ciudades, pf):
         for t, r in ciudades)
 
 def secciones_landing(h1, intro, contenido_real, ciudades, pf, ciudad=None):
-    lugar = ciudad or "toda España"
+    lugar = ciudad or "tu población"
+    en_lugar = f"en {lugar}" if ciudad else "en tu zona"
+    # Variación de término según la ciudad (evita canibalización de keywords)
+    idx = sum(ord(c) for c in (ciudad or "home")) % len(TERMINOS)
+    termino, termino_largo = TERMINOS[idx]
+    alt_base = f"{KEYWORD} {en_lugar}"
     bloque_real = ""
     if contenido_real and len(re.sub(r'<[^>]+>', '', contenido_real)) > 200:
         bloque_real = f"""
@@ -380,8 +481,8 @@ def secciones_landing(h1, intro, contenido_real, ciudades, pf, ciudad=None):
     </div>
     <div class="trust-signals">
       <p>✅ Más de 30 años de experiencia</p>
-      <p>✅ Equipos de última generación</p>
-      <p>✅ Satisfacción garantizada</p>
+      <p>✅ Servicio profesional 365 días</p>
+      <p>✅ Presupuesto sin compromiso</p>
     </div>
   </div>
 </section>
@@ -389,7 +490,7 @@ def secciones_landing(h1, intro, contenido_real, ciudades, pf, ciudad=None):
 <section class="stats section-padding">
   <div class="container">
     <div class="stat-item"><span class="stat-number" data-counter="30">0</span>+<p>Años de Experiencia</p></div>
-    <div class="stat-item"><span class="stat-number" data-counter="500">0</span>+<p>Proyectos Completados</p></div>
+    <div class="stat-item"><span class="stat-number" data-counter="500">0</span>+<p>Intervenciones Completadas</p></div>
     <div class="stat-item"><span class="stat-number" data-counter="98">0</span>%<p>Clientes Satisfechos</p></div>
     <div class="stat-item"><span class="stat-number" data-counter="24">0</span>/<span class="stat-number" data-counter="7">0</span><p>Servicio de Urgencia</p></div>
   </div>
@@ -397,9 +498,9 @@ def secciones_landing(h1, intro, contenido_real, ciudades, pf, ciudad=None):
 
 <section id="servicios" class="servicios section-padding">
   <div class="container">
-    <h2 class="section-title">Nuestros Servicios de Limpieza</h2>
+    <h2 class="section-title">Servicios de {KEYWORD} {en_lugar}</h2>
     <div class="ornament"></div>
-    <p class="section-subtitle">Soluciones integrales para la recuperación de tu espacio en {html.escape(lugar)}.</p>
+    <p class="section-subtitle">Especialistas en {termino_largo}: limpieza y descontaminación de tu espacio {en_lugar}.</p>
     <div class="servicios-grid">{_tarjetas_servicios()}</div>
   </div>
 </section>
@@ -408,17 +509,17 @@ def secciones_landing(h1, intro, contenido_real, ciudades, pf, ciudad=None):
   <div class="container">
     <h2 class="section-title">Resultados que Hablan por Sí Solos</h2>
     <div class="ornament"></div>
-    <p class="section-subtitle">Transformamos espacios devastados en ambientes renovados.</p>
+    <p class="section-subtitle">Dejamos tu vivienda o local libre de {termino}, hollín y olores.</p>
     <div class="before-after-content">
-      <div class="before-after-image"><img src="{pf}assets/img/resultado.webp" alt="Resultado de limpieza por incendio" loading="lazy"></div>
+      <div class="before-after-image"><img src="{pf}assets/img/resultado.webp" alt="{html.escape(alt_base)}: resultado de la limpieza" loading="lazy"></div>
       <div class="before-after-checklist">
         <h3>Nuestro Compromiso:</h3>
         <ul>
           <li>✅ Eliminación total de hollín y ceniza</li>
           <li>✅ Neutralización completa de olores con ozono</li>
-          <li>✅ Restauración de superficies dañadas</li>
+          <li>✅ Limpieza profunda de superficies afectadas</li>
           <li>✅ Desinfección y saneamiento</li>
-          <li>✅ Recuperación de objetos de valor</li>
+          <li>✅ Limpieza de objetos de valor</li>
           <li>✅ Entrega de espacios listos para usar</li>
         </ul>
       </div>
@@ -428,16 +529,16 @@ def secciones_landing(h1, intro, contenido_real, ciudades, pf, ciudad=None):
 
 <section id="proceso" class="proceso section-padding">
   <div class="container">
-    <h2 class="section-title">Nuestro Proceso de Restauración</h2>
+    <h2 class="section-title">Nuestro Proceso de Limpieza</h2>
     <div class="ornament"></div>
     <p class="section-subtitle">Un enfoque metódico para garantizar la máxima eficacia.</p>
     <div class="proceso-grid">
-      <div class="proceso-item reveal"><div class="proceso-icon">1</div><h3>Evaluación y Planificación</h3><p>Inspección detallada de los daños y plan de acción personalizado.</p></div>
+      <div class="proceso-item reveal"><div class="proceso-icon">1</div><h3>Evaluación y Planificación</h3><p>Inspección detallada del alcance y plan de limpieza personalizado.</p></div>
       <div class="proceso-item reveal"><div class="proceso-icon">2</div><h3>Contención y Protección</h3><p>Aislamiento de áreas afectadas para evitar la propagación de contaminantes.</p></div>
       <div class="proceso-item reveal"><div class="proceso-icon">3</div><h3>Limpieza y Desodorización</h3><p>Técnicas avanzadas para eliminar hollín, humo y olores.</p></div>
-      <div class="proceso-item reveal"><div class="proceso-icon">4</div><h3>Restauración Final</h3><p>Reparación de superficies y entrega de un espacio renovado.</p></div>
+      <div class="proceso-item reveal"><div class="proceso-icon">4</div><h3>Descontaminación Final</h3><p>Saneamiento y entrega de un espacio limpio y listo para usar.</p></div>
     </div>
-    <div class="proceso-image"><img src="{pf}assets/img/proceso.webp" alt="Proceso de limpieza por incendio" loading="lazy"></div>
+    <div class="proceso-image"><img src="{pf}assets/img/proceso.webp" alt="{html.escape(alt_base)}: proceso de limpieza" loading="lazy"></div>
   </div>
 </section>
 
@@ -447,7 +548,7 @@ def secciones_landing(h1, intro, contenido_real, ciudades, pf, ciudad=None):
     <div class="ornament"></div>
     <p class="section-subtitle">Profesionales cualificados y comprometidos con tu tranquilidad.</p>
     <div class="equipo-content">
-      <div class="equipo-image"><img src="{pf}assets/img/equipo.webp" alt="Equipo de Nano Nex" loading="lazy"></div>
+      <div class="equipo-image"><img src="{pf}assets/img/equipo.webp" alt="{html.escape(alt_base)}: equipo profesional" loading="lazy"></div>
       <div class="equipo-metrics">
         <div class="metric-item"><span class="metric-number" data-counter="20">0</span>+<p>Especialistas</p></div>
         <div class="metric-item"><span class="metric-number" data-counter="100">0</span>%<p>Formación Continua</p></div>
@@ -462,10 +563,10 @@ def secciones_landing(h1, intro, contenido_real, ciudades, pf, ciudad=None):
   <div class="container">
     <h2 class="section-title">Lo que Dicen Nuestros Clientes</h2>
     <div class="ornament"></div>
-    <p class="section-subtitle">Historias de éxito y satisfacción en {html.escape(lugar)}.</p>
+    <p class="section-subtitle">Opiniones de clientes {en_lugar} y alrededores.</p>
     <div class="testimonios-grid">
       <div class="testimonio-card reveal"><div class="stars">⭐⭐⭐⭐⭐</div><p>"Nano Nex salvó mi negocio. La limpieza fue impecable y el olor a humo desapareció por completo."</p><span class="client-name">- María G.</span></div>
-      <div class="testimonio-card reveal"><div class="stars">⭐⭐⭐⭐⭐</div><p>"Profesionalidad y eficiencia. Tras el incendio en mi casa hicieron un trabajo increíble."</p><span class="client-name">- Juan P.</span></div>
+      <div class="testimonio-card reveal"><div class="stars">⭐⭐⭐⭐⭐</div><p>"Profesionalidad y eficiencia. Tras el incendio en mi casa dejaron todo limpio y sin olores."</p><span class="client-name">- Juan P.</span></div>
       <div class="testimonio-card reveal"><div class="stars">⭐⭐⭐⭐⭐</div><p>"Desde el primer contacto hasta la finalización, todo fue excelente. Un servicio de primera."</p><span class="client-name">- Ana R.</span></div>
     </div>
   </div>
@@ -473,9 +574,9 @@ def secciones_landing(h1, intro, contenido_real, ciudades, pf, ciudad=None):
 
 <section id="zonas" class="zonas section-padding">
   <div class="container">
-    <h2 class="section-title">Nuestras Zonas de Servicio</h2>
+    <h2 class="section-title">Otras Zonas de Servicio</h2>
     <div class="ornament"></div>
-    <p class="section-subtitle">Atendemos urgencias en toda España.</p>
+    <p class="section-subtitle">{KEYWORD} cerca de ti. Estas son otras poblaciones donde actuamos:</p>
     <div class="zonas-grid">{_zonas_grid(ciudades, pf)}</div>
   </div>
 </section>
@@ -483,27 +584,32 @@ def secciones_landing(h1, intro, contenido_real, ciudades, pf, ciudad=None):
 {seccion_contacto(pf, ciudad)}"""
 
 def seccion_contacto(pf, ciudad=None):
+    lugar = ciudad or "tu población"
     return f"""<section id="contacto" class="contacto section-padding">
   <div class="container">
-    <h2 class="section-title">Contacto y Presupuesto Gratuito</h2>
+    <h2 class="section-title">Nosotros te llamamos</h2>
     <div class="ornament"></div>
-    <p class="section-subtitle">Estamos disponibles 24/7 para atender tu emergencia.</p>
+    <p class="section-subtitle">Déjanos tus datos y te llamamos para darte presupuesto sin compromiso. Disponibles 24/7.</p>
     <div class="contact-content">
       <div class="contact-info">
         <h3>Información de Contacto</h3>
         <p>📞 Teléfono: <a href="tel:{TEL}">{TEL_FMT}</a></p>
+        <p>💬 WhatsApp: <a href="https://wa.me/{WHATSAPP}" target="_blank" rel="noopener">{TEL_FMT}</a></p>
         <p>📧 Email: <a href="mailto:{EMAIL}">{EMAIL}</a></p>
-        <p>🌍 Cobertura: {html.escape(ciudad or 'Toda España')}</p>
-        <p>⏰ Servicio de urgencias 24 horas, 7 días</p>
+        <p>🕒 Horario: {HORARIO}</p>
       </div>
       <div class="contact-form">
-        <h3>Solicita tu Presupuesto</h3>
-        <form id="contactForm">
-          <div class="form-group"><label for="name">Nombre:</label><input type="text" id="name" name="name" required></div>
-          <div class="form-group"><label for="phone">Teléfono:</label><input type="tel" id="phone" name="phone" required></div>
-          <div class="form-group"><label for="city">Población:</label><input type="text" id="city" name="city" required></div>
-          <div class="form-group"><label for="description">Descripción del Incidente:</label><textarea id="description" name="description" rows="5" required></textarea></div>
-          <button type="submit" class="btn btn-primary">Enviar Solicitud</button>
+        <h3>Te llamamos gratis</h3>
+        <form id="contactForm" action="https://formsubmit.co/{EMAIL}" method="POST">
+          <input type="hidden" name="_subject" value="Nueva solicitud · {KEYWORD} ({html.escape(lugar)})">
+          <input type="hidden" name="Origen" value="{DOMINIO} · {html.escape(lugar)}">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+          <input type="text" name="_honey" style="display:none">
+          <div class="form-group"><label for="name">Nombre:</label><input type="text" id="name" name="Nombre" required></div>
+          <div class="form-group"><label for="phone">Teléfono:</label><input type="tel" id="phone" name="Telefono" required></div>
+          <div class="form-group"><label for="city">Población:</label><input type="text" id="city" name="Poblacion" value="{html.escape(ciudad or '')}" required></div>
+          <button type="submit" class="btn btn-primary">Quiero que me llaméis</button>
           <div id="formMessage" class="form-message"></div>
         </form>
       </div>
@@ -559,21 +665,175 @@ CONTENIDO_CSS = """/* Estilos para el contenido importado de WordPress y página
 .blog-card:hover{transform:translateY(-5px);box-shadow:0 14px 40px rgba(10,22,40,.15)}
 .blog-card .blog-fecha{color:var(--color-gold);font-size:.82rem;font-weight:700;text-transform:uppercase}
 .blog-card h3{font-family:var(--font-playfair);color:var(--color-dark-green);margin:.5em 0 0;font-size:1.15rem;line-height:1.35}
-@media(max-width:768px){.page-hero h1{font-size:1.8rem}.contenido-wp article{padding:26px 20px}}
+/* Topbar */
+.topbar{background:var(--color-dark-green);color:var(--color-cream);font-size:.85rem;border-bottom:1px solid rgba(201,168,76,.25)}
+.topbar .container{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 20px;flex-wrap:wrap}
+.topbar a{color:var(--color-gold);font-weight:700}
+.topbar-claim{font-weight:700;color:#fff}
+/* Botones flotantes (escritorio) */
+.float-btns{position:fixed;right:18px;bottom:22px;z-index:900;display:flex;flex-direction:column;gap:12px}
+.float-btns a{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;box-shadow:0 6px 20px rgba(0,0,0,.3);color:#fff;transition:transform .2s}
+.float-btns a:hover{transform:scale(1.08)}
+.float-wa{background:#25D366}
+.float-call{background:var(--color-gold);color:var(--color-dark-green)!important}
+.wa-ic{display:block}
+/* Barra inferior móvil */
+.mobile-cta-bar{position:fixed;left:0;right:0;bottom:0;z-index:950;display:none;
+  background:var(--color-dark-green);border-top:2px solid var(--color-gold)}
+.mobile-cta-bar a{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:13px 4px;color:#fff;font-weight:700;font-size:.92rem}
+.mobile-cta-bar .btn-mobile-wa{background:#25D366}
+.mobile-cta-bar .btn-mobile-quote{background:var(--color-gold);color:var(--color-dark-green)}
+.mobile-cta-bar .wa-ic{width:20px;height:20px}
+/* Grupo Nano Nex */
+.footer-bottom .grupo{font-size:.85rem;opacity:.85;margin-top:6px}
+.footer-bottom .grupo a{color:var(--color-gold);font-weight:700}
+/* Banner cookies */
+.cookie-banner{position:fixed;left:14px;right:14px;bottom:14px;z-index:980;background:var(--color-dark-green);
+  color:var(--color-cream);padding:14px 18px;border-radius:12px;display:flex;align-items:center;gap:14px;
+  box-shadow:0 10px 40px rgba(0,0,0,.35);max-width:780px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+.cookie-banner p{margin:0;font-size:.9rem}.cookie-banner a{color:var(--color-gold)}
+.cookie-banner .btn{padding:9px 20px;font-size:.9rem}
+@media(max-width:768px){
+  .page-hero h1{font-size:1.8rem}.contenido-wp article{padding:26px 20px}
+  .float-btns{display:none}
+  .mobile-cta-bar{display:flex}
+  body{padding-bottom:54px}
+  .topbar-hor{display:none}
+}
+"""
+
+FAVICON_SVG = (
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">'
+    '<rect width="64" height="64" rx="12" fill="#0A1628"/>'
+    '<text x="32" y="44" font-family="Georgia,serif" font-size="34" font-weight="700" '
+    'text-anchor="middle" fill="#C9A84C">NN</text></svg>')
+
+MAIN_JS = """document.addEventListener("DOMContentLoaded",()=>{
+  // Menú hamburguesa
+  const h=document.querySelector(".hamburger"),n=document.querySelector(".nav");
+  if(h&&n){h.addEventListener("click",()=>{n.classList.toggle("active");h.classList.toggle("active");});
+    document.querySelectorAll(".nav-list a").forEach(l=>l.addEventListener("click",()=>{n.classList.remove("active");h.classList.remove("active");}));}
+  // Scroll suave solo para anclas internas (no rompe navegación entre páginas)
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener("click",function(e){const id=this.getAttribute("href");if(id.length>1){const t=document.querySelector(id);if(t){e.preventDefault();t.scrollIntoView({behavior:"smooth"});}}});
+  });
+  // Año dinámico
+  const y=document.getElementById("currentYear");if(y)y.textContent=new Date().getFullYear();
+  // Reveal al hacer scroll
+  const io=new IntersectionObserver((es,o)=>{es.forEach(en=>{if(en.isIntersecting){en.target.classList.add("active");o.unobserve(en.target);}});},{threshold:.1});
+  document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+  // Contadores
+  const cw=new IntersectionObserver((es)=>{es.forEach(en=>{if(en.isIntersecting){en.target.querySelectorAll(".stat-number,.metric-number").forEach(c=>{const t=parseInt(c.getAttribute("data-counter"));let v=0;const inc=t/120;const up=()=>{if(v<t){v+=inc;c.textContent=Math.ceil(v);requestAnimationFrame(up);}else c.textContent=t;};up();});cw.unobserve(en.target);}});},{threshold:.6});
+  document.querySelectorAll(".stats,.equipo-metrics").forEach(s=>cw.observe(s));
+  // Banner de cookies
+  const cb=document.getElementById("cookie-banner");
+  if(cb&&!localStorage.getItem("cookies-ok")){cb.hidden=false;
+    const ok=document.getElementById("cookie-ok");if(ok)ok.addEventListener("click",()=>{localStorage.setItem("cookies-ok","1");cb.hidden=true;});}
+  // El formulario usa FormSubmit (POST nativo): no se intercepta.
+});
 """
 
 def copiar_assets():
-    """Copia css/js/img de la plantilla y escribe el CSS complementario."""
+    """Copia css/img de la plantilla, escribe nuestro JS, favicon y CSS complementario."""
     if os.path.isdir(PLANTILLA):
-        for sub in ("css", "js", "img"):
+        for sub in ("css", "img"):
             origen = os.path.join(PLANTILLA, sub)
             if os.path.isdir(origen):
                 shutil.copytree(origen, os.path.join(SALIDA, "assets", sub),
                                 dirs_exist_ok=True)
     destino_css = os.path.join(SALIDA, "assets", "css")
+    destino_js = os.path.join(SALIDA, "assets", "js")
     os.makedirs(destino_css, exist_ok=True)
+    os.makedirs(destino_js, exist_ok=True)
     with open(os.path.join(destino_css, "contenido.css"), "w", encoding="utf-8") as f:
         f.write(CONTENIDO_CSS)
+    with open(os.path.join(destino_js, "main.js"), "w", encoding="utf-8") as f:
+        f.write(MAIN_JS)
+    with open(os.path.join(SALIDA, "assets", "favicon.svg"), "w", encoding="utf-8") as f:
+        f.write(FAVICON_SVG)
+
+def generar_extras():
+    """robots.txt (con bots de IA), llms.txt, 404.html y .htaccess."""
+    # robots.txt
+    bots = ["GPTBot", "ChatGPT-User", "OAI-SearchBot", "ClaudeBot", "Claude-Web",
+            "anthropic-ai", "PerplexityBot", "Google-Extended", "Applebot-Extended",
+            "CCBot", "Bingbot", "Googlebot"]
+    rob = ["# robots.txt — crawlers tradicionales y de IA bienvenidos"]
+    for b in bots:
+        rob.append(f"User-agent: {b}\nAllow: /\n")
+    rob.append("User-agent: *\nAllow: /\n")
+    rob.append(f"Sitemap: {DOMINIO}/sitemap.xml")
+    with open(os.path.join(SALIDA, "robots.txt"), "w", encoding="utf-8") as f:
+        f.write("\n".join(rob) + "\n")
+
+    # llms.txt — resumen para modelos de IA
+    llms = f"""# {MARCA_FULL}
+
+> {KEYWORD}: empresa especializada en limpieza y descontaminación de viviendas y
+> locales tras un incendio. Solo limpieza, no realizamos obras ni reformas.
+> Servicio 24/7 en España. Teléfono {TEL_FMT}. Email {EMAIL}.
+
+## Servicios
+- Limpieza de incendios y post-incendios (hollín, humo, cenizas)
+- Desodorización con ozono (eliminación de olor a humo)
+- Limpieza con láser y con hielo seco (criogénica)
+- Síndrome de Diógenes y limpiezas traumáticas
+- Descontaminación industrial
+
+## Enlaces
+- Inicio: {DOMINIO}/
+- Zonas de servicio: {DOMINIO}/zonas/
+- Blog: {DOMINIO}/blog/
+- Sitemap: {DOMINIO}/sitemap.xml
+"""
+    with open(os.path.join(SALIDA, "llms.txt"), "w", encoding="utf-8") as f:
+        f.write(llms)
+
+    # 404.html (rutas absolutas para que funcionen en cualquier nivel)
+    cuerpo404 = ('<section class="page-hero"><div class="container">'
+                 '<h1>Página no encontrada</h1>'
+                 '<p>La página que buscas no existe o se ha movido.</p></div></section>'
+                 '<section class="contenido-wp section-padding"><div class="container">'
+                 '<article style="text-align:center">'
+                 '<p>Vuelve al inicio o llámanos para una urgencia.</p>'
+                 f'<p><a class="btn" href="/">Ir al inicio</a> '
+                 f'<a class="btn" href="tel:{TEL}">Llamar {TEL_FMT}</a></p>'
+                 '</article></div></section>')
+    html404 = plantilla("404 · Página no encontrada | " + MARCA_FULL,
+                        "La página que buscas no existe.", DOMINIO + "/404",
+                        cuerpo404, "/", pf_override="/")
+    with open(os.path.join(SALIDA, "404.html"), "w", encoding="utf-8") as f:
+        f.write(html404)
+
+    # .htaccess (para hosting Apache; GitHub Pages lo ignora)
+    htaccess = f"""DirectoryIndex index.html
+Options -Indexes
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{{HTTPS}} off
+  RewriteRule ^ https://%{{HTTP_HOST}}%{{REQUEST_URI}} [L,R=301]
+  RewriteCond %{{HTTP_HOST}} ^www\\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{{REQUEST_URI}} [L,R=301]
+</IfModule>
+ErrorDocument 404 /404.html
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml
+</IfModule>
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType image/webp "access plus 6 months"
+  ExpiresByType image/svg+xml "access plus 6 months"
+</IfModule>
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+</IfModule>
+"""
+    with open(os.path.join(SALIDA, ".htaccess"), "w", encoding="utf-8") as f:
+        f.write(htaccess)
 
 # ============================================================================
 #  Parseo del WXR y generación
@@ -585,6 +845,36 @@ def ruta_de(link):
     if not p.endswith("/"):
         p += "/"
     return p
+
+def asegurar_alt(htmltxt, ciudad=None):
+    """Rellena alt vacío/ausente de <img> con la keyword (+ciudad)."""
+    base = f"{KEYWORD} en {ciudad}" if ciudad else KEYWORD
+    rep = html.escape(base)
+    def fix(m):
+        tag = m.group(0)
+        if re.search(r'\balt\s*=\s*"[^"]+"', tag):
+            return tag
+        tag = re.sub(r'\s*\balt\s*=\s*""', '', tag)          # quita alt vacío
+        return tag[:-1] + f' alt="{rep}">'                    # añade antes de '>'
+    return re.sub(r'<img\b[^>]*>', fix, htmltxt)
+
+_TITULOS = {}
+def titulo_unico(t, sufijo=""):
+    """Garantiza títulos únicos; si se repite, añade un sufijo."""
+    if t not in _TITULOS:
+        _TITULOS[t] = 1; return t
+    _TITULOS[t] += 1
+    nuevo = f"{t} ({sufijo})" if sufijo else f"{t} ({_TITULOS[t]})"
+    return nuevo
+
+_DESCS = set()
+def desc_unica(desc, cuerpo):
+    """Devuelve una meta-description única; si se repite, usa el extracto del propio contenido."""
+    d = (desc or "").strip()
+    if not d or d in _DESCS:
+        d = primer_texto(cuerpo, 155) or d
+    _DESCS.add(d)
+    return d
 
 def escribir(ruta, contenido):
     destino = os.path.join(SALIDA, ruta.strip("/"), "index.html")
@@ -636,30 +926,51 @@ def main():
     # --- Páginas: portada y ciudades = landing; resto = artículo ---
     for p in paginas:
         pf = prefijo_rel(p["ruta"])
-        cuerpo = localizar_imgs(convertir(p["cont"]), pf)
-        desc = p["seo_desc"] or primer_texto(cuerpo)
-        canonical = DOMINIO + p["ruta"]
         ciudad = None if p["ruta"] == "/" else ciudad_de(p["titulo"])
+        cuerpo = asegurar_alt(localizar_imgs(convertir(p["cont"]), pf), ciudad)
+        canonical = DOMINIO + p["ruta"]
         if p["ruta"] == "/" or ciudad:
-            h1 = (f"Limpieza Profesional por Incendio en {ciudad}" if ciudad
-                  else "Limpieza Profesional por Incendio en toda España")
-            intro = desc or "Recupera tu hogar o negocio tras un incendio con expertos."
+            # Variación de término por ciudad para no canibalizar
+            idx = sum(ord(c) for c in (ciudad or "home")) % len(TERMINOS)
+            termino, termino_largo = TERMINOS[idx]
+            if ciudad:
+                title = titulo_unico(f"{KEYWORD} en {ciudad} | {termino_largo.capitalize()} · {MARCA}")
+                h1 = f"{KEYWORD} en {ciudad}"
+                # Descripción única por ciudad (solo se usa Yoast si menciona la ciudad)
+                yoast = p["seo_desc"] or ""
+                if ciudad.lower() in yoast.lower():
+                    desc = yoast
+                else:
+                    desc = (f"{KEYWORD} en {ciudad}: limpieza de {termino}, hollín y olores tras un "
+                            f"incendio en viviendas y locales. Servicio 24/7, presupuesto sin compromiso. ☎ {TEL_FMT}.")
+                schema = _schema_local(ciudad, canonical) + _schema_breadcrumb(h1, canonical)
+            else:
+                title = titulo_unico(f"{KEYWORD} · Limpieza y Descontaminación tras Incendio | {MARCA}")
+                h1 = f"{KEYWORD}: limpieza y descontaminación tras incendio"
+                desc = (f"{KEYWORD}: limpieza de humo, hollín y olores tras un incendio en tu vivienda "
+                        f"o local. Servicio profesional 24/7. Presupuesto sin compromiso. ☎ {TEL_FMT}.")
+                schema = _schema_home(canonical)
+            intro = (p["seo_desc"] or
+                     "Limpiamos y descontaminamos tu vivienda o local tras un incendio. Sin obras: solo limpieza.")
             body = secciones_landing(h1, intro, cuerpo, ciudades, pf, ciudad)
-            escribir(p["ruta"], plantilla(p["seo_title"], desc, canonical, body,
-                     p["ruta"], schema=_schema_local(ciudad, canonical)))
+            escribir(p["ruta"], plantilla(title, desc, canonical, body, p["ruta"], schema=schema))
         else:
+            desc = desc_unica(p["seo_desc"], cuerpo)
+            title = titulo_unico(p["seo_title"])
             body = articulo(p["titulo"], cuerpo)
-            escribir(p["ruta"], plantilla(p["seo_title"], desc, canonical, body, p["ruta"]))
+            escribir(p["ruta"], plantilla(title, desc, canonical, body, p["ruta"],
+                     schema=_schema_breadcrumb(p["titulo"], canonical)))
 
     # --- Entradas (blog) = artículo ---
     for e in entradas:
         pf = prefijo_rel(e["ruta"])
-        cuerpo = localizar_imgs(convertir(e["cont"]), pf)
-        desc = e["seo_desc"] or primer_texto(cuerpo)
+        cuerpo = asegurar_alt(localizar_imgs(convertir(e["cont"]), pf), None)
+        desc = desc_unica(e["seo_desc"], cuerpo)
         canonical = DOMINIO + e["ruta"]
+        title = titulo_unico(e["seo_title"], sufijo=e["fecha"][:4])
         body = articulo(e["titulo"], cuerpo, fecha=e["fecha"][:10])
-        escribir(e["ruta"], plantilla(e["seo_title"], desc, canonical, body,
-                 e["ruta"], nav_activo="/blog/"))
+        escribir(e["ruta"], plantilla(title, desc, canonical, body,
+                 e["ruta"], nav_activo="/blog/", schema=_schema_breadcrumb(e["titulo"], canonical)))
 
     # --- Índice del blog ---
     pf_blog = prefijo_rel("/blog/")
@@ -679,29 +990,45 @@ def main():
     # --- Página de zonas (ciudades) ---
     pf_zonas = prefijo_rel("/zonas/")
     body = (f'<section class="page-hero"><div class="container"><h1>Zonas de Servicio</h1>'
-            f'<p>Limpieza de incendios y post-incendios en toda España.</p></div></section>'
+            f'<p>{KEYWORD} cerca de ti. Estas son las poblaciones donde actuamos.</p></div></section>'
             f'<section id="zonas" class="zonas section-padding"><div class="container">'
             f'<div class="zonas-grid">{_zonas_grid(ciudades, pf_zonas)}</div></div></section>'
             f'{seccion_contacto(pf_zonas)}')
-    escribir("/zonas/", plantilla("Zonas de servicio | " + MARCA_FULL,
-             "Limpieza de incendios en Madrid, Barcelona, Valencia, Sevilla y toda España.",
-             DOMINIO + "/zonas/", body, "/zonas/"))
+    escribir("/zonas/", plantilla("Zonas de servicio · " + KEYWORD + " | " + MARCA,
+             f"{KEYWORD} en Madrid, Barcelona, Valencia, Sevilla, Málaga, Murcia, Zaragoza y más poblaciones. Servicio 24/7.",
+             DOMINIO + "/zonas/", body, "/zonas/",
+             schema=_schema_breadcrumb("Zonas de servicio", DOMINIO + "/zonas/")))
+
+    # --- Aviso legal ---
+    aviso = f"""<h2>Datos identificativos</h2>
+<p>Titular: {MARCA_FULL}. Email: <a href="mailto:{EMAIL}">{EMAIL}</a>. Teléfono: {TEL_FMT}.</p>
+<p>NIF y datos de registro: <em>pendientes de completar</em>.</p>
+<h2>Objeto</h2>
+<p>{MARCA_FULL} presta servicios de {KEYWORD.lower()}: limpieza y descontaminación de viviendas y locales tras un incendio. No realizamos obras ni reformas.</p>
+<h2>Propiedad intelectual</h2>
+<p>Todos los contenidos de este sitio son propiedad de {MARCA_FULL} o de terceros que han autorizado su uso.</p>
+<h2>Responsabilidad</h2>
+<p>El titular no se hace responsable del uso indebido de los contenidos del sitio web.</p>"""
+    escribir("/aviso-legal/", plantilla("Aviso legal | " + MARCA_FULL,
+             "Aviso legal y datos identificativos de " + MARCA_FULL + ".",
+             DOMINIO + "/aviso-legal/", articulo("Aviso legal", aviso),
+             "/aviso-legal/", schema=_schema_breadcrumb("Aviso legal", DOMINIO + "/aviso-legal/")))
 
     # --- sitemap.xml ---
-    urls = ([DOMINIO + p["ruta"] for p in paginas] +
-            [DOMINIO + e["ruta"] for e in entradas] +
-            [DOMINIO + "/blog/", DOMINIO + "/zonas/"])
+    rutas = ([p["ruta"] for p in paginas] + [e["ruta"] for e in entradas] +
+             ["/blog/", "/zonas/", "/aviso-legal/"])
+    hoy = datetime.now().strftime("%Y-%m-%d")
     sm = ['<?xml version="1.0" encoding="UTF-8"?>',
           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for u in urls:
-        sm.append(f"  <url><loc>{u}</loc></url>")
+    for r in rutas:
+        pr = "1.0" if r == "/" else ("0.8" if ciudad_de(r) or r in ("/blog/", "/zonas/") else "0.6")
+        sm.append(f"  <url><loc>{DOMINIO}{r}</loc><lastmod>{hoy}</lastmod><priority>{pr}</priority></url>")
     sm.append("</urlset>")
     with open(os.path.join(SALIDA, "sitemap.xml"), "w", encoding="utf-8") as f:
         f.write("\n".join(sm))
+    urls = rutas
 
-    # --- robots.txt ---
-    with open(os.path.join(SALIDA, "robots.txt"), "w", encoding="utf-8") as f:
-        f.write(f"User-agent: *\nAllow: /\nSitemap: {DOMINIO}/sitemap.xml\n")
+    generar_extras()
 
     print(f"OK: {len(paginas)} páginas + {len(entradas)} entradas + blog + zonas")
     print(f"Total URLs en sitemap: {len(urls)}")

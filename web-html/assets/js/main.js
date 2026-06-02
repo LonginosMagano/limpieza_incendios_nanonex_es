@@ -1,129 +1,23 @@
-
-document.addEventListener("DOMContentLoaded", () => {
-    // Hamburger Menu
-    const hamburger = document.querySelector(".hamburger");
-    const nav = document.querySelector(".nav");
-
-    if (hamburger && nav) {
-        hamburger.addEventListener("click", () => {
-            nav.classList.toggle("active");
-            hamburger.classList.toggle("active");
-        });
-
-        // Close nav when a link is clicked (for smooth scroll)
-        document.querySelectorAll(".nav-list a").forEach(link => {
-            link.addEventListener("click", () => {
-                if (nav.classList.contains("active")) {
-                    nav.classList.remove("active");
-                    hamburger.classList.remove("active");
-                }
-            });
-        });
-    }
-
-    // Smooth Scroll to Anchors
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
-    });
-
-    // Dynamic Year in Footer
-    const currentYearSpan = document.getElementById("currentYear");
-    if (currentYearSpan) {
-        currentYearSpan.textContent = new Date().getFullYear();
-    }
-
-    // Scroll Reveal with IntersectionObserver
-    const revealElements = document.querySelectorAll(".reveal");
-
-    const observerOptions = {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("active");
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    revealElements.forEach(el => observer.observe(el));
-
-    // Animated Counters
-    const counterObserverOptions = {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0.7
-    };
-
-    const animateCounter = (entry) => {
-        if (entry.isIntersecting) {
-            const counters = entry.target.querySelectorAll(".stat-number, .metric-number");
-            counters.forEach(counter => {
-                const target = parseInt(counter.getAttribute("data-counter"));
-                let current = 0;
-                const increment = target / 200; // Adjust speed
-
-                const updateCounter = () => {
-                    if (current < target) {
-                        current += increment;
-                        counter.textContent = Math.ceil(current);
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        counter.textContent = target;
-                    }
-                };
-                updateCounter();
-            });
-            counterObserver.unobserve(entry.target);
-        }
-    };
-
-    const counterObserver = new IntersectionObserver((entries) => {
-        entries.forEach(animateCounter);
-    }, counterObserverOptions);
-
-    document.querySelectorAll(".stats, .equipo-metrics").forEach(section => {
-        counterObserver.observe(section);
-    });
-
-    // Form Validation and Submission
-    const contactForm = document.getElementById("contactForm");
-    const formMessage = document.getElementById("formMessage");
-
-    if (contactForm) {
-        contactForm.addEventListener("submit", function (e) {
-            e.preventDefault();
-
-            const name = document.getElementById("name").value;
-            const phone = document.getElementById("phone").value;
-            const city = document.getElementById("city").value;
-            const description = document.getElementById("description").value;
-
-            if (name && phone && city && description) {
-                // Simulate form submission
-                setTimeout(() => {
-                    formMessage.textContent = "¡Gracias! Tu mensaje ha sido enviado. Nos pondremos en contacto contigo pronto.";
-                    formMessage.classList.remove("error");
-                    formMessage.classList.add("success");
-                    formMessage.style.display = "block";
-                    contactForm.reset();
-                }, 1000);
-            } else {
-                formMessage.textContent = "Por favor, completa todos los campos requeridos.";
-                formMessage.classList.remove("success");
-                formMessage.classList.add("error");
-                formMessage.style.display = "block";
-            }
-        });
-    }
+document.addEventListener("DOMContentLoaded",()=>{
+  // Menú hamburguesa
+  const h=document.querySelector(".hamburger"),n=document.querySelector(".nav");
+  if(h&&n){h.addEventListener("click",()=>{n.classList.toggle("active");h.classList.toggle("active");});
+    document.querySelectorAll(".nav-list a").forEach(l=>l.addEventListener("click",()=>{n.classList.remove("active");h.classList.remove("active");}));}
+  // Scroll suave solo para anclas internas (no rompe navegación entre páginas)
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener("click",function(e){const id=this.getAttribute("href");if(id.length>1){const t=document.querySelector(id);if(t){e.preventDefault();t.scrollIntoView({behavior:"smooth"});}}});
+  });
+  // Año dinámico
+  const y=document.getElementById("currentYear");if(y)y.textContent=new Date().getFullYear();
+  // Reveal al hacer scroll
+  const io=new IntersectionObserver((es,o)=>{es.forEach(en=>{if(en.isIntersecting){en.target.classList.add("active");o.unobserve(en.target);}});},{threshold:.1});
+  document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+  // Contadores
+  const cw=new IntersectionObserver((es)=>{es.forEach(en=>{if(en.isIntersecting){en.target.querySelectorAll(".stat-number,.metric-number").forEach(c=>{const t=parseInt(c.getAttribute("data-counter"));let v=0;const inc=t/120;const up=()=>{if(v<t){v+=inc;c.textContent=Math.ceil(v);requestAnimationFrame(up);}else c.textContent=t;};up();});cw.unobserve(en.target);}});},{threshold:.6});
+  document.querySelectorAll(".stats,.equipo-metrics").forEach(s=>cw.observe(s));
+  // Banner de cookies
+  const cb=document.getElementById("cookie-banner");
+  if(cb&&!localStorage.getItem("cookies-ok")){cb.hidden=false;
+    const ok=document.getElementById("cookie-ok");if(ok)ok.addEventListener("click",()=>{localStorage.setItem("cookies-ok","1");cb.hidden=true;});}
+  // El formulario usa FormSubmit (POST nativo): no se intercepta.
 });
