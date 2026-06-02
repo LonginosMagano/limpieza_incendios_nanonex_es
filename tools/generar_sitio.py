@@ -310,10 +310,10 @@ def _flotantes_y_barra(pf):
   <a href="{rel('/contacto/', pf)}" class="btn-mobile-quote">✉️ Presupuesto</a>
 </div>"""
 
-def _cookie_banner():
+def _cookie_banner(pf):
     return ('<div id="cookie-banner" class="cookie-banner" hidden>'
             '<p>Usamos cookies propias y de terceros para mejorar tu experiencia. '
-            '<a href="/politica-de-cookies/">Más información</a>.</p>'
+            f'<a href="{rel("/politica-de-cookies/", pf)}">Más información</a>.</p>'
             '<button id="cookie-ok" class="btn btn-primary">Aceptar</button></div>')
 
 def _pie(pf):
@@ -349,7 +349,7 @@ def _pie(pf):
   </div>
 </footer>
 {_flotantes_y_barra(pf)}
-{_cookie_banner()}"""
+{_cookie_banner(pf)}"""
 
 def _schema_local(ciudad, canonical):
     loc = ciudad or "tu localidad"
@@ -835,6 +835,25 @@ ErrorDocument 404 /404.html
     with open(os.path.join(SALIDA, ".htaccess"), "w", encoding="utf-8") as f:
         f.write(htaccess)
 
+    # .nojekyll: evita que GitHub Pages procese el sitio con Jekyll
+    open(os.path.join(SALIDA, ".nojekyll"), "w").close()
+
+def sincronizar_raiz():
+    """Copia el sitio generado (web-html/) a la raíz del repo, para que GitHub Pages
+    lo sirva tanto en modo 'GitHub Actions' (artefacto web-html) como en modo
+    'Deploy from a branch' (raíz). No toca las carpetas de código fuente."""
+    PROTEGIDAS = {"tools", "origen-wordpress", "plantilla-5", "docs",
+                  ".git", ".github", "README.md", "web-html"}
+    for nombre in os.listdir(SALIDA):
+        if nombre in PROTEGIDAS:
+            continue
+        org = os.path.join(SALIDA, nombre)
+        dst = os.path.join(RAIZ, nombre)
+        if os.path.isdir(org):
+            shutil.copytree(org, dst, dirs_exist_ok=True)
+        else:
+            shutil.copy2(org, dst)
+
 # ============================================================================
 #  Parseo del WXR y generación
 # ============================================================================
@@ -1029,6 +1048,7 @@ def main():
     urls = rutas
 
     generar_extras()
+    sincronizar_raiz()
 
     print(f"OK: {len(paginas)} páginas + {len(entradas)} entradas + blog + zonas")
     print(f"Total URLs en sitemap: {len(urls)}")
