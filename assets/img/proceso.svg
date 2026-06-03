@@ -1,11 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" role="img" aria-label="Proceso de limpieza">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-<stop offset="0" stop-color="#0A1628"/><stop offset="1" stop-color="#13315C"/></linearGradient></defs>
-<rect width="800" height="520" fill="url(#g)"/>
-<rect x="18" y="18" width="764" height="484" rx="18" fill="none" stroke="#C9A84C" stroke-width="2" opacity=".6"/>
-<circle cx="400" cy="200" r="74" fill="none" stroke="#C9A84C" stroke-width="4"/>
-<text x="400" y="226" font-family="Georgia,serif" font-size="62" font-weight="700" text-anchor="middle" fill="#C9A84C">NN</text>
-<text x="400" y="330" font-family="Georgia,serif" font-size="40" font-weight="700" text-anchor="middle" fill="#FdF6E9">Nano Nex</text>
-<text x="400" y="372" font-family="Arial,sans-serif" font-size="22" text-anchor="middle" fill="#C9A84C" letter-spacing="1">Proceso de limpieza</text>
-<text x="400" y="412" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" fill="#FdF6E9" opacity=".75">Hollín · humo · desodorización con ozono</text>
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#0A1628"/><stop offset="1" stop-color="#13315C"/></linearGradient>
+<radialGradient id="glow" cx="50%" cy="38%" r="50%">
+<stop offset="0" stop-color="#C9A84C" stop-opacity=".35"/><stop offset="1" stop-color="#C9A84C" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="800" height="520" fill="url(#bg)"/>
+<rect width="800" height="520" fill="url(#glow)"/>
+<g fill="#C9A84C" opacity=".18">
+<circle cx="90" cy="80" r="5"/><circle cx="720" cy="120" r="7"/><circle cx="680" cy="430" r="5"/>
+<circle cx="130" cy="420" r="6"/><circle cx="400" cy="60" r="4"/></g>
+<circle cx="400" cy="210" r="118" fill="#C9A84C" opacity=".10"/>
+<circle cx="400" cy="210" r="118" fill="none" stroke="#C9A84C" stroke-width="2" opacity=".5"/>
+<g><path d="M400 120 C446 182 470 212 470 250 a70 70 0 1 1 -140 0 c0 -38 24 -68 70 -130 z" fill="#C9A84C"/><ellipse cx="378" cy="250" rx="14" ry="20" fill="#FdF6E9" opacity=".55"/></g>
+<text x="400" y="392" font-family="Georgia,serif" font-size="34" font-weight="700" text-anchor="middle" fill="#FdF6E9">Proceso de limpieza</text>
+<text x="400" y="426" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" fill="#C9A84C" opacity=".9">Hollín · humo · ozono</text>
+<text x="400" y="486" font-family="Georgia,serif" font-size="18" font-weight="700" text-anchor="middle" fill="#FdF6E9" opacity=".55">Nano Nex</text>
 </svg>

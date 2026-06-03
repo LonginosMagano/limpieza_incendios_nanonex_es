@@ -710,6 +710,35 @@ CONTENIDO_CSS = """/* Estilos para el contenido importado de WordPress y página
   box-shadow:0 10px 40px rgba(0,0,0,.35);max-width:780px;margin:0 auto;flex-wrap:wrap;justify-content:center}
 .cookie-banner p{margin:0;font-size:.9rem}.cookie-banner a{color:var(--color-gold)}
 .cookie-banner .btn{padding:9px 20px;font-size:.9rem}
+.cookie-banner[hidden]{display:none!important}   /* el atributo hidden ahora SÍ oculta */
+/* ===== Pulido visual general (mantiene paleta y arquitectura) ===== */
+.btn-primary{background:linear-gradient(135deg,#d8b85a,#b8923a);border:none;
+  box-shadow:0 8px 22px rgba(201,168,76,.32);transition:transform .2s,box-shadow .2s}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(201,168,76,.45)}
+.servicio-card,.proceso-item,.testimonio-card,.blog-card{transition:transform .25s,box-shadow .25s}
+.servicio-card:hover,.proceso-item:hover,.testimonio-card:hover{
+  transform:translateY(-6px);box-shadow:0 16px 40px rgba(10,22,40,.18)}
+.servicio-card .icon{transition:transform .25s}.servicio-card:hover .icon{transform:scale(1.15)}
+.proceso-icon{box-shadow:0 6px 18px rgba(201,168,76,.35)}
+.section-title{position:relative}
+/* Contenido WP: que no quede tan plano */
+.contenido-wp article{box-shadow:0 14px 44px rgba(10,22,40,.10)}
+.contenido-wp article h2{position:relative;margin-top:1.6em}
+.contenido-wp article h3{color:var(--color-light-dark-green);border-left:4px solid var(--color-gold);
+  padding-left:.55em;margin-top:1.5em}
+.contenido-wp article a:not(.btn){background:linear-gradient(transparent 60%,rgba(201,168,76,.28) 0);
+  padding:0 2px;transition:background .2s,color .2s}
+.contenido-wp article a:not(.btn):hover{color:#b8923a;background:rgba(201,168,76,.25)}
+.contenido-wp article ul li{margin:.35em 0}
+.contenido-wp article blockquote{border-left:4px solid var(--color-gold);background:#faf6ec;
+  margin:1.4em 0;padding:14px 22px;border-radius:0 10px 10px 0;font-style:italic;color:#5a4a25}
+/* Hero con más fuerza */
+.hero-overlay{background:linear-gradient(160deg,rgba(10,22,40,.86),rgba(19,49,92,.72))!important}
+.badge-urgencia{box-shadow:0 6px 18px rgba(201,168,76,.4);animation:pulse 2.2s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+/* Imágenes de sección con marco y sombra */
+.equipo-image img,.proceso-image img,.before-after-image img{border-radius:16px;
+  box-shadow:0 18px 50px rgba(10,22,40,.28);border:1px solid rgba(201,168,76,.35)}
 /* Mejora estética del formulario de contacto */
 .contacto{background:linear-gradient(160deg,#0A1628 0%,#13315C 100%)}
 .contact-form{border-top:4px solid var(--color-gold);box-shadow:0 18px 50px rgba(0,0,0,.35)}
@@ -740,24 +769,43 @@ CONTENIDO_CSS = """/* Estilos para el contenido importado de WordPress y página
 }
 """
 
-def _placeholder_svg(label, sub):
-    """Imagen propia (sin logo de terceros) con la identidad Nano Nex."""
+def _ilustracion_svg(label, sub, icono):
+    """Ilustración temática propia (sin logos de terceros), con la paleta Nano Nex."""
     return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" role="img" aria-label="{html.escape(label)}">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-<stop offset="0" stop-color="#0A1628"/><stop offset="1" stop-color="#13315C"/></linearGradient></defs>
-<rect width="800" height="520" fill="url(#g)"/>
-<rect x="18" y="18" width="764" height="484" rx="18" fill="none" stroke="#C9A84C" stroke-width="2" opacity=".6"/>
-<circle cx="400" cy="200" r="74" fill="none" stroke="#C9A84C" stroke-width="4"/>
-<text x="400" y="226" font-family="Georgia,serif" font-size="62" font-weight="700" text-anchor="middle" fill="#C9A84C">NN</text>
-<text x="400" y="330" font-family="Georgia,serif" font-size="40" font-weight="700" text-anchor="middle" fill="#FdF6E9">Nano Nex</text>
-<text x="400" y="372" font-family="Arial,sans-serif" font-size="22" text-anchor="middle" fill="#C9A84C" letter-spacing="1">{html.escape(label)}</text>
-<text x="400" y="412" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" fill="#FdF6E9" opacity=".75">{html.escape(sub)}</text>
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#0A1628"/><stop offset="1" stop-color="#13315C"/></linearGradient>
+<radialGradient id="glow" cx="50%" cy="38%" r="50%">
+<stop offset="0" stop-color="#C9A84C" stop-opacity=".35"/><stop offset="1" stop-color="#C9A84C" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="800" height="520" fill="url(#bg)"/>
+<rect width="800" height="520" fill="url(#glow)"/>
+<g fill="#C9A84C" opacity=".18">
+<circle cx="90" cy="80" r="5"/><circle cx="720" cy="120" r="7"/><circle cx="680" cy="430" r="5"/>
+<circle cx="130" cy="420" r="6"/><circle cx="400" cy="60" r="4"/></g>
+<circle cx="400" cy="210" r="118" fill="#C9A84C" opacity=".10"/>
+<circle cx="400" cy="210" r="118" fill="none" stroke="#C9A84C" stroke-width="2" opacity=".5"/>
+{icono}
+<text x="400" y="392" font-family="Georgia,serif" font-size="34" font-weight="700" text-anchor="middle" fill="#FdF6E9">{html.escape(label)}</text>
+<text x="400" y="426" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" fill="#C9A84C" opacity=".9">{html.escape(sub)}</text>
+<text x="400" y="486" font-family="Georgia,serif" font-size="18" font-weight="700" text-anchor="middle" fill="#FdF6E9" opacity=".55">Nano Nex</text>
 </svg>"""
 
+_ICONO_EQUIPO = ('<g><circle cx="400" cy="158" r="36" fill="#C9A84C"/>'
+                 '<path d="M344 268 a56 56 0 0 1 112 0 z" fill="#C9A84C"/>'
+                 '<rect x="372" y="120" width="56" height="20" rx="10" fill="#FdF6E9" opacity=".85"/></g>')
+_ICONO_PROCESO = ('<g><path d="M400 120 C446 182 470 212 470 250 a70 70 0 1 1 -140 0 '
+                  'c0 -38 24 -68 70 -130 z" fill="#C9A84C"/>'
+                  '<ellipse cx="378" cy="250" rx="14" ry="20" fill="#FdF6E9" opacity=".55"/></g>')
+_ICONO_RESULTADO = ('<g><path d="M400 118 L420 192 L496 212 L420 232 L400 306 L380 232 '
+                    'L304 212 L380 192 Z" fill="#C9A84C"/>'
+                    '<path d="M300 150 l8 26 26 8 -26 8 -8 26 -8 -26 -26 -8 26 -8 z" fill="#FdF6E9" opacity=".7"/>'
+                    '<path d="M510 250 l6 18 18 6 -18 6 -6 18 -6 -18 -18 -6 18 -6 z" fill="#FdF6E9" opacity=".6"/></g>')
+
 PLACEHOLDERS = {
-    "equipo.svg":    ("Equipo profesional", "Técnicos especializados en limpieza post incendio"),
-    "proceso.svg":   ("Proceso de limpieza", "Hollín · humo · desodorización con ozono"),
-    "resultado.svg": ("Resultado final", "Espacios limpios y libres de olores"),
+    "equipo.svg":    ("Equipo experto", "Técnicos especializados 24/7", _ICONO_EQUIPO),
+    "proceso.svg":   ("Proceso de limpieza", "Hollín · humo · ozono", _ICONO_PROCESO),
+    "resultado.svg": ("Resultado impecable", "Espacios limpios y sin olores", _ICONO_RESULTADO),
 }
 
 FAVICON_SVG = (
@@ -824,9 +872,9 @@ def copiar_assets():
         ruta_v = os.path.join(destino_img, viejo)
         if os.path.exists(ruta_v):
             os.remove(ruta_v)
-    for nombre, (lab, sub) in PLACEHOLDERS.items():
+    for nombre, (lab, sub, icono) in PLACEHOLDERS.items():
         with open(os.path.join(destino_img, nombre), "w", encoding="utf-8") as f:
-            f.write(_placeholder_svg(lab, sub))
+            f.write(_ilustracion_svg(lab, sub, icono))
 
 def generar_extras():
     """robots.txt (con bots de IA), llms.txt, 404.html y .htaccess."""
