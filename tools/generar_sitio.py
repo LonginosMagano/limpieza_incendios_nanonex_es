@@ -197,6 +197,18 @@ def solo_limpieza(htmltxt):
         return seg
     return re.sub(r'>([^<]+)<', lambda m: '>' + _txt(m.group(1)) + '<', htmltxt)
 
+def quitar_formularios(htmltxt):
+    """Elimina formularios antiguos importados de WordPress (Divi/HTML) para que
+    solo quede el formulario propio 'Nosotros te llamamos'."""
+    htmltxt = re.sub(r'<form\b[^>]*>.*?</form>', '', htmltxt, flags=re.S | re.I)
+    # campos sueltos fuera de <form> (Divi a veces deja inputs huérfanos)
+    htmltxt = re.sub(r'<(input|textarea|select)\b[^>]*?>(.*?</\1>)?', '', htmltxt, flags=re.S | re.I)
+    htmltxt = re.sub(r'<button\b[^>]*>.*?</button>', '', htmltxt, flags=re.S | re.I)
+    # heading "¿Necesitas una limpieza...?" que quedaba sobre el form viejo
+    htmltxt = re.sub(r'<h[1-6][^>]*>\s*¿?Necesitas una limpieza de Incendios\??\s*</h[1-6]>',
+                     '', htmltxt, flags=re.I)
+    return htmltxt
+
 def convertir(contenido):
     if not contenido:
         return ""
@@ -204,7 +216,7 @@ def convertir(contenido):
         html_out = extraer_divi(contenido)
     else:
         html_out = texto_a_parrafos(limpiar_gutenberg(contenido))
-    return solo_limpieza(html_out)
+    return solo_limpieza(quitar_formularios(html_out))
 
 # ============================================================================
 #  Localización de imágenes (URLs en vivo -> archivos locales subidos)
