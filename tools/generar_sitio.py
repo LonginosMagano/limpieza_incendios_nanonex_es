@@ -418,6 +418,7 @@ def plantilla(titulo, descripcion, canonical, cuerpo, ruta_actual,
 <link href="{fuentes}" rel="stylesheet">
 <link rel="stylesheet" href="{pf}assets/css/style.css">
 <link rel="stylesheet" href="{pf}assets/css/contenido.css">
+<noscript><style>.reveal{{opacity:1!important;transform:none!important}}</style></noscript>
 </head>
 <body>
 {_cabecera(pf, activo)}
@@ -511,7 +512,7 @@ def secciones_landing(h1, intro, contenido_real, ciudades, pf, ciudad=None):
     <div class="ornament"></div>
     <p class="section-subtitle">Dejamos tu vivienda o local libre de {termino}, hollín y olores.</p>
     <div class="before-after-content">
-      <div class="before-after-image"><img src="{pf}assets/img/resultado.webp" alt="{html.escape(alt_base)}: resultado de la limpieza" loading="lazy"></div>
+      <div class="before-after-image"><img src="{pf}assets/img/resultado.svg" alt="{html.escape(alt_base)}: resultado de la limpieza" loading="lazy"></div>
       <div class="before-after-checklist">
         <h3>Nuestro Compromiso:</h3>
         <ul>
@@ -538,7 +539,7 @@ def secciones_landing(h1, intro, contenido_real, ciudades, pf, ciudad=None):
       <div class="proceso-item reveal"><div class="proceso-icon">3</div><h3>Limpieza y Desodorización</h3><p>Técnicas avanzadas para eliminar hollín, humo y olores.</p></div>
       <div class="proceso-item reveal"><div class="proceso-icon">4</div><h3>Descontaminación Final</h3><p>Saneamiento y entrega de un espacio limpio y listo para usar.</p></div>
     </div>
-    <div class="proceso-image"><img src="{pf}assets/img/proceso.webp" alt="{html.escape(alt_base)}: proceso de limpieza" loading="lazy"></div>
+    <div class="proceso-image"><img src="{pf}assets/img/proceso.svg" alt="{html.escape(alt_base)}: proceso de limpieza" loading="lazy"></div>
   </div>
 </section>
 
@@ -548,7 +549,7 @@ def secciones_landing(h1, intro, contenido_real, ciudades, pf, ciudad=None):
     <div class="ornament"></div>
     <p class="section-subtitle">Profesionales cualificados y comprometidos con tu tranquilidad.</p>
     <div class="equipo-content">
-      <div class="equipo-image"><img src="{pf}assets/img/equipo.webp" alt="{html.escape(alt_base)}: equipo profesional" loading="lazy"></div>
+      <div class="equipo-image"><img src="{pf}assets/img/equipo.svg" alt="{html.escape(alt_base)}: equipo profesional" loading="lazy"></div>
       <div class="equipo-metrics">
         <div class="metric-item"><span class="metric-number" data-counter="20">0</span>+<p>Especialistas</p></div>
         <div class="metric-item"><span class="metric-number" data-counter="100">0</span>%<p>Formación Continua</p></div>
@@ -704,6 +705,26 @@ CONTENIDO_CSS = """/* Estilos para el contenido importado de WordPress y página
 }
 """
 
+def _placeholder_svg(label, sub):
+    """Imagen propia (sin logo de terceros) con la identidad Nano Nex."""
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" role="img" aria-label="{html.escape(label)}">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#0A1628"/><stop offset="1" stop-color="#13315C"/></linearGradient></defs>
+<rect width="800" height="520" fill="url(#g)"/>
+<rect x="18" y="18" width="764" height="484" rx="18" fill="none" stroke="#C9A84C" stroke-width="2" opacity=".6"/>
+<circle cx="400" cy="200" r="74" fill="none" stroke="#C9A84C" stroke-width="4"/>
+<text x="400" y="226" font-family="Georgia,serif" font-size="62" font-weight="700" text-anchor="middle" fill="#C9A84C">NN</text>
+<text x="400" y="330" font-family="Georgia,serif" font-size="40" font-weight="700" text-anchor="middle" fill="#FdF6E9">Nano Nex</text>
+<text x="400" y="372" font-family="Arial,sans-serif" font-size="22" text-anchor="middle" fill="#C9A84C" letter-spacing="1">{html.escape(label)}</text>
+<text x="400" y="412" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" fill="#FdF6E9" opacity=".75">{html.escape(sub)}</text>
+</svg>"""
+
+PLACEHOLDERS = {
+    "equipo.svg":    ("Equipo profesional", "Técnicos especializados en limpieza post incendio"),
+    "proceso.svg":   ("Proceso de limpieza", "Hollín · humo · desodorización con ozono"),
+    "resultado.svg": ("Resultado final", "Espacios limpios y libres de olores"),
+}
+
 FAVICON_SVG = (
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">'
     '<rect width="64" height="64" rx="12" fill="#0A1628"/>'
@@ -721,16 +742,24 @@ MAIN_JS = """document.addEventListener("DOMContentLoaded",()=>{
   });
   // Año dinámico
   const y=document.getElementById("currentYear");if(y)y.textContent=new Date().getFullYear();
-  // Reveal al hacer scroll
-  const io=new IntersectionObserver((es,o)=>{es.forEach(en=>{if(en.isIntersecting){en.target.classList.add("active");o.unobserve(en.target);}});},{threshold:.1});
-  document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+  // Reveal al hacer scroll (umbral 0: aparece en cuanto entra, también en textos largos)
+  const reveals=document.querySelectorAll(".reveal");
+  const io=new IntersectionObserver((es,o)=>{es.forEach(en=>{if(en.isIntersecting){en.target.classList.add("active");o.unobserve(en.target);}});},{threshold:0,rootMargin:"0px 0px -40px 0px"});
+  reveals.forEach(el=>io.observe(el));
+  // Salvaguarda: a los 2.5s revela cualquier bloque que siga oculto
+  setTimeout(()=>reveals.forEach(el=>el.classList.add("active")),2500);
   // Contadores
-  const cw=new IntersectionObserver((es)=>{es.forEach(en=>{if(en.isIntersecting){en.target.querySelectorAll(".stat-number,.metric-number").forEach(c=>{const t=parseInt(c.getAttribute("data-counter"));let v=0;const inc=t/120;const up=()=>{if(v<t){v+=inc;c.textContent=Math.ceil(v);requestAnimationFrame(up);}else c.textContent=t;};up();});cw.unobserve(en.target);}});},{threshold:.6});
+  const cw=new IntersectionObserver((es)=>{es.forEach(en=>{if(en.isIntersecting){en.target.querySelectorAll(".stat-number,.metric-number").forEach(c=>{const t=parseInt(c.getAttribute("data-counter"));let v=0;const inc=t/120;const up=()=>{if(v<t){v+=inc;c.textContent=Math.ceil(v);requestAnimationFrame(up);}else c.textContent=t;};up();});cw.unobserve(en.target);}});},{threshold:.4});
   document.querySelectorAll(".stats,.equipo-metrics").forEach(s=>cw.observe(s));
-  // Banner de cookies
+  // Banner de cookies: aparece si no se ha aceptado y se oculta al aceptar o al hacer scroll
   const cb=document.getElementById("cookie-banner");
-  if(cb&&!localStorage.getItem("cookies-ok")){cb.hidden=false;
-    const ok=document.getElementById("cookie-ok");if(ok)ok.addEventListener("click",()=>{localStorage.setItem("cookies-ok","1");cb.hidden=true;});}
+  if(cb&&!localStorage.getItem("cookies-ok")){
+    cb.hidden=false;
+    const cerrar=()=>{localStorage.setItem("cookies-ok","1");cb.hidden=true;window.removeEventListener("scroll",onScroll);};
+    const ok=document.getElementById("cookie-ok");if(ok)ok.addEventListener("click",cerrar);
+    const onScroll=()=>{if(window.scrollY>120)cerrar();};
+    window.addEventListener("scroll",onScroll,{passive:true});
+  }
   // El formulario usa FormSubmit (POST nativo): no se intercepta.
 });
 """
@@ -753,6 +782,16 @@ def copiar_assets():
         f.write(MAIN_JS)
     with open(os.path.join(SALIDA, "assets", "favicon.svg"), "w", encoding="utf-8") as f:
         f.write(FAVICON_SVG)
+    # Imágenes propias (sustituyen a las fotos de plantilla con logos de terceros)
+    destino_img = os.path.join(SALIDA, "assets", "img")
+    os.makedirs(destino_img, exist_ok=True)
+    for viejo in ("equipo.webp", "proceso.webp", "resultado.webp"):
+        ruta_v = os.path.join(destino_img, viejo)
+        if os.path.exists(ruta_v):
+            os.remove(ruta_v)
+    for nombre, (lab, sub) in PLACEHOLDERS.items():
+        with open(os.path.join(destino_img, nombre), "w", encoding="utf-8") as f:
+            f.write(_placeholder_svg(lab, sub))
 
 def generar_extras():
     """robots.txt (con bots de IA), llms.txt, 404.html y .htaccess."""
