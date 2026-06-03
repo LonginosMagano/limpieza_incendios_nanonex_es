@@ -601,16 +601,18 @@ def seccion_contacto(pf, ciudad=None):
       </div>
       <div class="contact-form">
         <h3>Te llamamos gratis</h3>
+        <p class="form-lead">Rellena estos 3 datos y te llamamos en menos de 24 h.</p>
         <form id="contactForm" action="https://formsubmit.co/{EMAIL}" method="POST">
           <input type="hidden" name="_subject" value="Nueva solicitud · {KEYWORD} ({html.escape(lugar)})">
           <input type="hidden" name="Origen" value="{DOMINIO} · {html.escape(lugar)}">
           <input type="hidden" name="_captcha" value="false">
           <input type="hidden" name="_template" value="table">
           <input type="text" name="_honey" style="display:none">
-          <div class="form-group"><label for="name">Nombre:</label><input type="text" id="name" name="Nombre" required></div>
-          <div class="form-group"><label for="phone">Teléfono:</label><input type="tel" id="phone" name="Telefono" required></div>
-          <div class="form-group"><label for="city">Población:</label><input type="text" id="city" name="Poblacion" value="{html.escape(ciudad or '')}" required></div>
-          <button type="submit" class="btn btn-primary">Quiero que me llaméis</button>
+          <div class="form-group"><label for="name">Nombre</label><input type="text" id="name" name="Nombre" placeholder="Tu nombre" autocomplete="name" required></div>
+          <div class="form-group"><label for="phone">Teléfono</label><input type="tel" id="phone" name="Telefono" placeholder="Ej. 600 123 456" autocomplete="tel" inputmode="tel" required></div>
+          <div class="form-group"><label for="city">Población</label><input type="text" id="city" name="Poblacion" placeholder="Tu población" value="{html.escape(ciudad or '')}" autocomplete="address-level2" required></div>
+          <button type="submit" class="btn btn-primary">📞 Quiero que me llaméis</button>
+          <p class="form-foot">🔒 Sin compromiso. Al enviar aceptas nuestra <a href="{rel('/politica-de-privacidad/', pf)}">política de privacidad</a>.</p>
           <div id="formMessage" class="form-message"></div>
         </form>
       </div>
@@ -696,12 +698,33 @@ CONTENIDO_CSS = """/* Estilos para el contenido importado de WordPress y página
   box-shadow:0 10px 40px rgba(0,0,0,.35);max-width:780px;margin:0 auto;flex-wrap:wrap;justify-content:center}
 .cookie-banner p{margin:0;font-size:.9rem}.cookie-banner a{color:var(--color-gold)}
 .cookie-banner .btn{padding:9px 20px;font-size:.9rem}
+/* Mejora estética del formulario de contacto */
+.contacto{background:linear-gradient(160deg,#0A1628 0%,#13315C 100%)}
+.contact-form{border-top:4px solid var(--color-gold);box-shadow:0 18px 50px rgba(0,0,0,.35)}
+.contact-info{box-shadow:0 18px 50px rgba(0,0,0,.25)}
+.contact-form .form-lead{color:var(--color-cream);opacity:.85;margin:-10px 0 22px;font-size:.95rem}
+.form-group{margin-bottom:16px}
+.form-group label{font-size:.78rem;letter-spacing:.4px;text-transform:uppercase;opacity:.9;margin-bottom:6px}
+.form-group input{padding:14px 16px;border-radius:10px;border:1px solid rgba(201,168,76,.45);
+  background:rgba(255,255,255,.06);color:var(--color-cream);transition:border-color .2s,box-shadow .2s,background .2s}
+.form-group input::placeholder{color:rgba(253,246,233,.45)}
+.form-group input:focus{border-color:var(--color-gold);background:rgba(255,255,255,.1);
+  box-shadow:0 0 0 3px rgba(201,168,76,.22)}
+.contact-form .btn-primary{border-radius:50px;margin-top:6px;letter-spacing:.3px;
+  box-shadow:0 8px 24px rgba(201,168,76,.35)}
+.contact-form .form-foot{font-size:.78rem;opacity:.7;text-align:center;margin:14px 0 0}
+.contact-form .form-foot a{color:var(--color-gold)}
 @media(max-width:768px){
   .page-hero h1{font-size:1.8rem}.contenido-wp article{padding:26px 20px}
   .float-btns{display:none}
   .mobile-cta-bar{display:flex}
-  body{padding-bottom:54px}
+  body{padding-bottom:58px}
   .topbar-hor{display:none}
+  .topbar .container{justify-content:center;font-size:.8rem}
+  /* El banner de cookies no se monta sobre la barra inferior */
+  .cookie-banner{bottom:66px;left:8px;right:8px;padding:11px 14px;gap:10px}
+  .cookie-banner p{font-size:.82rem}
+  .contact-info,.contact-form{padding:26px 22px;min-width:0}
 }
 """
 
@@ -757,7 +780,7 @@ MAIN_JS = """document.addEventListener("DOMContentLoaded",()=>{
     cb.hidden=false;
     const cerrar=()=>{localStorage.setItem("cookies-ok","1");cb.hidden=true;window.removeEventListener("scroll",onScroll);};
     const ok=document.getElementById("cookie-ok");if(ok)ok.addEventListener("click",cerrar);
-    const onScroll=()=>{if(window.scrollY>120)cerrar();};
+    const onScroll=()=>{if(window.scrollY>60)cerrar();};
     window.addEventListener("scroll",onScroll,{passive:true});
   }
   // El formulario usa FormSubmit (POST nativo): no se intercepta.

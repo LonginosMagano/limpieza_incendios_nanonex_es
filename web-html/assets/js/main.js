@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     cb.hidden=false;
     const cerrar=()=>{localStorage.setItem("cookies-ok","1");cb.hidden=true;window.removeEventListener("scroll",onScroll);};
     const ok=document.getElementById("cookie-ok");if(ok)ok.addEventListener("click",cerrar);
-    const onScroll=()=>{if(window.scrollY>120)cerrar();};
+    const onScroll=()=>{if(window.scrollY>60)cerrar();};
     window.addEventListener("scroll",onScroll,{passive:true});
   }
   // El formulario usa FormSubmit (POST nativo): no se intercepta.
