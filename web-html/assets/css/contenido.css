@@ -92,6 +92,34 @@
 /* Imágenes de sección con marco y sombra */
 .equipo-image img,.proceso-image img,.before-after-image img{border-radius:16px;
   box-shadow:0 18px 50px rgba(10,22,40,.28);border:1px solid rgba(201,168,76,.35)}
+/* ===== FAQ (acordeón) ===== */
+.faq{background:var(--color-cream)}
+.faq-list{max-width:840px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq-item{background:#fff;border:1px solid rgba(201,168,76,.35);border-radius:12px;
+  box-shadow:0 6px 20px rgba(10,22,40,.06);overflow:hidden}
+.faq-item summary{cursor:pointer;list-style:none;padding:18px 22px;font-weight:700;
+  color:var(--color-dark-green);font-family:var(--font-playfair);font-size:1.06rem;
+  display:flex;justify-content:space-between;align-items:center;gap:16px}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:"+";color:var(--color-gold);font-size:1.6rem;line-height:1;transition:transform .2s}
+.faq-item[open] summary::after{transform:rotate(45deg)}
+.faq-item .faq-resp{padding:0 22px 18px;color:#444;line-height:1.6}
+.faq-item .faq-resp p{margin:0}
+/* ===== Artículos optimizados para fragmentos destacados ===== */
+.respuesta-rapida{background:#faf6ec;border-left:5px solid var(--color-gold);
+  padding:16px 20px;border-radius:0 12px 12px 0;margin:0 0 1.6em;font-size:1.05rem}
+.respuesta-rapida strong{color:var(--color-dark-green)}
+.contenido-wp article ol{padding-left:1.2em;margin:1em 0}
+.contenido-wp article ol li{margin:.5em 0}
+.tabla-seo{width:100%;border-collapse:collapse;margin:1.4em 0;font-size:.96rem}
+.tabla-seo th,.tabla-seo td{border:1px solid #e3d9bf;padding:10px 14px;text-align:left}
+.tabla-seo th{background:var(--color-dark-green);color:var(--color-cream)}
+.tabla-seo tr:nth-child(even) td{background:#faf6ec}
+.art-cta{background:linear-gradient(160deg,#0A1628,#13315C);color:var(--color-cream);
+  padding:24px;border-radius:14px;margin:2em 0 0;text-align:center}
+.art-cta a.btn{margin-top:10px}
+.blog-card.destacado{border-top-color:var(--color-gold);background:linear-gradient(180deg,#fffdf7,#fff)}
+.blog-card.destacado .blog-fecha{color:#b8923a}
 /* Mejora estética del formulario de contacto */
 .contacto{background:linear-gradient(160deg,#0A1628 0%,#13315C 100%)}
 .contact-form{border-top:4px solid var(--color-gold);box-shadow:0 18px 50px rgba(0,0,0,.35)}

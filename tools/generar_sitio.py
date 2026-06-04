@@ -8,7 +8,7 @@ y los metadatos SEO de Yoast/RankMath. Genera sitemap.xml y robots.txt.
 Uso:
     python3 tools/generar_sitio.py
 """
-import os, re, html, sys, glob
+import os, re, html, sys, glob, json
 from xml.etree import ElementTree as ET
 from datetime import datetime
 
@@ -594,6 +594,8 @@ def secciones_landing(h1, intro, contenido_real, ciudades, pf, ciudad=None):
   </div>
 </section>
 
+{bloque_faq(faqs_landing(ciudad), ciudad)}
+
 {seccion_contacto(pf, ciudad)}"""
 
 def seccion_contacto(pf, ciudad=None):
@@ -631,6 +633,209 @@ def seccion_contacto(pf, ciudad=None):
     </div>
   </div>
 </section>"""
+
+def faqs_landing(ciudad=None):
+    """Q&A deterministas (mismas para render y schema). Genéricas en home."""
+    lugar = f"en {ciudad}" if ciudad else "en tu población"
+    cap = ciudad or "tu zona"
+    return [
+        (f"¿Cuánto cuesta una limpieza post incendio {lugar}?",
+         f"El precio depende de los metros afectados, el nivel de hollín y los tratamientos "
+         f"necesarios (ozono, hielo seco, etc.). En Nano Nex valoramos cada caso {lugar} y damos "
+         f"un presupuesto cerrado y sin compromiso tras una inspección gratuita."),
+        (f"¿Cuánto tarda la limpieza tras un incendio?",
+         f"Una vivienda pequeña puede quedar lista en 1-3 días; locales o daños severos requieren "
+         f"más tiempo. Trabajamos por fases (desescombro, limpieza de hollín y desodorización) para "
+         f"que recuperes el espacio cuanto antes."),
+        (f"¿Eliminan por completo el olor a humo?",
+         f"Sí. Usamos generadores de ozono y, si hace falta, hielo seco y nebulización, que "
+         f"neutralizan el olor a humo a nivel molecular en paredes, textiles y conductos, no solo "
+         f"lo enmascaran."),
+        (f"¿Trabajáis con seguros de hogar?",
+         f"Sí. Emitimos informes y presupuestos detallados compatibles con tu compañía y te "
+         f"ayudamos con la documentación del parte para que la limpieza {lugar} la cubra tu póliza "
+         f"siempre que sea posible."),
+        (f"¿Atendéis urgencias 24 horas {lugar}?",
+         f"Sí. Disponemos de equipos operativos 24/7 los 365 días. Cuanto antes se actúa, menos se "
+         f"fija el hollín y más material se puede salvar, así que llámanos lo antes posible al "
+         f"{TEL_FMT}."),
+        (f"¿Hacéis obras o reformas además de la limpieza?",
+         f"No. Nano Nex se dedica exclusivamente a la limpieza y descontaminación post incendio "
+         f"(hollín, humo y olores). Dejamos el espacio limpio y saneado, listo para que tú o tu "
+         f"gremio acometáis cualquier reforma posterior."),
+    ]
+
+def bloque_faq(faqs, ciudad=None):
+    lugar = f" en {ciudad}" if ciudad else ""
+    items = "".join(
+        f'<details class="faq-item reveal"><summary>{html.escape(q)}</summary>'
+        f'<div class="faq-resp"><p>{html.escape(a)}</p></div></details>'
+        for q, a in faqs)
+    return f"""<section id="faq" class="faq section-padding">
+  <div class="container">
+    <h2 class="section-title">Preguntas frecuentes{html.escape(lugar)}</h2>
+    <div class="ornament"></div>
+    <p class="section-subtitle">Resolvemos las dudas más habituales sobre la {KEYWORD.lower()}.</p>
+    <div class="faq-list">{items}</div>
+  </div>
+</section>"""
+
+def jsonld(d):
+    return '<script type="application/ld+json">\n' + json.dumps(d, ensure_ascii=False) + '\n</script>'
+
+def schema_faq(faqs):
+    data = {"@context": "https://schema.org", "@type": "FAQPage",
+            "mainEntity": [
+                {"@type": "Question", "name": q,
+                 "acceptedAnswer": {"@type": "Answer", "text": a}}
+                for q, a in faqs]}
+    return jsonld(data)
+
+# --- Artículos cornerstone optimizados para fragmentos destacados ---------------
+ARTICULOS_SEO = [
+ {"ruta": "/blog/que-hacer-despues-de-un-incendio-en-casa/",
+  "titulo": "Qué hacer después de un incendio en casa: guía paso a paso",
+  "desc": "Qué hacer tras un incendio en casa: seguridad, cortar suministros, documentar daños para el seguro y llamar a limpieza profesional. Guía paso a paso.",
+  "fecha": "2026-05-28",
+  "respuesta": "Tras un incendio, prioriza tu seguridad: no entres hasta que los bomberos lo autoricen, corta luz, agua y gas, documenta los daños con fotos para el seguro y contacta cuanto antes con una empresa de limpieza post incendio. Actuar rápido evita que el hollín se fije y dañe más.",
+  "cuerpo": "<h2>Por qué hay que actuar rápido</h2><p>El hollín es ácido y graso: con las horas se incrusta en paredes, muebles y metales, y el olor a humo penetra en textiles y conductos. Cuanto antes se inicie la limpieza, más material se salva y menor es el coste final.</p>",
+  "pasos_titulo": "Qué hacer paso a paso tras el incendio",
+  "pasos": [
+    ("Asegura la zona", "No accedas hasta que los bomberos confirmen que es seguro; la estructura y el humo pueden seguir siendo peligrosos."),
+    ("Corta los suministros", "Desconecta electricidad, gas y agua para evitar nuevos riesgos."),
+    ("Documenta los daños", "Haz fotos y vídeos de todo antes de tocar nada: te servirán para el parte del seguro."),
+    ("Ventila con cuidado", "Abre ventanas si es seguro, pero no frotes el hollín: puede incrustarse aún más."),
+    ("Llama a profesionales", "Contacta con una empresa de limpieza post incendio para frenar el deterioro y planificar la descontaminación."),
+  ],
+  "howto_name": "Qué hacer después de un incendio en casa",
+  "faq": [
+    ("¿Puedo limpiar el hollín yo mismo?", "Pequeñas manchas sí, pero el hollín es ácido y se incrusta; una limpieza inadecuada puede fijarlo y dañar más. Para daños medios o grandes conviene un equipo profesional con ozono y productos específicos."),
+    ("¿Cuándo puedo volver a vivir en casa?", "Depende del alcance. Tras la limpieza, la desodorización y la revisión de instalaciones, la vivienda vuelve a ser habitable. Priorizamos dejar el espacio saneado cuanto antes."),
+  ]},
+ {"ruta": "/blog/como-eliminar-el-olor-a-humo-en-casa/",
+  "titulo": "Cómo eliminar el olor a humo en casa tras un incendio",
+  "desc": "Cómo eliminar el olor a humo en casa: limpiar el hollín, lavar textiles, ventilar y aplicar ozono que neutraliza el olor a nivel molecular. Pasos y FAQ.",
+  "fecha": "2026-05-21",
+  "respuesta": "Para eliminar el olor a humo tras un incendio no basta con ambientadores: hay que limpiar el hollín de todas las superficies, lavar o desechar los textiles, ventilar y aplicar ozono, que neutraliza el olor a nivel molecular. En casos intensos se combina con hielo seco y nebulización.",
+  "cuerpo": "<h2>Por qué vuelve el olor a humo</h2><p>El olor persiste porque el hollín microscópico queda impregnado en paredes, tejidos y conductos de ventilación. Si no se elimina el origen, cualquier ambientador solo lo enmascara unas horas.</p>",
+  "pasos_titulo": "Cómo quitar el olor a humo paso a paso",
+  "pasos": [
+    ("Retira y lava los textiles", "Cortinas, ropa, sofás y alfombras retienen el humo; lávalos o sustitúyelos."),
+    ("Limpia todas las superficies", "Paredes, techos, muebles y rincones: el hollín impregnado emite olor constante."),
+    ("Ventila a fondo", "Abre ventanas y fuerza corrientes de aire durante varios días."),
+    ("Aplica ozono", "Un generador de ozono oxida las moléculas del olor en aire, textiles y conductos."),
+    ("Revisa conductos y huecos ocultos", "El humo se cuela en la climatización y los huecos; trátalos para que el olor no reaparezca."),
+  ],
+  "howto_name": "Cómo eliminar el olor a humo en casa",
+  "faq": [
+    ("¿El ozono es seguro?", "Sí, aplicado por profesionales y con el espacio desalojado durante el tratamiento. Al ventilar, el ozono se reconvierte en oxígeno sin dejar residuos."),
+    ("¿Los ambientadores sirven?", "No. Solo enmascaran el olor temporalmente. Si no se elimina el hollín de origen, el olor a humo vuelve."),
+  ]},
+ {"ruta": "/blog/como-limpiar-el-hollin-de-las-paredes/",
+  "titulo": "Cómo limpiar el hollín de las paredes tras un incendio",
+  "desc": "Cómo limpiar el hollín de las paredes: protección, aspirado en seco, esponja química y limpieza específica. Evita frotar en húmedo, que lo incrusta.",
+  "fecha": "2026-05-14",
+  "respuesta": "Para limpiar el hollín de las paredes: protégete con guantes y mascarilla, aspira en seco sin frotar, pasa una esponja química seca y solo después aplica una limpieza húmeda específica según el material. El hollín es graso y ácido: frotarlo en húmedo de entrada lo extiende e incrusta.",
+  "cuerpo": "<h2>El error más común</h2><p>Mucha gente empieza con agua y bayeta: el hollín graso se emborrona y penetra en la pintura, dejando manchas permanentes. El orden correcto es siempre <strong>seco primero, húmedo después</strong>.</p>",
+  "pasos_titulo": "Cómo limpiar el hollín paso a paso",
+  "pasos": [
+    ("Protégete", "Usa guantes, mascarilla FFP2 y ventila: el hollín es tóxico."),
+    ("Aspira en seco", "Con aspirador de filtro HEPA y boquilla, sin tocar la pared, retira el hollín suelto."),
+    ("Pasa una esponja química seca", "La 'chemical sponge' en seco arrastra el hollín sin extenderlo."),
+    ("Limpieza húmeda específica", "Solo después, con un desengrasante adecuado al material, limpia de arriba abajo."),
+    ("Desodoriza", "Aplica ozono para eliminar el olor residual incrustado."),
+  ],
+  "howto_name": "Cómo limpiar el hollín de las paredes",
+  "faq": [
+    ("¿Sirve agua y jabón normal?", "Para hollín muy ligero puede ayudar tras el aspirado en seco, pero el hollín graso necesita desengrasantes específicos. Mal hecho, mancha la pintura de forma permanente."),
+    ("¿Hay que repintar?", "A veces sí, si el hollín ha penetrado. Nosotros dejamos la pared limpia y saneada; el repintado, si lo deseas, es un paso posterior."),
+  ]},
+ {"ruta": "/blog/limpieza-post-incendio-y-seguro-de-hogar/",
+  "titulo": "Limpieza post incendio y seguro de hogar: cómo reclamar paso a paso",
+  "desc": "¿El seguro de hogar cubre la limpieza post incendio? Sí, en la mayoría de casos. Cómo reclamar: plazos, documentación y presupuesto para el perito.",
+  "fecha": "2026-05-07",
+  "respuesta": "La mayoría de seguros de hogar cubren la limpieza y descontaminación tras un incendio. Para reclamar: comunica el siniestro a tu compañía en las primeras 72 horas, documenta los daños con fotos, guarda las facturas y pide un presupuesto detallado a una empresa especializada que el perito pueda validar.",
+  "cuerpo": "<h2>¿Qué suele cubrir el seguro?</h2><ul><li>Limpieza de hollín y humo en continente y contenido.</li><li>Desodorización (ozono) y saneamiento.</li><li>Daños a mobiliario y enseres.</li><li>En algunas pólizas, alojamiento temporal.</li></ul><p>Revisa siempre las condiciones de tu póliza, ya que las coberturas varían entre compañías.</p>",
+  "pasos_titulo": "Cómo reclamar a tu seguro paso a paso",
+  "pasos": [
+    ("Comunica el siniestro", "Avisa a tu aseguradora cuanto antes (suele haber 7 días; idealmente en 72 horas)."),
+    ("Documenta todo", "Fotos y vídeos de los daños y enseres antes de limpiar; conserva los objetos dañados si es posible."),
+    ("Pide presupuesto profesional", "Solicita a una empresa de limpieza post incendio un presupuesto detallado para el perito."),
+    ("Coordina con el perito", "La empresa puede atender la visita del perito y justificar cada partida."),
+    ("Guarda las facturas", "Conserva todos los justificantes para el reembolso."),
+  ],
+  "howto_name": "Cómo reclamar la limpieza post incendio a tu seguro",
+  "faq": [
+    ("¿El seguro paga la limpieza con ozono?", "Generalmente sí, si forma parte de la descontaminación necesaria. Un presupuesto detallado ayuda a que el perito lo apruebe."),
+    ("¿Puedo elegir la empresa de limpieza?", "Sí. Tienes derecho a elegir empresa; muchas aseguradoras lo aceptan con un presupuesto justificado. Nosotros preparamos la documentación."),
+    ("¿Y si el incendio fue por negligencia?", "Consulta tu póliza; muchas cubren igualmente, aunque con matices. Documentar bien el siniestro es clave."),
+  ]},
+ {"ruta": "/blog/cuanto-cuesta-una-limpieza-post-incendio/",
+  "titulo": "Cuánto cuesta una limpieza post incendio",
+  "desc": "Cuánto cuesta una limpieza post incendio: factores, precios orientativos por nivel de daño y cómo pedir presupuesto gratuito. Suele cubrirlo el seguro.",
+  "fecha": "2026-04-30",
+  "respuesta": "El precio de una limpieza post incendio depende de los metros afectados, el nivel de hollín y los tratamientos necesarios. De forma orientativa va desde unos cientos de euros en daños leves hasta varios miles en siniestros graves. Lo correcto es una inspección previa y un presupuesto cerrado y gratuito.",
+  "cuerpo": "<h2>Factores que influyen en el precio</h2><ul><li>Metros cuadrados y número de estancias afectadas.</li><li>Nivel de hollín e intensidad del olor a humo.</li><li>Tratamientos necesarios: ozono, hielo seco, nebulización.</li><li>Retirada de escombros y enseres dañados.</li></ul><h2>Precios orientativos por nivel de daño</h2><table class=\"tabla-seo\"><thead><tr><th>Nivel</th><th>Situación típica</th><th>Tratamientos</th><th>Orientación*</th></tr></thead><tbody><tr><td>Leve</td><td>Conato en una estancia, hollín ligero</td><td>Limpieza + ozono</td><td>desde ~300-600 €</td></tr><tr><td>Medio</td><td>Varias estancias, humo extendido</td><td>Limpieza profunda + ozono + textiles</td><td>~600-2.000 €</td></tr><tr><td>Grave</td><td>Vivienda o local completo, daños severos</td><td>Desescombro + limpieza + hielo seco + ozono</td><td>desde 2.000 €</td></tr></tbody></table><p>*Cifras orientativas. El precio real se fija tras una inspección gratuita, y en la mayoría de casos lo cubre el seguro de hogar.</p>",
+  "faq": [
+    ("¿El presupuesto es gratis?", "Sí. Inspeccionamos el daño y te damos un presupuesto cerrado y sin compromiso."),
+    ("¿Lo cubre el seguro?", "En la mayoría de casos sí. Te entregamos un presupuesto detallado válido para el perito."),
+    ("¿Cobráis el desplazamiento para valorar?", "La valoración inicial es gratuita dentro de nuestra zona de servicio."),
+  ]},
+ {"ruta": "/blog/limpieza-con-ozono-tras-un-incendio/",
+  "titulo": "Limpieza con ozono tras un incendio: qué es y cómo funciona",
+  "desc": "Qué es la limpieza con ozono tras un incendio y cómo elimina el olor a humo a nivel molecular. Cómo es el tratamiento paso a paso y preguntas frecuentes.",
+  "fecha": "2026-04-23",
+  "respuesta": "La limpieza con ozono usa un generador que libera ozono (O₃), un gas que oxida y destruye las moléculas responsables del olor a humo en el aire, los textiles y los conductos. No enmascara: elimina el olor de raíz. Se realiza con el espacio desalojado y, al ventilar, el ozono vuelve a ser oxígeno.",
+  "cuerpo": "<h2>¿Qué es el ozono y por qué funciona?</h2><p>El ozono (O₃) es oxígeno con un átomo extra, muy reactivo. Al entrar en contacto con las partículas de humo y los microorganismos, los oxida y los destruye, eliminando el olor en lugar de taparlo.</p><h2>Cuándo se usa</h2><p>Es el paso final tras retirar el hollín: complementa la limpieza, no la sustituye. Es ideal para olores incrustados en textiles, colchones y conductos de ventilación.</p>",
+  "pasos_titulo": "Cómo es el tratamiento de ozono",
+  "pasos": [
+    ("Limpieza previa", "Primero se retira el hollín; el ozono complementa, no sustituye, la limpieza."),
+    ("Sellado del espacio", "Se cierra la estancia para concentrar el ozono."),
+    ("Generación de ozono", "El equipo libera ozono durante el tiempo calculado según el volumen."),
+    ("Tiempo de actuación", "El ozono penetra en textiles, conductos y rincones neutralizando el olor."),
+    ("Ventilación", "Se ventila hasta que el ozono se reconvierte en oxígeno y el espacio es seguro."),
+  ],
+  "howto_name": "Cómo es la limpieza con ozono tras un incendio",
+  "faq": [
+    ("¿Cuánto dura el tratamiento de ozono?", "Según el volumen y la intensidad del olor, de unas horas a varios ciclos. Tras ventilar, el espacio queda listo."),
+    ("¿Es seguro para mascotas y plantas?", "Durante el tratamiento el espacio debe estar desalojado (personas, animales y plantas). Después de ventilar no queda ningún residuo."),
+  ]},
+]
+
+def cuerpo_articulo_seo(a, pf):
+    out = [f'<p class="respuesta-rapida"><strong>Respuesta rápida:</strong> {html.escape(a["respuesta"])}</p>']
+    out.append(a["cuerpo"])
+    if a.get("pasos"):
+        out.append(f'<h2>{html.escape(a.get("pasos_titulo", "Paso a paso"))}</h2><ol>')
+        for n, t in a["pasos"]:
+            out.append(f'<li><strong>{html.escape(n)}.</strong> {html.escape(t)}</li>')
+        out.append('</ol>')
+    if a.get("faq"):
+        out.append('<h2>Preguntas frecuentes</h2><div class="faq-list">')
+        for q, ans in a["faq"]:
+            out.append(f'<details class="faq-item"><summary>{html.escape(q)}</summary>'
+                       f'<div class="faq-resp"><p>{html.escape(ans)}</p></div></details>')
+        out.append('</div>')
+    out.append(f'<div class="art-cta"><p><strong>¿Necesitas {KEYWORD.lower()} ya?</strong> '
+               f'Te llamamos y te damos presupuesto sin compromiso.</p>'
+               f'<a class="btn" href="{rel("/contacto/", pf)}">Solicitar presupuesto</a> '
+               f'<a class="btn" href="tel:{TEL}">Llamar {TEL_FMT}</a></div>')
+    return "".join(out)
+
+def schema_articulo_seo(a, canonical):
+    blocks = [_schema_breadcrumb(a["titulo"], canonical)]
+    blocks.append(jsonld({"@context": "https://schema.org", "@type": "Article",
+        "headline": a["titulo"], "description": a["desc"], "datePublished": a["fecha"],
+        "author": {"@type": "Organization", "name": MARCA_FULL},
+        "publisher": {"@id": DOMINIO + "/#organization"}, "mainEntityOfPage": canonical}))
+    if a.get("pasos"):
+        blocks.append(jsonld({"@context": "https://schema.org", "@type": "HowTo",
+            "name": a.get("howto_name", a["titulo"]),
+            "step": [{"@type": "HowToStep", "position": i + 1, "name": n, "text": t}
+                     for i, (n, t) in enumerate(a["pasos"])]}))
+    if a.get("faq"):
+        blocks.append(schema_faq(a["faq"]))
+    return "".join(blocks)
 
 def articulo(titulo, cuerpo, fecha=None):
     meta = f'<p class="post-meta">Publicado el {fecha}</p>' if fecha else ''
@@ -739,6 +944,34 @@ CONTENIDO_CSS = """/* Estilos para el contenido importado de WordPress y página
 /* Imágenes de sección con marco y sombra */
 .equipo-image img,.proceso-image img,.before-after-image img{border-radius:16px;
   box-shadow:0 18px 50px rgba(10,22,40,.28);border:1px solid rgba(201,168,76,.35)}
+/* ===== FAQ (acordeón) ===== */
+.faq{background:var(--color-cream)}
+.faq-list{max-width:840px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq-item{background:#fff;border:1px solid rgba(201,168,76,.35);border-radius:12px;
+  box-shadow:0 6px 20px rgba(10,22,40,.06);overflow:hidden}
+.faq-item summary{cursor:pointer;list-style:none;padding:18px 22px;font-weight:700;
+  color:var(--color-dark-green);font-family:var(--font-playfair);font-size:1.06rem;
+  display:flex;justify-content:space-between;align-items:center;gap:16px}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:"+";color:var(--color-gold);font-size:1.6rem;line-height:1;transition:transform .2s}
+.faq-item[open] summary::after{transform:rotate(45deg)}
+.faq-item .faq-resp{padding:0 22px 18px;color:#444;line-height:1.6}
+.faq-item .faq-resp p{margin:0}
+/* ===== Artículos optimizados para fragmentos destacados ===== */
+.respuesta-rapida{background:#faf6ec;border-left:5px solid var(--color-gold);
+  padding:16px 20px;border-radius:0 12px 12px 0;margin:0 0 1.6em;font-size:1.05rem}
+.respuesta-rapida strong{color:var(--color-dark-green)}
+.contenido-wp article ol{padding-left:1.2em;margin:1em 0}
+.contenido-wp article ol li{margin:.5em 0}
+.tabla-seo{width:100%;border-collapse:collapse;margin:1.4em 0;font-size:.96rem}
+.tabla-seo th,.tabla-seo td{border:1px solid #e3d9bf;padding:10px 14px;text-align:left}
+.tabla-seo th{background:var(--color-dark-green);color:var(--color-cream)}
+.tabla-seo tr:nth-child(even) td{background:#faf6ec}
+.art-cta{background:linear-gradient(160deg,#0A1628,#13315C);color:var(--color-cream);
+  padding:24px;border-radius:14px;margin:2em 0 0;text-align:center}
+.art-cta a.btn{margin-top:10px}
+.blog-card.destacado{border-top-color:var(--color-gold);background:linear-gradient(180deg,#fffdf7,#fff)}
+.blog-card.destacado .blog-fecha{color:#b8923a}
 /* Mejora estética del formulario de contacto */
 .contacto{background:linear-gradient(160deg,#0A1628 0%,#13315C 100%)}
 .contact-form{border-top:4px solid var(--color-gold);box-shadow:0 18px 50px rgba(0,0,0,.35)}
@@ -904,6 +1137,8 @@ def generar_extras():
 - Síndrome de Diógenes y limpiezas traumáticas
 - Descontaminación industrial
 
+## Guías (preguntas frecuentes)
+""" + "".join(f'- {a["titulo"]}: {DOMINIO}{a["ruta"]}\n' for a in ARTICULOS_SEO) + f"""
 ## Enlaces
 - Inicio: {DOMINIO}/
 - Zonas de servicio: {DOMINIO}/zonas/
@@ -1093,6 +1328,7 @@ def main():
                 schema = _schema_home(canonical)
             intro = (p["seo_desc"] or
                      "Limpiamos y descontaminamos tu vivienda o local tras un incendio. Sin obras: solo limpieza.")
+            schema += schema_faq(faqs_landing(ciudad))
             body = secciones_landing(h1, intro, cuerpo, ciudades, pf, ciudad)
             escribir(p["ruta"], plantilla(title, desc, canonical, body, p["ruta"], schema=schema))
         else:
@@ -1113,9 +1349,23 @@ def main():
         escribir(e["ruta"], plantilla(title, desc, canonical, body,
                  e["ruta"], nav_activo="/blog/", schema=_schema_breadcrumb(e["titulo"], canonical)))
 
-    # --- Índice del blog ---
+    # --- Artículos cornerstone (Respuesta rápida + pasos + FAQ + HowTo) ---
+    for a in ARTICULOS_SEO:
+        pf = prefijo_rel(a["ruta"])
+        canonical = DOMINIO + a["ruta"]
+        title = titulo_unico(f'{a["titulo"]} | {MARCA}')
+        body = articulo(a["titulo"], cuerpo_articulo_seo(a, pf), fecha=a["fecha"])
+        escribir(a["ruta"], plantilla(title, a["desc"], canonical, body, a["ruta"],
+                 nav_activo="/blog/", schema=schema_articulo_seo(a, canonical)))
+
+    # --- Índice del blog (primero las guías cornerstone) ---
     pf_blog = prefijo_rel("/blog/")
-    tarjetas = "".join(
+    tarjetas_seo = "".join(
+        f'<a class="blog-card reveal destacado" href="{rel(a["ruta"], pf_blog)}">'
+        f'<span class="blog-fecha">★ Guía</span>'
+        f'<h3>{html.escape(a["titulo"])}</h3></a>'
+        for a in ARTICULOS_SEO)
+    tarjetas = tarjetas_seo + "".join(
         f'<a class="blog-card reveal" href="{rel(e["ruta"], pf_blog)}">'
         f'<span class="blog-fecha">{e["fecha"][:10]}</span>'
         f'<h3>{html.escape(e["titulo"])}</h3></a>'
@@ -1157,6 +1407,7 @@ def main():
 
     # --- sitemap.xml ---
     rutas = ([p["ruta"] for p in paginas] + [e["ruta"] for e in entradas] +
+             [a["ruta"] for a in ARTICULOS_SEO] +
              ["/blog/", "/zonas/", "/aviso-legal/"])
     hoy = datetime.now().strftime("%Y-%m-%d")
     sm = ['<?xml version="1.0" encoding="UTF-8"?>',
