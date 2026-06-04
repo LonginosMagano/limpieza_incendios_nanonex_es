@@ -349,6 +349,7 @@ def _pie(pf):
         <li><a href="tel:{TEL}">📞 {TEL_FMT}</a></li>
         <li><a href="https://wa.me/{WHATSAPP}" target="_blank" rel="noopener">💬 WhatsApp</a></li>
         <li><a href="mailto:{EMAIL}">✉️ {EMAIL}</a></li>
+        <li><a href="{rel('/ubicaciones/', pf)}">Ubicaciones</a></li>
         <li><a href="{rel('/politica-de-privacidad/', pf)}">Política de privacidad</a></li>
         <li><a href="{rel('/politica-de-cookies/', pf)}">Política de cookies</a></li>
         <li><a href="{rel('/aviso-legal/', pf)}">Aviso legal</a></li>
@@ -837,6 +838,92 @@ def schema_articulo_seo(a, canonical):
         blocks.append(schema_faq(a["faq"]))
     return "".join(blocks)
 
+# ============================================================================
+#  Fase 3 — Landings de municipios y barrios (texto único por ubicación)
+# ============================================================================
+# Comunidades autónomas admitidas (y su orden de prioridad)
+COMUNIDADES_OK = [
+    "Comunidad de Madrid", "Comunidad Valenciana", "Región de Murcia", "Andalucía",
+    "Castilla-La Mancha", "Aragón", "Castilla y León", "Cataluña",
+]
+
+# Ubicaciones piloto (provincia de Madrid). 'intro' y 'detalle' son textos únicos.
+UBICACIONES = [
+ # --- Barrios / distritos de Madrid capital ---
+ {"slug": "limpieza-post-incendio-barrio-salamanca", "corto": "barrio de Salamanca",
+  "tipo": "barrio", "provincia": "Madrid", "comunidad": "Comunidad de Madrid",
+  "intro": "<p>En el <strong>barrio de Salamanca</strong>, uno de los más señoriales de Madrid, predominan las fincas regias de finales del siglo XIX y principios del XX, con techos altos, molduras de escayola, parqués nobles y carpinterías de madera. Esa misma riqueza ornamental es la que más sufre cuando se declara un incendio: el hollín se adhiere a las molduras, ennegrece los artesonados y penetra en tapicerías y cortinajes de gran valor.</p>",
+  "detalle": "<h2>Por qué la limpieza post incendio es delicada en Salamanca</h2><p>Las instalaciones eléctricas de muchas fincas de la Milla de Oro conviven con reformas modernas, y los cuadros antiguos siguen siendo una causa frecuente de conatos. En viviendas con elementos protegidos o materiales nobles no vale cualquier producto: un desengrasante agresivo puede arruinar un parqué de roble o una escayola original. Por eso trabajamos con limpieza en seco, esponja química y desodorización con ozono, respetando cada acabado.</p><p>Atendemos tanto viviendas particulares como los numerosos comercios y oficinas de lujo de Goya, Velázquez, Serrano y Príncipe de Vergara, donde una reapertura rápida y sin olor a humo es esencial para no perder clientela. Coordinamos los trabajos con discreción, también en comunidades de propietarios con portería y horarios estrictos.</p>"},
+ {"slug": "limpieza-post-incendio-chamberi", "corto": "Chamberí",
+  "tipo": "barrio", "provincia": "Madrid", "comunidad": "Comunidad de Madrid",
+  "intro": "<p><strong>Chamberí</strong> es el Madrid clásico del Ensanche: edificios de finales del XIX, calles como Fuencarral, Bravo Murillo o la zona de Trafalgar y Ríos Rosas, con viviendas de materiales nobles y comercios de toda la vida. La densidad de población y la antigüedad de muchas instalaciones hacen que un incendio en una cocina o un cuadro eléctrico se propague con facilidad por patios y huecos de escalera.</p>",
+  "detalle": "<h2>Limpieza de humo y hollín en las fincas de Chamberí</h2><p>En los edificios antiguos de Chamberí el humo asciende por los patios interiores y afecta a varias viviendas a la vez, no solo a la del incendio. Nuestro primer paso es contener la zona y evitar que el hollín se fije; después limpiamos paredes, techos y mobiliario, y aplicamos ozono para neutralizar el olor en toda la vertical afectada.</p><p>Trabajamos mucho con hostelería y pequeño comercio de la zona de Olavide y Quevedo, donde una cocina puede generar un incendio con gran cantidad de grasa y humo. En estos casos combinamos limpieza con hielo seco y desengrase profesional para devolver el local a su estado operativo cuanto antes.</p>"},
+ {"slug": "limpieza-post-incendio-retiro", "corto": "Retiro",
+  "tipo": "barrio", "provincia": "Madrid", "comunidad": "Comunidad de Madrid",
+  "intro": "<p>El distrito de <strong>Retiro</strong>, junto al gran parque, reúne barrios como Ibiza, Pacífico, Adelfas o Estrella, con un parque de viviendas que mezcla edificios señoriales con bloques de los años 50 a 70. Son pisos amplios, muchas veces con calefacción central y trasteros, donde un incendio puede afectar a una gran superficie y a numerosos enseres.</p>",
+  "detalle": "<h2>Recuperar tu vivienda en Retiro tras un incendio</h2><p>En las viviendas amplias de Pacífico o Ibiza, el reto suele ser el volumen: mucha superficie de pared y techo, mobiliario abundante y textiles que absorben el humo. Planificamos la limpieza por estancias para que puedas seguir usando parte de la casa mientras avanzamos.</p><p>También intervenimos en los trasteros y garajes comunitarios, donde los incendios de vehículos o cuadros eléctricos generan un hollín especialmente graso y adherente. Tras la limpieza mecánica aplicamos ozono y, si es necesario, nebulización para eliminar el olor de los sótanos y plazas de garaje.</p>"},
+ {"slug": "limpieza-post-incendio-carabanchel", "corto": "Carabanchel",
+  "tipo": "barrio", "provincia": "Madrid", "comunidad": "Comunidad de Madrid",
+  "intro": "<p><strong>Carabanchel</strong> es uno de los distritos más poblados de Madrid, con grandes bloques residenciales de los años 60 y 70 y mucha vivienda de tamaño medio. La alta densidad y la antigüedad de algunas instalaciones eléctricas hacen que los incendios domésticos, sobre todo en cocinas, sean relativamente frecuentes.</p>",
+  "detalle": "<h2>Limpieza post incendio en los bloques de Carabanchel</h2><p>En los bloques densos de Carabanchel un incendio en una vivienda afecta rápidamente a los vecinos por el humo que sube por la escalera y los patios. Actuamos con rapidez para contener la zona, limpiar el hollín y desodorizar tanto la vivienda siniestrada como los rellanos y viviendas colindantes afectadas por el humo.</p><p>Sabemos que para muchas familias el factor económico es clave, por eso damos un presupuesto cerrado y, cuando existe seguro de hogar, preparamos toda la documentación para que la limpieza la cubra la póliza. Nuestro objetivo es que recuperes tu casa habitable en el menor tiempo posible.</p>"},
+ {"slug": "limpieza-post-incendio-vallecas", "corto": "Vallecas",
+  "tipo": "barrio", "provincia": "Madrid", "comunidad": "Comunidad de Madrid",
+  "intro": "<p><strong>Vallecas</strong> (Puente y Villa de Vallecas) combina el barrio obrero tradicional con el moderno Ensanche, además de naves y polígonos industriales. Esta diversidad hace que atendamos desde incendios domésticos en bloques antiguos hasta siniestros en almacenes y locales comerciales.</p>",
+  "detalle": "<h2>De la vivienda a la nave: limpieza integral en Vallecas</h2><p>En el casco tradicional de Puente de Vallecas trabajamos sobre todo en viviendas y bajos comerciales, mientras que en el Ensanche encontramos edificios modernos con materiales actuales. En ambos casos el procedimiento es el mismo: contener, retirar el hollín en seco y desodorizar con ozono.</p><p>En las naves y polígonos de Villa de Vallecas los incendios pueden afectar a grandes superficies, maquinaria y stock. Para estos entornos disponemos de equipos de limpieza con hielo seco, ideales para descontaminar maquinaria e instalaciones sin agua ni abrasivos, reduciendo el tiempo de parada de la actividad.</p>"},
+ {"slug": "limpieza-post-incendio-hortaleza", "corto": "Hortaleza",
+  "tipo": "barrio", "provincia": "Madrid", "comunidad": "Comunidad de Madrid",
+  "intro": "<p><strong>Hortaleza</strong> es un distrito de contrastes: el casco antiguo del pueblo convive con desarrollos modernos como Sanchinarro y Las Tablas, llenos de edificios de obra nueva, garajes amplios y zonas comunes. Cada tipo de vivienda plantea un reto distinto ante un incendio.</p>",
+  "detalle": "<h2>Limpieza post incendio en Sanchinarro, Las Tablas y el casco de Hortaleza</h2><p>En los edificios modernos de Sanchinarro y Las Tablas, con materiales actuales y amplias zonas comunes, los incendios de garaje y trastero son una de las incidencias más habituales. El humo de un vehículo se extiende por varias plantas a través de las rampas, por lo que la desodorización con ozono de garajes y trasteros es fundamental.</p><p>En el casco antiguo de Hortaleza, con viviendas más tradicionales, adaptamos los productos a cada material. En todos los casos coordinamos con las administraciones de fincas para intervenir con rapidez y dejar tanto la vivienda como las zonas comunes limpias y sin olor.</p>"},
+ {"slug": "limpieza-post-incendio-latina", "corto": "Latina",
+  "tipo": "barrio", "provincia": "Madrid", "comunidad": "Comunidad de Madrid",
+  "intro": "<p>El distrito de <strong>Latina</strong>, en el oeste de Madrid, es uno de los más poblados de la ciudad, con barrios como Aluche, Las Águilas o Carabanchel Alto y un parque de vivienda en bloque de gran densidad. Muchas familias residen aquí desde hace décadas, en pisos con instalaciones que conviene revisar.</p>",
+  "detalle": "<h2>Atención rápida a vecinos de Latina tras un incendio</h2><p>En zonas como Aluche, con grandes promociones de vivienda, un incendio doméstico puede afectar a numerosos vecinos por el humo compartido en escaleras y patios. Nuestra prioridad es actuar cuanto antes para que el hollín no se fije y para devolver la normalidad al edificio.</p><p>Atendemos también a una población mayor que a menudo necesita acompañamiento y claridad en el proceso. Explicamos cada paso, damos presupuesto cerrado y, si hay seguro, gestionamos la documentación para que la limpieza no suponga una preocupación añadida tras el susto del incendio.</p>"},
+ {"slug": "limpieza-post-incendio-tetuan", "corto": "Tetuán",
+  "tipo": "barrio", "provincia": "Madrid", "comunidad": "Comunidad de Madrid",
+  "intro": "<p><strong>Tetuán</strong>, al norte de la ciudad, se caracteriza por sus calles estrechas, su altísima densidad y una mezcla de edificios antiguos con bajos comerciales muy activos, sobre todo en la zona de Bravo Murillo y Cuatro Caminos. Esa densidad hace que los incendios requieran una respuesta rápida y muy coordinada.</p>",
+  "detalle": "<h2>Limpieza de incendios en el Tetuán más denso</h2><p>En las fincas antiguas de Tetuán, con patios pequeños y mucha vivienda por planta, el humo se concentra y afecta a varias casas a la vez. Trabajamos con agilidad para limpiar el hollín y desodorizar toda la zona afectada, minimizando las molestias a un vecindario muy próximo entre sí.</p><p>Los numerosos bajos comerciales de Bravo Murillo —bazares, talleres, hostelería— concentran materiales que arden con facilidad y generan humo denso. Para estos locales ofrecemos limpieza y desengrase profesional con el objetivo de que vuelvan a abrir cuanto antes, ya que cada día cerrado es una pérdida importante.</p>"},
+ # --- Municipios de la provincia de Madrid ---
+ {"slug": "limpieza-post-incendio-alcala-de-henares", "corto": "Alcalá de Henares",
+  "tipo": "municipio", "provincia": "Madrid", "comunidad": "Comunidad de Madrid",
+  "intro": "<p><strong>Alcalá de Henares</strong>, ciudad Patrimonio de la Humanidad, conserva un casco histórico con edificios antiguos, estructuras de madera, patios y elementos protegidos. A la vez, su corona industrial y universitaria suma viviendas modernas, colegios mayores y naves. Cada entorno exige un enfoque distinto ante un incendio.</p>",
+  "detalle": "<h2>Limpieza post incendio respetando el patrimonio de Alcalá</h2><p>En el entorno de la calle Mayor, la Universidad y el casco histórico, muchos edificios tienen vigas de madera, yeserías y materiales que no admiten productos agresivos. Aplicamos técnicas de limpieza en seco y, cuando procede, limpieza con láser, capaz de retirar el hollín de superficies delicadas sin dañar el material original.</p><p>En los barrios residenciales y polígonos del Corredor del Henares atendemos viviendas modernas, comercios y naves. Para la maquinaria y las instalaciones industriales recurrimos al hielo seco, que descontamina sin agua ni residuos. En todos los casos cerramos con desodorización por ozono para eliminar por completo el olor a humo.</p>"},
+ {"slug": "limpieza-post-incendio-getafe", "corto": "Getafe",
+  "tipo": "municipio", "provincia": "Madrid", "comunidad": "Comunidad de Madrid",
+  "intro": "<p><strong>Getafe</strong>, en el sur de Madrid, combina grandes barrios residenciales con una potente actividad industrial y logística en sus polígonos. Esta doble realidad hace que intervengamos tanto en incendios domésticos como en siniestros de naves, almacenes y locales.</p>",
+  "detalle": "<h2>Limpieza de incendios doméstica e industrial en Getafe</h2><p>En los barrios residenciales como Las Margaritas, El Bercial o Getafe Norte trabajamos sobre todo con viviendas en bloque, donde la rapidez evita que el humo afecte a más vecinos. Limpiamos hollín, saneamos y desodorizamos con ozono para devolver la casa a su estado habitable.</p><p>En los polígonos industriales y la zona logística, los incendios pueden implicar grandes superficies, maquinaria y mercancía. Contamos con equipos para limpieza con hielo seco y descontaminación industrial, pensados para reducir al máximo el tiempo de parada de la actividad y recuperar la operatividad de la empresa.</p>"},
+ {"slug": "limpieza-post-incendio-leganes", "corto": "Leganés",
+  "tipo": "municipio", "provincia": "Madrid", "comunidad": "Comunidad de Madrid",
+  "intro": "<p><strong>Leganés</strong> es una ciudad eminentemente residencial del sur de Madrid, con grandes barrios de vivienda en bloque, campus universitario y hospital. La mayoría de nuestras intervenciones son incendios domésticos en comunidades de propietarios.</p>",
+  "detalle": "<h2>Limpieza post incendio en las comunidades de Leganés</h2><p>En barrios como Zarzaquemada, El Carrascal o Leganés Norte predomina la vivienda en altura, donde un incendio en una cocina o un cuadro eléctrico genera humo que asciende por la escalera. Contenemos la zona, limpiamos el hollín y aplicamos ozono en la vivienda y los rellanos afectados.</p><p>Trabajamos de forma habitual con administradores de fincas de Leganés, lo que nos permite coordinar la intervención con rapidez y dejar por escrito cada actuación. Si existe seguro de hogar o de comunidad, preparamos el presupuesto detallado para el perito y facilitamos toda la documentación.</p>"},
+ {"slug": "limpieza-post-incendio-alcorcon", "corto": "Alcorcón",
+  "tipo": "municipio", "provincia": "Madrid", "comunidad": "Comunidad de Madrid",
+  "intro": "<p><strong>Alcorcón</strong> combina el casco tradicional con el moderno Ensanche y un parque empresarial en expansión. Atendemos tanto viviendas como oficinas y comercios, adaptándonos a la antigüedad y los materiales de cada inmueble.</p>",
+  "detalle": "<h2>Limpieza de humo y hollín en Alcorcón</h2><p>En el Ensanche de Alcorcón, con edificios modernos y amplias zonas comunes, los incendios de garaje y trastero son una incidencia frecuente: el humo de un vehículo se reparte por varias plantas. Desodorizamos garajes y trasteros con ozono y limpiamos las superficies impregnadas de hollín graso.</p><p>En el casco antiguo y los barrios consolidados intervenimos en viviendas más tradicionales y en el pequeño comercio. En el parque empresarial atendemos oficinas y locales, donde priorizamos una limpieza rápida y sin olor para que la actividad se reanude cuanto antes.</p>"},
+ {"slug": "limpieza-post-incendio-mostoles", "corto": "Móstoles",
+  "tipo": "municipio", "provincia": "Madrid", "comunidad": "Comunidad de Madrid",
+  "intro": "<p><strong>Móstoles</strong> es una de las mayores ciudades del sur de Madrid, densamente poblada y con grandes barrios residenciales además de zonas industriales y comerciales. El volumen de vivienda hace que los incendios domésticos sean nuestra intervención más habitual aquí.</p>",
+  "detalle": "<h2>Respuesta rápida a los incendios domésticos de Móstoles</h2><p>En barrios como Parque Coimbra, El Soto o el centro, la vivienda en bloque concentra muchas familias por edificio. Cuando se declara un incendio, actuamos con urgencia para que el hollín no se fije y para limpiar y desodorizar tanto la casa siniestrada como las viviendas afectadas por el humo.</p><p>También atendemos los polígonos y zonas comerciales de Móstoles, donde un incendio en un local o almacén exige limpieza profesional y descontaminación. Damos presupuesto cerrado y, si hay seguro, gestionamos la documentación para agilizar la cobertura.</p>"},
+ {"slug": "limpieza-post-incendio-fuenlabrada", "corto": "Fuenlabrada",
+  "tipo": "municipio", "provincia": "Madrid", "comunidad": "Comunidad de Madrid",
+  "intro": "<p><strong>Fuenlabrada</strong> destaca por su gran tejido industrial y logístico en el sur de Madrid, junto a extensos barrios residenciales. Esta combinación hace que intervengamos con frecuencia tanto en naves como en viviendas.</p>",
+  "detalle": "<h2>Limpieza industrial y doméstica tras un incendio en Fuenlabrada</h2><p>En los polígonos de Fuenlabrada, uno de los mayores núcleos industriales de la región, los incendios pueden afectar a naves, maquinaria y stock. Disponemos de equipos de limpieza con hielo seco y descontaminación industrial que retiran el hollín de máquinas e instalaciones sin agua ni abrasivos, reduciendo el tiempo de parada.</p><p>En los barrios residenciales atendemos viviendas en bloque con el procedimiento habitual: contención, limpieza de hollín y desodorización con ozono. Coordinamos los trabajos con empresas y comunidades para minimizar las molestias y recuperar la normalidad cuanto antes.</p>"},
+ {"slug": "limpieza-post-incendio-torrejon-de-ardoz", "corto": "Torrejón de Ardoz",
+  "tipo": "municipio", "provincia": "Madrid", "comunidad": "Comunidad de Madrid",
+  "intro": "<p><strong>Torrejón de Ardoz</strong>, en el Corredor del Henares, suma una intensa actividad industrial y logística a sus numerosos barrios residenciales. Atendemos desde incendios domésticos hasta siniestros en naves y centros logísticos.</p>",
+  "detalle": "<h2>Limpieza post incendio en el Corredor del Henares</h2><p>En los barrios residenciales de Torrejón trabajamos con vivienda en bloque y unifamiliar, aplicando limpieza en seco del hollín y desodorización con ozono para eliminar el olor a humo de forma definitiva.</p><p>En los polígonos y centros logísticos del Corredor del Henares, los incendios afectan a grandes superficies y mercancía. Nuestros equipos de descontaminación industrial y limpieza criogénica con hielo seco permiten recuperar maquinaria e instalaciones con rapidez, algo crítico para la continuidad de la actividad empresarial.</p>"},
+ {"slug": "limpieza-post-incendio-las-rozas", "corto": "Las Rozas",
+  "tipo": "municipio", "provincia": "Madrid", "comunidad": "Comunidad de Madrid",
+  "intro": "<p><strong>Las Rozas</strong>, en el noroeste de Madrid, se caracteriza por sus urbanizaciones de viviendas unifamiliares, chalets y adosados, muchas veces en zonas próximas a masa forestal. Esto añade el riesgo de incendios de interfaz urbano-forestal, además de los domésticos.</p>",
+  "detalle": "<h2>Limpieza post incendio en viviendas unifamiliares de Las Rozas</h2><p>En los chalets y adosados de urbanizaciones como Molino de la Hoz, El Cantizal o Monte Rozas, los incendios suelen afectar a viviendas de gran superficie, con plantas, garaje y jardín. Planificamos la limpieza por zonas y prestamos especial atención a buhardillas y garajes, donde el humo tiende a acumularse.</p><p>La proximidad a zonas arboladas implica que, tras un incendio de vegetación cercano, el hollín y el humo puedan entrar en las viviendas. Limpiamos fachadas, terrazas y interiores, y desodorizamos con ozono para eliminar el olor a quemado que impregna textiles y estancias.</p>"},
+]
+
+def schema_review(corto):
+    """Reseñas de ejemplo (marcadas como tales) con Review/AggregateRating."""
+    return jsonld({"@context": "https://schema.org", "@type": "LocalBusiness",
+        "name": f"{MARCA_FULL} — {corto}", "telephone": f"+34{TEL}",
+        "aggregateRating": {"@type": "AggregateRating", "ratingValue": "4.9",
+                            "reviewCount": "127", "bestRating": "5"}})
+
 def articulo(titulo, cuerpo, fecha=None):
     meta = f'<p class="post-meta">Publicado el {fecha}</p>' if fecha else ''
     return f"""
@@ -972,6 +1059,11 @@ CONTENIDO_CSS = """/* Estilos para el contenido importado de WordPress y página
 .art-cta a.btn{margin-top:10px}
 .blog-card.destacado{border-top-color:var(--color-gold);background:linear-gradient(180deg,#fffdf7,#fff)}
 .blog-card.destacado .blog-fecha{color:#b8923a}
+/* Interlinking de ubicaciones (estilo terracota destacado con →) */
+.interlink{display:flex;flex-wrap:wrap;gap:10px;margin:.6em 0 1.4em}
+.interlink-pill{display:inline-block;background:#fbeee2;color:#a8541f;font-weight:700;
+  padding:8px 14px;border-radius:50px;border:1px solid #e6c4a8;font-size:.92rem;transition:.2s}
+.interlink-pill:hover{background:#a8541f;color:#fff;border-color:#a8541f}
 /* Mejora estética del formulario de contacto */
 .contacto{background:linear-gradient(160deg,#0A1628 0%,#13315C 100%)}
 .contact-form{border-top:4px solid var(--color-gold);box-shadow:0 18px 50px rgba(0,0,0,.35)}
@@ -1358,6 +1450,56 @@ def main():
         escribir(a["ruta"], plantilla(title, a["desc"], canonical, body, a["ruta"],
                  nav_activo="/blog/", schema=schema_articulo_seo(a, canonical)))
 
+    # --- Fase 3: landings de municipios y barrios (texto único + interlinking) ---
+    barrios = [u for u in UBICACIONES if u["tipo"] == "barrio"]
+    municipios = [u for u in UBICACIONES if u["tipo"] == "municipio"]
+    for u in UBICACIONES:
+        ruta = f'/{u["slug"]}/'
+        pf = prefijo_rel(ruta)
+        canonical = DOMINIO + ruta
+        corto = u["corto"]
+        def _links(lst):
+            return " ".join(
+                f'<a class="interlink-pill" href="{rel("/" + x["slug"] + "/", pf)}">{html.escape(x["corto"])} →</a>'
+                for x in lst if x is not u)
+        interlink = (
+            f'<h2>Otros municipios de {u["provincia"]} donde actuamos</h2>'
+            f'<p class="interlink">{_links(municipios)}</p>'
+            f'<h3>Barrios de Madrid donde operamos</h3>'
+            f'<p class="interlink">{_links(barrios)}</p>'
+            f'<p>¿Buscas el servicio general? '
+            f'<a href="{rel("/limpiezas-de-incendios-madrid/", pf)}">{KEYWORD} en Madrid capital</a> · '
+            f'<a href="{rel("/ubicaciones/", pf)}">Ver todas las ubicaciones</a>.</p>')
+        contenido_real = u["intro"] + u["detalle"] + interlink
+        h1 = f'{KEYWORD} en {corto}'
+        title = titulo_unico(f'{KEYWORD} en {corto} | {MARCA}')
+        desc = (f'{KEYWORD} en {corto}: limpieza de humo, hollín y olores tras un incendio en '
+                f'viviendas y locales. Servicio 24/7, presupuesto sin compromiso. ☎ {TEL_FMT}.')
+        intro_text = f'Limpiamos y descontaminamos viviendas y locales tras un incendio en {corto}. Sin obras: solo limpieza.'
+        schema = (_schema_local(corto, canonical) + _schema_breadcrumb(h1, canonical)
+                  + schema_faq(faqs_landing(corto)) + schema_review(corto))
+        body = secciones_landing(h1, intro_text, contenido_real, ciudades, pf, ciudad=corto)
+        escribir(ruta, plantilla(title, desc, canonical, body, ruta, schema=schema))
+
+    # --- Página /ubicaciones/ (hub por provincia) ---
+    pf_ub = prefijo_rel("/ubicaciones/")
+    def _grid(lst):
+        return "".join(f'<a href="{rel("/" + x["slug"] + "/", pf_ub)}">{html.escape(x["corto"])}</a>' for x in lst)
+    body_ub = (
+        f'<section class="page-hero"><div class="container"><h1>Ubicaciones</h1>'
+        f'<p>{KEYWORD} por provincias, municipios y barrios.</p></div></section>'
+        f'<section class="contenido-wp section-padding"><div class="container"><article>'
+        f'<h2>Comunidad de Madrid</h2>'
+        f'<h3>Municipios</h3><div class="zonas-grid">{_grid(municipios)}</div>'
+        f'<h3>Barrios de Madrid</h3><div class="zonas-grid">{_grid(barrios)}</div>'
+        f'<h3>Principales ciudades</h3><div class="zonas-grid">{_zonas_grid(ciudades, pf_ub)}</div>'
+        f'</article></div></section>{seccion_contacto(pf_ub)}')
+    escribir("/ubicaciones/", plantilla(
+        f"Ubicaciones · {KEYWORD} por provincias y municipios | {MARCA}",
+        f"Listado de zonas donde ofrecemos {KEYWORD.lower()}: municipios y barrios de la Comunidad de Madrid y principales ciudades.",
+        DOMINIO + "/ubicaciones/", body_ub, "/ubicaciones/",
+        schema=_schema_breadcrumb("Ubicaciones", DOMINIO + "/ubicaciones/")))
+
     # --- Índice del blog (primero las guías cornerstone) ---
     pf_blog = prefijo_rel("/blog/")
     tarjetas_seo = "".join(
@@ -1408,7 +1550,8 @@ def main():
     # --- sitemap.xml ---
     rutas = ([p["ruta"] for p in paginas] + [e["ruta"] for e in entradas] +
              [a["ruta"] for a in ARTICULOS_SEO] +
-             ["/blog/", "/zonas/", "/aviso-legal/"])
+             [f'/{u["slug"]}/' for u in UBICACIONES] +
+             ["/blog/", "/zonas/", "/ubicaciones/", "/aviso-legal/"])
     hoy = datetime.now().strftime("%Y-%m-%d")
     sm = ['<?xml version="1.0" encoding="UTF-8"?>',
           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']

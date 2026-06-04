@@ -120,6 +120,11 @@
 .art-cta a.btn{margin-top:10px}
 .blog-card.destacado{border-top-color:var(--color-gold);background:linear-gradient(180deg,#fffdf7,#fff)}
 .blog-card.destacado .blog-fecha{color:#b8923a}
+/* Interlinking de ubicaciones (estilo terracota destacado con →) */
+.interlink{display:flex;flex-wrap:wrap;gap:10px;margin:.6em 0 1.4em}
+.interlink-pill{display:inline-block;background:#fbeee2;color:#a8541f;font-weight:700;
+  padding:8px 14px;border-radius:50px;border:1px solid #e6c4a8;font-size:.92rem;transition:.2s}
+.interlink-pill:hover{background:#a8541f;color:#fff;border-color:#a8541f}
 /* Mejora estética del formulario de contacto */
 .contacto{background:linear-gradient(160deg,#0A1628 0%,#13315C 100%)}
 .contact-form{border-top:4px solid var(--color-gold);box-shadow:0 18px 50px rgba(0,0,0,.35)}
