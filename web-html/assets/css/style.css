@@ -25,6 +25,23 @@ body {
     background-color: var(--color-dark-green);
 }
 
+/* Skip Link for Accessibility */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--color-gold);
+    color: var(--color-dark-green);
+    padding: 8px;
+    text-decoration: none;
+    z-index: 100;
+    font-weight: 600;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
 .container {
     max-width: 1100px;
     margin: 0 auto;
@@ -232,6 +249,36 @@ body {
 
 .hero h1 .highlight {
     color: var(--color-gold);
+}
+
+.featured-snippet {
+    background-color: rgba(201, 168, 76, 0.15);
+    border: 2px solid var(--color-gold);
+    border-radius: 8px;
+    padding: 25px 30px;
+    margin-bottom: 30px;
+    backdrop-filter: blur(5px);
+}
+
+.featured-snippet h2 {
+    font-family: var(--font-playfair);
+    font-size: 1.6em;
+    color: var(--color-gold);
+    margin-bottom: 12px;
+    text-align: left;
+}
+
+.featured-snippet p {
+    font-size: 1.05em;
+    line-height: 1.7;
+    color: var(--color-cream);
+    text-align: left;
+    margin: 0;
+}
+
+.featured-snippet strong {
+    color: var(--color-gold);
+    font-weight: 700;
 }
 
 .hero p {
