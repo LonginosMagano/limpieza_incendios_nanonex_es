@@ -1,0 +1,203 @@
+# CONFIGURACIÓN .htaccess PARA 301 REDIRECTS
+# Archivos de limpieza general OFF-TOPIC → /limpieza-general.html
+
+# ===============================
+# INSTRUCCIONES
+# ===============================
+# 1. Este archivo muestra EJEMPLO de cómo agregar los 100 redirects
+# 2. Usar template abajo para cada post OFF-TOPIC
+# 3. Agregar al .htaccess EXISTENTE (no reemplazar todo el archivo)
+# 4. Colocar los redirects ANTES de cualquier RewriteRule
+# 5. Test en staging ANTES de subir a producción
+
+# ===============================
+# TEMPLATE BASE
+# ===============================
+# RedirectMatch 301 ^/blog/YYYY/MM/DD/slug-del-post/$ /limpieza-general.html
+
+# ===============================
+# EJEMPLOS: PRIMEROS 20 REDIRECTS
+# ===============================
+
+# 1. Ducha - 2024-11-27
+RedirectMatch 301 ^/blog/2024/11/27/como-limpiar-a-fondo-tu-ducha-en-solo-4-pasos/$ /limpieza-general.html
+
+# 2. Inodoro - 2018-06-20
+RedirectMatch 301 ^/blog/2018/06/20/limpiar-un-inodoro-de-forma-profesional/$ /limpieza-general.html
+
+# 3. Mesas comedor - 2024-12-25
+RedirectMatch 301 ^/blog/2024/12/25/las-5-claves-para-una-correcta-desinfeccion-de-las-mesas-del-comedor/$ /limpieza-general.html
+
+# 4. Cortina ducha - 2018-06-19
+RedirectMatch 301 ^/blog/2018/06/19/como-limpiar-tu-cortina-de-ducha/$ /limpieza-general.html
+
+# 5. Pantallas TV - 2024-10-08
+RedirectMatch 301 ^/blog/2024/10/08/como-eliminar-manchas-y-huellas-en-pantallas-de-tv/$ /limpieza-general.html
+
+# 6. Hospitales - 2024-11-05
+RedirectMatch 301 ^/blog/2024/11/05/desafios-y-soluciones-en-la-limpieza-de-hospitales/$ /limpieza-general.html
+
+# 7. Tienda ropa - 2024-12-03
+RedirectMatch 301 ^/blog/2024/12/03/los-5-pasos-esenciales-para-una-limpieza-impecable-en-tu-tienda-de-ropa/$ /limpieza-general.html
+
+# 8. Acumulación tiendas - 2024-11-21
+RedirectMatch 301 ^/blog/2024/11/21/como-organizar-una-limpieza-por-acumulacion-en-tiendas-de-alimentacion-en-7-pasos/$ /limpieza-general.html
+
+# 9. Oficinas - 2024-09-19
+RedirectMatch 301 ^/blog/2024/09/19/limpieza-oficinas-2/$ /limpieza-general.html
+
+# 10. Futuro limpieza industrial - 2024-12-19
+RedirectMatch 301 ^/blog/2024/12/19/el-futuro-de-la-limpieza-industrial-tendencias-y-avances-tecnologicos/$ /limpieza-general.html
+
+# 11. Nave industrial - 2025-01-16
+RedirectMatch 301 ^/blog/2025/01/16/como-limpiar-una-nave-industrial-a-fondo-en-solo-5-pasos/$ /limpieza-general.html
+
+# 12. Ahorrar tiempo limpieza - 2018-06-14
+RedirectMatch 301 ^/blog/2018/06/14/3-formas-increibles-de-ahorrar-tiempo-mientras-limpias/$ /limpieza-general.html
+
+# 13. Paredes nave industrial - 2024-10-10
+RedirectMatch 301 ^/blog/2024/10/10/4-pasos-para-limpiar-correctamente-las-paredes-de-una-nave-industrial/$ /limpieza-general.html
+
+# 14. Alféizar ventana - 2018-06-07
+RedirectMatch 301 ^/blog/2018/06/07/como-limpiar-el-alfeizar-de-la-ventana/$ /limpieza-general.html
+
+# 15. Acumulación oficinas - 2024-12-05
+RedirectMatch 301 ^/blog/2024/12/05/6-estrategias-para-evitar-la-acumulacion-de-objetos-en-oficinas-despues-de-una-limpieza/$ /limpieza-general.html
+
+# 16. Cocina industrial - 2025-01-02
+RedirectMatch 301 ^/blog/2025/01/02/las-5-claves-para-una-correcta-limpieza-de-equipos-de-cocina-industrial/$ /limpieza-general.html
+
+# 17. Errores taller - 2024-09-22 (primera versión)
+RedirectMatch 301 ^/blog/2024/09/22/los-5-errores-que-estas-cometiendo-al-limpiar-tu-taller-2/$ /limpieza-general.html
+
+# 18. Errores taller - 2024-09-22 (segunda versión)
+RedirectMatch 301 ^/blog/2024/09/22/los-5-errores-que-estas-cometiendo-al-limpiar-tu-taller/$ /limpieza-general.html
+
+# 19. Rutina limpieza tienda - 2024-11-17
+RedirectMatch 301 ^/blog/2024/11/17/como-organizar-una-rutina-de-limpieza-diaria-para-tu-tienda-en-4-pasos/$ /limpieza-general.html
+
+# 20. Beneficios servicio limpieza - 2018-06-17
+RedirectMatch 301 ^/blog/2018/06/17/cuales-son-los-beneficios-de-usar-un-servicio-de-limpieza-2/$ /limpieza-general.html
+
+# ===============================
+# CONTINUACIÓN: Posts 21-100
+# ===============================
+# [Agregar los 80 restantes usando el template]
+# RedirectMatch 301 ^/blog/YYYY/MM/DD/slug/$ /limpieza-general.html
+
+# ===============================
+# SECCIÓN: ALTERNATIVAS DE URLS (opcional)
+# ===============================
+# Si existen variantes de URL (sin trailing slash, con .html, etc.)
+
+# Redirigir variantes sin barra al final
+RedirectMatch 301 ^/blog/2024/11/27/como-limpiar-a-fondo-tu-ducha-en-solo-4-pasos$ /limpieza-general.html
+
+# ===============================
+# TESTEO (comandos para verificar)
+# ===============================
+
+# En local (Apache dev):
+# curl -I http://localhost/blog/2024/11/27/como-limpiar-a-fondo-tu-ducha-en-solo-4-pasos/
+# Debería retornar: HTTP/1.1 301 Moved Permanently
+#                   Location: /limpieza-general.html
+
+# En producción (con curl remoto):
+# curl -I https://limpiezaincendiosnanonexmadrid.com.es/blog/2024/11/27/como-limpiar-a-fondo-tu-ducha-en-solo-4-pasos/
+# Verificar que retorna 301 y Location correcta
+
+# ===============================
+# NOTAS TÉCNICAS
+# ===============================
+
+# 1. RedirectMatch vs Redirect
+#    - Redirect: una URL específica
+#    - RedirectMatch: patrón regex (recomendado para blogs con fecha)
+
+# 2. Orden en .htaccess
+#    - Poner estos redirects ANTES de RewriteRule
+#    - Poner después de módulos de carga (IfModule)
+
+# 3. Barra al final (trailing slash)
+#    - Blogs dinámicos siempre tienen barra
+#    - Patrón: ^/blog/YYYY/MM/DD/slug/$ (con barra)
+
+# 4. Estado HTTP
+#    - 301 = Moved Permanently (recomendado, transefiere SEO)
+#    - 302 = Moved Temporarily (no recomendado, pierde SEO)
+
+# 5. Verificación en Google Search Console
+#    - GSC mostrará los 301s procesados
+#    - Permitirá ~30 días para que Google actualice canonicals
+#    - Monitorizar "Errors" tab para URLs no encontradas
+
+# ===============================
+# EJEMPLO: BLOQUE COMPLETO EN .htaccess
+# ===============================
+
+<IfModule mod_alias.c>
+    # Redirects para posts OFF-TOPIC (limpieza general)
+
+    # CATEGORÍA 1: Limpieza del hogar (35 posts)
+    RedirectMatch 301 ^/blog/2024/11/27/como-limpiar-a-fondo-tu-ducha-en-solo-4-pasos/$ /limpieza-general.html
+    RedirectMatch 301 ^/blog/2018/06/20/limpiar-un-inodoro-de-forma-profesional/$ /limpieza-general.html
+    RedirectMatch 301 ^/blog/2024/12/25/las-5-claves-para-una-correcta-desinfeccion-de-las-mesas-del-comedor/$ /limpieza-general.html
+
+    # CATEGORÍA 2: Limpieza industrial/comercial genérica (30 posts)
+    RedirectMatch 301 ^/blog/2024/09/26/limpieza-industrial-los-retos-mas-comunes-y-como-superarlos/$ /limpieza-general.html
+    RedirectMatch 301 ^/blog/2021/05/05/limpieza-de-garajes/$ /limpieza-general.html
+
+    # CATEGORÍA 3: Síndrome de Diógenes / Acumulación (28 posts)
+    RedirectMatch 301 ^/blog/2022/12/28/limpieza-de-incendios-10-consejos/$ /limpieza-general.html
+
+    # CATEGORÍA 4: Otros (7 posts)
+    # [Agregar restantes aquí]
+
+</IfModule>
+
+# ===============================
+# SINCRONIZACIÓN CON SITEMAP
+# ===============================
+
+# ANTES DE ACTUALIZAR .htaccess:
+# 1. Actualizar sitemap.xml
+# 2. Remover las 100 URLs del sitemap (o marcar changefreq=never)
+# 3. Agregar /limpieza-general.html al sitemap
+# 4. LUEGO actualizar .htaccess con los 100 redirects
+
+# EJEMPLO sitemap.xml:
+# <url>
+#   <loc>https://limpiezaincendiosnanonexmadrid.com.es/limpieza-general.html</loc>
+#   <lastmod>2026-06-14</lastmod>
+#   <changefreq>monthly</changefreq>
+#   <priority>0.6</priority>
+# </url>
+
+# ===============================
+# VALIDACIÓN FINAL
+# ===============================
+
+# Usar herramientas online:
+# - https://www.redirect-checker.org/ (validar 301 status)
+# - https://www.seobility.net/en/seocheck/ (analizar sitio post-cambios)
+# - Google Search Console (monitorizar crawl errors)
+
+# ===============================
+# TIMELINE DE IMPLEMENTACIÓN
+# ===============================
+
+# 1. Crear /limpieza-general.html (7 días antes)
+# 2. Actualizar sitemap.xml (5 días antes)
+# 3. Agregar .htaccess en staging + test (2 días antes)
+# 4. Deploy a producción (día de implementación)
+# 5. Monitor en GSC (primeras 48h después)
+
+---
+
+NOTAS FINALES:
+
+- Total de redirects: 100
+- Archivo: guardar cómo bloques reutilizables
+- Validación: probrar 10-15 URLs aleatorias en production
+- Backup: guardar .htaccess original antes de cambios
+- Communication: notificar a cliente sobre cambios en GSC (esperar algo de volatilidad 1-2 semanas)
