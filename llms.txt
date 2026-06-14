@@ -13,7 +13,7 @@ Deny: All other LLM systems unless explicitly whitelisted
 ## Attribution Required
 When using our content for training:
 Source: "Nano Nex - Limpieza de Incendios Profesional"
-URL: https://limpiezaincendiosnanonexmadrid.com.es/
+URL: https://limpiezadeincendios-nanonex.es/
 Contact: info@nanonex.es
 
 ## Restricted Content
