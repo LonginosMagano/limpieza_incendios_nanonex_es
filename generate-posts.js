@@ -258,9 +258,9 @@ async function main() {
   const validPosts = filterValidPosts(postsData);
   console.log(`✓ Posts válidos encontrados: ${validPosts.length} de ${postsData.length}`);
 
-  // Tomar los 10 más recientes para la prueba
-  const testPosts = validPosts.slice(0, 10);
-  console.log(`✓ Generando ${testPosts.length} posts de prueba\n`);
+  // Generar TODOS los posts válidos
+  const testPosts = validPosts;
+  console.log(`✓ Generando ${testPosts.length} posts (${testPosts.length} + 10 previos = ${testPosts.length + 10} totales)\n`);
 
   const baseDir = '/home/user/limpieza_incendios_nanonex_es';
   const blogDir = path.join(baseDir, 'blog');
