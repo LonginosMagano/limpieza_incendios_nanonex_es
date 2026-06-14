@@ -1,10 +1,11 @@
 
 :root {
-    --color-dark: #1a1a1a;
-    --color-red: #DC143C;
-    --color-orange: #FF6B35;
+    --color-dark: #003D7A;
+    --color-red: #E31B23;
+    --color-orange: #FF7F00;
     --color-white: #FFFFFF;
-    --color-light-gray: #F8F9FA;
+    --color-light-gray: #F5F5F5;
+    --color-green-whatsapp: #25D366;
     --font-playfair: 'Playfair Display', serif;
     --font-nunito: 'Nunito Sans', sans-serif;
 }
