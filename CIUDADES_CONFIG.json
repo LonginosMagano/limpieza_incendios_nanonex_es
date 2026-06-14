@@ -1,0 +1,205 @@
+{
+  "cities": [
+    {
+      "id": "barcelona",
+      "name": "Barcelona",
+      "region": "Cataluña",
+      "filename": "limpieza-de-incendios-barcelona.html",
+      "type": "city",
+      "h1": "Limpieza de incendios en Barcelona: Cuando el fuego toca la ciudad",
+      "intro": "Barcelona es manzanas regulares, pisos altos de finales del XIX, densidad pura. Eixample, Gràcia, Sarrià... cada barrio respira diferente. Pero cuando el fuego entra en una vivienda de Barcelona, entra con fuerza: humo que sube por toda la escalera, hollín que se cuela por marcos de ventanas compartidas, olor que traspasa pisos enteros. Aquí los incendios no son solo privados: afectan a toda la comunidad. Y la comunidad necesita recuperarse juntos.",
+      "seoTitle": "Limpieza de incendios en Barcelona | Urgencias 24/7 | Nano Nex",
+      "seoDesc": "Barcelona: Limpieza profesional post incendio. Eliminamos hollín, humo y olores en edificios modernos y antiguos. Presupuesto gratis 24/7.",
+      "neighborhoods": [
+        {
+          "id": "barcelona-eixample",
+          "name": "Eixample",
+          "filename": "limpieza-de-incendios-barcelona-eixample.html",
+          "h1": "Limpieza de incendios en Eixample: Aquí el fuego no espera",
+          "intro": "Eixample es la zona de expansión de Barcelona. Manzanas regulares, pisos altos, edificios históricos de finales del XIX. Cuando el fuego entra en un piso de Eixample, entra con fuerza: humo que sube por toda la comunidad, hollín que se cuela en las molduras, olor que traspasa las puertas del vecino. Aquí los incendios no son solo un problema personal: son un problema de bloque entero."
+        },
+        {
+          "id": "barcelona-gracia",
+          "name": "Gràcia",
+          "filename": "limpieza-de-incendios-barcelona-gracia.html",
+          "h1": "Limpieza de incendios en Gràcia: Pueblo dentro de la ciudad",
+          "intro": "Gràcia es el pueblo que Barcelona se tragó. Calles estrechas, edificios de seis pisos, plazas donde todavía respira la gente. Los incendios aquí tienen sabor de crisis: afectan a los vecinos de siempre, a las tiendas que llevan cuarenta años, a los bares donde se vive la calle. Un incendio en Gràcia no es un evento: es trauma comunitario que necesita limpieza profesional."
+        },
+        {
+          "id": "barcelona-sarria",
+          "name": "Sarrià",
+          "filename": "limpieza-de-incendios-barcelona-sarria.html",
+          "h1": "Limpieza de incendios en Sarrià: Entre el bosque y la ciudad",
+          "intro": "Sarrià conserva aire de pueblo. Casas de tres plantas, jardines, calles que respiran. Es zona residencial donde viven familias que eligieron tranquilidad. Pero cuando el fuego llega a Sarrià, deja humo y ceniza igual que en el Eixample: casas quemadas, olores enquistados, daños que requieren limpieza profesional y delicada."
+        },
+        {
+          "id": "barcelona-montjuic",
+          "name": "Montjuïc",
+          "filename": "limpieza-de-incendios-barcelona-montjuic.html",
+          "h1": "Limpieza de incendios en Montjuïc: Parque en llamas",
+          "intro": "Montjuïc es verde, museos, vistas de ciudad. Viviendas más dispersas, chalets con terraza, apartamentos con jardín. Pero cuando el fuego toca Montjuïc, toca todo: casas aisladas donde el humo penetra profundo, materiales naturales donde el hollín se adhiere. La limpieza aquí debe ser delicada: se trata de viviendas de valor y espacios con historia."
+        },
+        {
+          "id": "barcelona-horta",
+          "name": "Horta",
+          "filename": "limpieza-de-incendios-barcelona-horta.html",
+          "h1": "Limpieza de incendios en Horta: Barrio obrero, problemas reales",
+          "intro": "Horta es Barcelona residencial, trabajadora. Bloques de viviendas, comercio de barrio, gente que vive en comunidad real. Los incendios aquí golpean a familias trabajadoras sin tiempo para esperar. Las casas de Horta son hogares prácticos donde cada día cuenta. Por eso la limpieza tiene que ser rápida, profesional, confiable."
+        }
+      ],
+      "linkedCities": ["valencia", "zaragoza"]
+    },
+    {
+      "id": "valencia",
+      "name": "Valencia",
+      "region": "Comunidad Valenciana",
+      "filename": "limpieza-de-incendios-valencia.html",
+      "type": "city",
+      "h1": "Limpieza profesional de incendios en Valencia: Turia, historia y reconstrucción",
+      "intro": "Valencia fue ciudad de agua. Ahora es ciudad de hormigón y tráfico. El Turia es historia, el incendio es presente. Viviendas modernas con aire acondicionado que no deja entrar luz, bloques de apartamentos donde cien familias respiran el mismo aire. Cuando el fuego entra en Valencia, entra en casas que fueron construidas para vivir rápido: depósitos de resina, instalaciones justas, materiales económicos que cogen humo con facilidad.",
+      "seoTitle": "Limpieza post incendio Valencia | Especialistas 24/7 | Nano Nex",
+      "seoDesc": "Valencia: Limpieza profesional tras incendio. Eliminamos hollín, humo y olores en viviendas y comercios. Presupuesto gratis. Disponibles ahora.",
+      "neighborhoods": [
+        {
+          "id": "valencia-centro",
+          "name": "Centro",
+          "filename": "limpieza-de-incendios-valencia-centro.html",
+          "h1": "Limpieza de incendios en el Centro de Valencia: Corazón de la ciudad",
+          "intro": "El Centro de Valencia palpita. Edificios históricos de finales del XIX conviven con apartamentos modernos, comercios de toda la vida, restaurantes turísticos. Cuando el fuego afecta el Centro, afecta tejido social: casas antiguas con instalaciones nuevas improvisadas, negocios que cierran las persianas por una emergencia. La limpieza debe ser rápida y definitiva."
+        },
+        {
+          "id": "valencia-rascanya",
+          "name": "Rascaña",
+          "filename": "limpieza-de-incendios-valencia-rascanya.html",
+          "h1": "Limpieza de incendios en Rascaña: Valencia trabajadora",
+          "intro": "Rascaña es Valencia obrera. Bloques de viviendas, comercio local, gente que vive en comunidad. Las casas de Rascaña son hogares prácticos donde el humo de un incendio se extiende rápido por escaleras y patios compartidos. Aquí los incendios no son lujos que limpiar: son crisis que requieren solución profesional inmediata."
+        },
+        {
+          "id": "valencia-campanar",
+          "name": "Campanar",
+          "filename": "limpieza-de-incendios-valencia-campanar.html",
+          "h1": "Limpieza de incendios en Campanar: Entre huerta y ciudad",
+          "intro": "Campanar mantiene algo de tradición valenciana. Viviendas residenciales, parcelas con historia, arquitectura más baja que en el Centro. Pero también sufre incendios: casas que arden, humo que se enquista en materiales antiguos, olores que persisten. La limpieza en Campanar requiere entender esa mezcla de tradición y modernidad."
+        }
+      ],
+      "linkedCities": ["barcelona", "murcia"]
+    },
+    {
+      "id": "sevilla",
+      "name": "Sevilla",
+      "region": "Andalucía",
+      "filename": "limpieza-de-incendios-sevilla.html",
+      "type": "city",
+      "h1": "Limpieza de incendios en Sevilla: Reconstruir la tradición",
+      "intro": "Sevilla es el alma de Andalucía. Barrios antiguos de origen medieval, patios interiores, construcciones que tienen siglos. Un incendio aquí no es solo suciedad: es una amenaza a lo que hemos heredado. El hollín del fuego penetra en azulejos antiguos, en vigas de madera que son patrimonio, en espacios que respiran historia. Por eso la limpieza post-incendio en Sevilla requiere delicadeza. No vale cualquier técnica: hace falta especialidad.",
+      "seoTitle": "Limpieza de incendios en Sevilla | Especialistas patrimonio | Nano Nex",
+      "seoDesc": "Sevilla: Limpieza profesional post incendio. Protegemos elementos históricos. Hollín y humo eliminados sin dañar azulejos ni madera antigua.",
+      "neighborhoods": [],
+      "linkedCities": ["cordoba", "malaga", "granada"]
+    },
+    {
+      "id": "malaga",
+      "name": "Málaga",
+      "region": "Andalucía",
+      "filename": "limpieza-de-incendios-malaga.html",
+      "type": "city",
+      "h1": "Limpieza de incendios en Málaga: Cuando el mar no puede ayudar",
+      "intro": "Málaga respira aire de playa. Turismo, comercio, viviendas de temporada. Pero los incendios en Málaga son reales: casas quemadas, humo que se adhiere al ambiente salino, hollín que corroe por la humedad marina. La limpieza aquí es urgente porque la sal del aire acelera el daño. Además, Málaga tiene mucho comercio turístico: un incendio en un restaurante o tienda es crisis económica inmediata.",
+      "seoTitle": "Limpieza post incendio Málaga | 24/7 disponibles | Nano Nex",
+      "seoDesc": "Málaga: Limpieza profesional tras incendio. Actuamos rápido en viviendas y locales. Humo, hollín y olores eliminados. Presupuesto sin compromiso.",
+      "neighborhoods": [],
+      "linkedCities": ["sevilla", "granada", "cordoba"]
+    },
+    {
+      "id": "alicante",
+      "name": "Alicante",
+      "region": "Comunidad Valenciana",
+      "filename": "limpieza-de-incendios-alicante.html",
+      "type": "city",
+      "h1": "Limpieza de incendios en Alicante: Entre playa y caos",
+      "intro": "Alicante es playa y ciudad. Turismo en primera línea, viviendas residenciales en el interior, bloques de altura en el centro. Los incendios aquí tienen carácter múltiple: desde apartamentos de playa con mobiliario fino hasta viviendas obreras con densidad extrema. La limpieza requiere entender esa heterogeneidad: cada tipo de casa necesita técnica diferente.",
+      "seoTitle": "Limpieza de incendios en Alicante | Urgencias 24/7 | Nano Nex",
+      "seoDesc": "Alicante: Limpieza post incendio profesional. Viviendas, apartamentos y locales. Hollín y humo eliminados. Presupuesto gratis disponible ya.",
+      "neighborhoods": [],
+      "linkedCities": ["valencia", "murcia"]
+    },
+    {
+      "id": "murcia",
+      "name": "Murcia",
+      "region": "Región de Murcia",
+      "filename": "limpieza-de-incendios-murcia.html",
+      "type": "city",
+      "h1": "Limpieza de incendios en Murcia: Huerta de ceniza",
+      "intro": "Murcia es tierra y agua, huerta ancestral donde la ciudad creció sin control. Viviendas antiguas en el casco histórico, urbanizaciones nuevas en las afueras, edificios de comercio en el centro. Los incendios aquí tienen ritmo lento pero destructivo: el calor del interior mantiene el humo vivo durante días, el polvo se enquista, los olores persisten. La limpieza en Murcia es cuestión de profesionales que entienda esa inercia térmica.",
+      "seoTitle": "Limpieza post incendio Murcia | Especialistas 24/7 | Nano Nex",
+      "seoDesc": "Murcia: Limpieza profesional tras incendio. Eliminamos humo, hollín y olores definitivamente. Presupuesto gratis. Disponibles ahora.",
+      "neighborhoods": [],
+      "linkedCities": ["alicante", "valencia"]
+    },
+    {
+      "id": "zaragoza",
+      "name": "Zaragoza",
+      "region": "Aragón",
+      "filename": "limpieza-de-incendios-zaragoza.html",
+      "type": "city",
+      "h1": "Limpieza de incendios en Zaragoza: Ebro de humo",
+      "intro": "Zaragoza se extiende a ambos lados del Ebro. Ciudad histórica con modernidad industrial. Casas antiguas en el Casco Viejo, bloques residenciales en expansión, naves y locales comerciales. Los incendios en Zaragoza afectan a viviendas de todo tipo: desde palacios restaurados hasta pisos de obra nueva sin aislamiento. La limpieza aquí debe ser flexible, profesional, y entender cada tipología de daño.",
+      "seoTitle": "Limpieza de incendios en Zaragoza | 24/7 profesionales | Nano Nex",
+      "seoDesc": "Zaragoza: Limpieza post incendio profesional. Viviendas, locales y naves. Humo y hollín eliminados. Presupuesto sin compromiso disponible.",
+      "neighborhoods": [],
+      "linkedCities": ["barcelona", "madrid", "valencia"]
+    },
+    {
+      "id": "granada",
+      "name": "Granada",
+      "region": "Andalucía",
+      "filename": "limpieza-de-incendios-granada.html",
+      "type": "city",
+      "h1": "Limpieza de incendios en Granada: Las faldas de Sierra Nevada",
+      "intro": "Granada respira altura. Casco antiguo pegado a montañas, Albaicín con arquitectura medieval, barrios nuevos en expansión. La geografía de Granada hace que los incendios sean complejos: el humo sube por laderas, se enquista en pisos de diferentes niveles, afecta a casas construidas en épocas diferentes con materiales variados. La limpieza aquí requiere conocimiento de la topografía y técnicas adaptadas.",
+      "seoTitle": "Limpieza post incendio Granada | Especialistas montaña | Nano Nex",
+      "seoDesc": "Granada: Limpieza profesional tras incendio. Protegemos arquitectura histórica. Humo y hollín eliminados. Presupuesto gratis 24/7.",
+      "neighborhoods": [],
+      "linkedCities": ["sevilla", "cordoba", "malaga"]
+    },
+    {
+      "id": "cordoba",
+      "name": "Córdoba",
+      "region": "Andalucía",
+      "filename": "limpieza-de-incendios-cordoba.html",
+      "type": "city",
+      "h1": "Limpieza de incendios en Córdoba: Patrimonio en peligro",
+      "intro": "Córdoba es patrimonio vivo. Casco histórico intacto, casas patio de belleza arquitectónica, construcciones que son herencia andaluza. Un incendio en Córdoba no es solo emergencia: es amenaza al patrimonio. El hollín oscurece arcos de yeso, mancha azulejos mudejar, penetra en patios que son oasis. La limpieza aquí debe ser técnica, delicada, especializada. No se puede limpiar Córdoba con técnicas estándar.",
+      "seoTitle": "Limpieza de incendios en Córdoba | Especialistas patrimonio | Nano Nex",
+      "seoDesc": "Córdoba: Limpieza post incendio delicada. Protegemos arquitectura medieval. Presupuesto sin compromiso. Disponibles 24/7.",
+      "neighborhoods": [],
+      "linkedCities": ["sevilla", "granada", "malaga"]
+    },
+    {
+      "id": "bilbao",
+      "name": "Bilbao",
+      "region": "País Vasco",
+      "filename": "limpieza-de-incendios-bilbao.html",
+      "type": "city",
+      "h1": "Limpieza de incendios en Bilbao: Recuperar la ría",
+      "intro": "Bilbao es ría, industria reconvertida, modernidad. Edificios históricos del Casco Viejo conviven con arquitectura contemporánea, viviendas en la Margen Derecha, comercio en Gran Vía. Los incendios aquí afectan a ciudades en capas: viviendas antiguas sin reforma, apartamentos modernos con sistemas cerrados, oficinas con climatización intensiva. La humedad del Nervión hace que el humo se adhiera diferente. La limpieza requiere entender esa complejidad urbana.",
+      "seoTitle": "Limpieza post incendio Bilbao | Especialistas Nervión | Nano Nex",
+      "seoDesc": "Bilbao: Limpieza profesional tras incendio. Viviendas, oficinas y comercios. Humo y hollín eliminados. Presupuesto gratis ahora.",
+      "neighborhoods": [],
+      "linkedCities": ["barcelona", "zaragoza"]
+    },
+    {
+      "id": "palma",
+      "name": "Palma",
+      "region": "Islas Baleares",
+      "filename": "limpieza-de-incendios-palma.html",
+      "type": "city",
+      "h1": "Limpieza de incendios en Palma: Cuando el fuego llega a la isla",
+      "intro": "Palma es turismo, playas, viviendas de lujo. Pero también es ciudad con casas de verdad donde viven familias. Los incendios en Palma son especiales: la humedad marina intensifica el daño, el aislamiento de la isla hace que no haya emergencias rápidas, los olores persisten más. Además, en Palma hay apartamentos turísticos de valor: un incendio es pérdida económica inmediata. La limpieza debe ser profesional, rápida, garantizada.",
+      "seoTitle": "Limpieza de incendios en Palma | 24/7 isla disponibles | Nano Nex",
+      "seoDesc": "Palma: Limpieza post incendio profesional en isla. Apartamentos y viviendas. Humo y hollín eliminados definitivamente. Presupuesto sin compromiso.",
+      "neighborhoods": [],
+      "linkedCities": ["barcelona", "valencia"]
+    }
+  ]
+}
