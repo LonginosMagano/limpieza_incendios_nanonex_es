@@ -1,0 +1,387 @@
+================================================================================
+ENTREGA FINAL: PLAN CRÍTICO 3A + 3B
+Limpieza Blog + Expansión Geográfica
+Nano Nex Madrid - Limpieza Post Incendio
+================================================================================
+
+FECHA: 2026-06-14
+VERSIÓN: 1.0 Completa
+ESTADO: ✅ LISTO PARA IMPLEMENTACIÓN
+
+================================================================================
+RESUMEN EJECUTIVO
+================================================================================
+
+Se ha completado análisis exhaustivo y plan de implementación para dos críticos:
+
+1. CRÍTICO 3A: LIMPIEZA DE BLOG
+   Problema: 50% de contenido OFF-TOPIC (100/201 posts) diluy autoridad SEO
+   Solución: 301 redirects a /limpieza-general.html
+   Timeline: 2 semanas
+   Impacto: Enfoque en 101 posts relevantes (post-incendio + técnicas especiales)
+
+2. CRÍTICO 3B: EXPANSIÓN GEOGRÁFICA
+   Plan: 11 nuevas landings en ciudades estratégicas (Tier 1-3)
+   Timeline: 4 semanas
+   Impacto: 570-840 búsquedas/mes + 4-7 leads/mes + 8-14K€/mes (6+ meses)
+   ROI: 8-14x
+
+PROYECTO TOTAL: 6 semanas, ~38 horas, 900-1.350€ (si outsource)
+
+================================================================================
+ARCHIVOS GENERADOS (6 documentos)
+================================================================================
+
+1. README_PLAN_CRITICO.md ⭐ ÍNDICE MAESTRO
+   - Descripción de todos los archivos
+   - Rutas de lectura recomendadas por rol
+   - Datos clave resumidos
+   - Guía rápida de implementación
+   ✓ Tamaño: 8.8 KB
+   ✓ Tiempo lectura: 5 min
+
+2. RESUMEN_EJECUTIVO_FINAL.md ⭐ PARA DIRECTIVOS
+   - Hallazgos clave (blog + expansión)
+   - Timelines integrados (Semanas 1-6)
+   - Recursos necesarios
+   - Impacto proyectado
+   - Checklist implementación
+   ✓ Tamaño: 8.1 KB
+   ✓ Tiempo lectura: 10 min
+
+3. PLAN_CRITICO_3A_3B.md ⭐ DOCUMENTO COMPLETO
+   - PARTE 1: Análisis Blog (1.1-1.7)
+     - 201 posts categorizados en 5 clústeres
+     - 100 posts OFF-TOPIC identificados
+     - Estrategia de 301 redirects detallada
+
+   - PARTE 2: Expansión Geográfica (2.1-2.6)
+     - 11 ciudades priorizadas (Tier 1-3)
+     - Copy templates personalizados (Valladolid, Murcia ejemplos)
+     - Checklist técnico de implementación
+     - Estimación de impacto SEO (570-840 búsquedas/mes)
+
+   - PARTE 3: Plan Implementación (3.1-3.6)
+     - Timeline consolidado (Fases 3A + 3B)
+     - Recursos + checklist semanal
+     - Validación pre-deploy + monitorización post-launch
+
+   ✓ Tamaño: 33 KB
+   ✓ Tiempo lectura: 30-45 min
+   ✓ Para: Project managers, developers, copywriters, SEO specialists
+
+4. OFF_TOPIC_POSTS_REDIRECT_LIST.txt
+   - Lista completa de 100 posts OFF-TOPIC
+   - Categorizados en 4 grupos:
+     * Limpieza del hogar (35 posts)
+     * Limpieza industrial/comercial genérica (30 posts)
+     * Síndrome de Diógenes / Acumulación (28 posts)
+     * Otros (7 posts)
+   - URLs exactas para cada post
+   - Instrucciones para .htaccess
+   ✓ Tamaño: 11 KB
+   ✓ Tiempo lectura: 10 min
+   ✓ Para: Developers, SEO specialists
+
+5. HTACCESS_REDIRECTS_EXAMPLE.txt
+   - Template técnico para configuración .htaccess
+   - 20 ejemplos de redirects 301 reales
+   - Notas técnicas (RedirectMatch vs Redirect, orden, trailing slash, etc.)
+   - Comandos de validación (curl, herramientas online)
+   - Checklist: pre-deploy + post-deploy
+   ✓ Tamaño: 12 KB
+   ✓ Tiempo lectura: 15 min
+   ✓ Para: Developers, DevOps
+
+6. CIUDADES_EXPANSION_MAESTRO.csv
+   - Tabla maestra de 11 ciudades
+   - 20 columnas: Prioridad, Tier, Semana, Ciudad, Provincia, CCAA,
+     Población, Estado, Context Hook, Industrias, Clima, Municipios Vecinos,
+     URL Archivo, Meta Title, Meta Description, Copy Hero, Search Volume, Status
+   - Filas: 11 ciudades (Valladolid, Burgos, Toledo, Murcia, Jaén, Huesca,
+     Teruel, Salamanca, Cuenca, Alicante, Castellón)
+   - Secciones adicionales: Notas meta, Timeline resumen, Validación,
+     Municipios candidatos Fase 3C
+   ✓ Tamaño: 12 KB
+   ✓ Para: Project managers, copywriters, developers (tracking)
+
+================================================================================
+ANÁLISIS CRÍTICO 3A: BLOG CLEANUP
+================================================================================
+
+HALLAZGOS PRINCIPALES:
+├─ Total posts: 201 únicos (2017-2025)
+├─ Posts relevantes (post-incendio): 81 posts (40.3%)
+├─ Posts técnicas especiales (ozono, láser, etc.): 20 posts (9.9%)
+├─ Posts OFF-TOPIC (eliminar): 100 posts (49.8%) ⚠️
+│  └─ Limpieza ducha, inodoro, mesas, cortinas, moscas, etc.
+└─ TOTAL A MANTENER: 101 posts (50.2%)
+
+PROBLEMA ESTRATÉGICO:
+  Google ve el sitio como "limpieza genérica" en lugar de "post-incendio"
+  → Cannibalización de crawl budget
+  → Baja intención de conversión
+  → Señal débil de E-E-A-T
+
+SOLUCIÓN RECOMENDADA: OPCIÓN B - 301 REDIRECTS
+  ✓ Preserva autoridad de dominio (Page Rank sigue fluyendo)
+  ✓ Reduce crawl budget desperdiciado
+  ✓ Mejora UX (usuarios redirigidos a contenido relevante)
+  ✓ Mantiene historial en Google Search Console
+
+IMPLEMENTACIÓN:
+  1. Crear /limpieza-general.html (nueva página genérica)
+  2. Generar 100 redirects 301 en .htaccess
+  3. Actualizar blog.html con nuevas categorías
+  4. Actualizar sitemap.xml (remover 100 posts, agregar limpieza-general)
+  5. Test: validar 10 URLs aleatorias
+  6. Deploy: subir a producción
+  7. GSC: submit nuevo sitemap
+
+TIMELINE: 2 semanas (7 días útiles)
+
+================================================================================
+ANÁLISIS CRÍTICO 3B: EXPANSIÓN GEOGRÁFICA
+================================================================================
+
+COBERTURA ACTUAL:
+  Landings existentes: 48 archivos
+  ├─ Madrid: 11 landings (saturado)
+  ├─ Barcelona: 6 landings (buena)
+  ├─ Valencia: 4 landings (parcial)
+  ├─ Andalucía: 8+ landings (parcial)
+  ├─ Castilla-La Mancha: 0 ❌ CRÍTICO
+  ├─ Castilla y León: 0 ❌ CRÍTICO
+  └─ Otros: ~10
+
+PLAN DE EXPANSIÓN: 11 NUEVAS LANDINGS
+
+TIER 1 (Alto valor, 5 landings):
+  1. Valladolid (Castilla y León) - 305K - Industria alimentaria
+     Municipios: Tordesillas, Peñafiel, Medina del Campo
+  2. Burgos (Castilla y León) - 178K - Medieval + patrimonio
+     Municipios: Aranda de Duero, Briviesca
+  3. Toledo (Castilla-La Mancha) - 84K - UNESCO turismo
+     Municipios: Talavera de la Reina, Orgaz
+  4. Murcia (Región Murcia) - 468K - Clima cálido + turismo
+     Municipios: Cartagena, Lorca
+  5. Jaén (Andalucía) - 114K - Olivadera rural
+     Municipios: Linares, Andújar
+
+  Búsquedas estimadas: 380-510/mes
+  Timeline: Semanas 2-3
+
+TIER 2 (Valor medio, 4 landings):
+  6. Huesca (Aragón) - 52K - Pirineo turismo
+  7. Teruel (Aragón) - 35K - Rural extremo
+  8. Salamanca (Castilla y León) - 143K - Universitaria
+  9. Cuenca (Castilla-La Mancha) - 54K - Casas colgadas patrimonio
+
+  Búsquedas estimadas: 80-160/mes
+  Timeline: Semanas 4-5
+
+TIER 3 (Mantenimiento, 2 landings):
+  10. Alicante (C. Valenciana) - 330K - Costa Blanca
+  11. Castellón (C. Valenciana) - 174K - Cerámica
+
+  Búsquedas estimadas: 110-170/mes
+  Timeline: Semana 5
+
+VOLUMEN TOTAL NUEVO: 570-840 búsquedas/mes
+IMPACTO ESPERADO:
+  CTR (top 3): 20-30%
+  Conversión: 2-3% de clics
+  Leads nuevos/mes: 4-7 leads (6+ meses post-launch)
+  Valor/mes: 8-14K€ potencial
+  ROI: 8-14x
+
+TIMELINE TOTAL: 4 semanas desarrollo + 2-3 meses para posicionamiento
+
+================================================================================
+TIMELINE INTEGRADO: FASES 3A + 3B
+================================================================================
+
+SEMANA 1-2: FASE 3A (Blog Cleanup)
+├─ Días 1-2: Análisis final + validación
+├─ Días 3-4: Crear /limpieza-general.html + generar 301 redirects
+├─ Día 5: Actualizar blog.html + sitemap.xml
+├─ Día 6: Test en staging
+└─ Día 7: Deploy a producción
+
+SEMANA 2-3: FASE 3B TIER 1 Parte 1
+├─ Lunes-Martes: Research + copywriting (Valladolid, Burgos)
+├─ Miércoles-Jueves: Desarrollo HTML (2 landings)
+├─ Viernes: Testing
+└─ Sábado: Deploy
+
+SEMANA 3: FASE 3B TIER 1 Parte 2
+├─ Lunes-Martes: Research + copywriting (Toledo, Murcia, Jaén)
+├─ Miércoles-Jueves: Desarrollo HTML (3 landings)
+└─ Viernes: Deploy + QA
+
+SEMANA 4: FASE 3B TIER 2 Parte 1
+├─ Lunes-Martes: Research + copywriting (Huesca, Teruel, Salamanca)
+├─ Miércoles-Jueves: Desarrollo HTML (3 landings)
+└─ Viernes: Deploy
+
+SEMANA 5: FASE 3B TIER 2 Parte 2 + TIER 3
+├─ Lunes-Martes: Research + copywriting (Cuenca, Alicante, Castellón)
+├─ Miércoles-Jueves: Desarrollo HTML (3 landings)
+├─ Viernes: Actualizar /ubicaciones.html + sitemap.xml
+└─ Sábado: Deploy final
+
+SEMANA 6: Integración + Monitorización
+├─ Google Search Console: submit sitemap
+├─ Monitorizar crawl errors (primeras 48h)
+└─ Validar posicionamiento inicial
+
+PROYECTO TOTAL: 6 semanas
+
+================================================================================
+RECURSOS NECESARIOS
+================================================================================
+
+Copywriting + Research: 13 horas
+├─ 2h Valladolid, Burgos
+├─ 2.5h Toledo, Murcia, Jaén
+├─ 2h Huesca, Teruel, Salamanca
+└─ 2h Cuenca, Alicante, Castellón
+Coste: 500-750€
+
+Desarrollo HTML + Técnico: 19 horas
+├─ 3h Tier 1 (5 landings)
+├─ 4.5h Tier 2 (4 landings)
+├─ 4.5h Tier 3 (2 landings)
+├─ 2h Validación + integración
+└─ 3h Testing + QA
+Coste: 400-600€
+
+SEO + Schema.org: 2 horas (incluido en desarrollo)
+Testing + QA: 4 horas (incluido en desarrollo)
+
+TOTAL: 38 horas, 900-1.350€ (si outsource)
+TIMELINE: ~2 semanas dedicadas
+
+================================================================================
+IMPACTO PROYECTADO
+================================================================================
+
+MES 1-2 (Post-launch)
+├─ Indexación de 11 landings
+├─ Posicionamiento inicial (posición 7-15)
+├─ Primeros clics en GSC
+└─ 1-2 leads iniciales
+
+MES 3-4 (Consolidación)
+├─ Posicionamiento mejorado (posición 3-8)
+├─ 2-4 leads/mes
+└─ Datos de CTR en GSC
+
+MES 6+ (Madurez)
+├─ Posicionamiento top 3 para keywords principales
+├─ 4-7 leads/mes
+├─ 8-14K€/mes de valor potencial
+└─ Data para expandir a municipios vecinos (Fase 3C futura)
+
+================================================================================
+CHECKLIST IMPLEMENTACIÓN
+================================================================================
+
+FASE 3A (Blog Cleanup) - SEMANA 1-2
+├─ [ ] Crear /limpieza-general.html
+├─ [ ] Generar 100 redirects 301 para .htaccess
+├─ [ ] Actualizar blog.html con nuevas categorías
+├─ [ ] Actualizar sitemap.xml
+├─ [ ] Test: validar 301s en 10 URLs aleatorias
+├─ [ ] Deploy: subir archivos a producción
+└─ [ ] GSC: submit nuevo sitemap
+
+FASE 3B (Expansión) - SEMANA 2-6
+├─ [ ] Crear template base desde limpieza-de-incendios-malaga.html
+├─ [ ] Escribir copy personalizado para 11 ciudades
+├─ [ ] Desarrollar 11 landings HTML
+├─ [ ] Validar meta tags, schema.org, links internos
+├─ [ ] Testing responsive + velocidad
+├─ [ ] Deploy secuencial (no todo de una vez)
+├─ [ ] Actualizar /ubicaciones.html
+└─ [ ] Monitorizar posicionamiento en GSC
+
+================================================================================
+MÉTRICAS A TRACKEAR
+================================================================================
+
+Google Search Console:
+├─ Impressions por ciudad
+├─ Click-through rate (CTR)
+├─ Average position (esperado: 7-15 inicial → 3-5 en 8 semanas)
+└─ Crawl stats
+
+Google Analytics 4:
+├─ Users nuevos por landing
+├─ Conversion rate (formulario)
+└─ Time on page
+
+Business:
+├─ Form submissions por ciudad
+├─ Lead quality
+└─ Sales closed
+
+================================================================================
+SIGUIENTES PASOS
+================================================================================
+
+INMEDIATO (Esta semana):
+1. Revisar y aprobar este plan (RESUMEN_EJECUTIVO_FINAL.md)
+2. Asignar recursos (copywriter + developer)
+3. Crear /limpieza-general.html en staging
+4. Validar que 100 posts OFF-TOPIC están documentados
+
+SEMANA 1 (Fase 3A):
+1. Generar 100 redirects 301 en .htaccess
+2. Actualizar sitemap.xml
+3. Testing en staging
+4. Deploy a producción
+
+SEMANA 2-6 (Fase 3B):
+1. Crear 11 landings siguiendo CIUDADES_EXPANSION_MAESTRO.csv
+2. Deploy secuencial (no todo de una vez)
+3. Testing y validación
+4. Actualizar /ubicaciones.html + sitemap.xml
+
+SEMANA 7+ (Optimización):
+1. Monitorizar posicionamiento en Google Search Console
+2. Identificar keywords con bajo CTR → reescribir copy
+3. Identificar gaps de ranking → crear blog posts de soporte
+4. Plan de expansión a municipios vecinos (Fase 3C futura)
+
+================================================================================
+CONCLUSIÓN
+================================================================================
+
+Se ha entregado un plan completo, detallado y listo para implementación que
+aborda dos críticos simultaneamente:
+
+1. LIMPIAR BLOG: Eliminar 50% OFF-TOPIC mediante 301 redirects
+   → Enfoque en 101 posts post-incendio + técnicas especiales
+   → Mejora de 2-3x en autoridad temática
+
+2. EXPANDIR GEOGRAFÍA: 11 nuevas landings en ciudades estratégicas
+   → 570-840 búsquedas/mes nuevas
+   → 4-7 leads/mes (6+ meses post-launch)
+   → 8-14K€/mes de valor potencial
+
+TIMELINE: 6 semanas, ~38 horas, 900-1.350€ (si outsource)
+
+Documentación completa generada:
+✓ README_PLAN_CRITICO.md (índice maestro)
+✓ RESUMEN_EJECUTIVO_FINAL.md (para directivos)
+✓ PLAN_CRITICO_3A_3B.md (documento completo, 40+ páginas)
+✓ OFF_TOPIC_POSTS_REDIRECT_LIST.txt (100 posts a redirigir)
+✓ HTACCESS_REDIRECTS_EXAMPLE.txt (template técnico)
+✓ CIUDADES_EXPANSION_MAESTRO.csv (tabla maestra 11 ciudades)
+
+================================================================================
+ESTADO: ✅ LISTO PARA IMPLEMENTACIÓN
+Fecha: 2026-06-14
+Versión: 1.0 Completa
+================================================================================
