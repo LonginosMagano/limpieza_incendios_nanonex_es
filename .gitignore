@@ -35,3 +35,6 @@ build/
 # Archivos grandes / datos locales (descomenta si aplica)
 # data/*.csv
 # data/*.zip
+
+# Claude Code / worktrees
+.claude/worktrees/
