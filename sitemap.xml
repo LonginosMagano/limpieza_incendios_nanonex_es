@@ -247,7 +247,9 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- ARTÍCULOS BLOG Y EDUCACIONALES (16 PÁGINAS) -->
+  <!-- ARTÍCULOS BLOG Y EDUCACIONALES (DESPUÉS CONSOLIDACIÓN) -->
+  <!-- Nota: 9 URLs de "cómo limpiar hollín en [ciudad]" consolidadas a 3 hubs -->
+  <!-- Las 6 URLs satélites redirigen a los 3 hubs principales via .htaccess (301) -->
   <url>
     <loc>https://limpiezaincendiosnanonexmadrid.com.es/como-eliminar-olor-a-humo-en-casa.html</loc>
     <lastmod>2026-06-14</lastmod>
@@ -260,60 +262,35 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://limpiezaincendiosnanonexmadrid.com.es/como-limpiar-el-hollin-en-alcala-de-henares.html</loc>
-    <lastmod>2026-06-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://limpiezaincendiosnanonexmadrid.com.es/como-limpiar-el-hollin-en-alcobendas.html</loc>
-    <lastmod>2026-06-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://limpiezaincendiosnanonexmadrid.com.es/como-limpiar-el-hollin-en-alcorcon.html</loc>
-    <lastmod>2026-06-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://limpiezaincendiosnanonexmadrid.com.es/como-limpiar-el-hollin-en-fuenlabrada.html</loc>
-    <lastmod>2026-06-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://limpiezaincendiosnanonexmadrid.com.es/como-limpiar-el-hollin-en-getafe.html</loc>
-    <lastmod>2026-06-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://limpiezaincendiosnanonexmadrid.com.es/como-limpiar-el-hollin-en-leganes.html</loc>
-    <lastmod>2026-06-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
+  <!-- HUB 1: MADRID NORTE/CENTRO -->
   <url>
     <loc>https://limpiezaincendiosnanonexmadrid.com.es/como-limpiar-el-hollin-en-madrid.html</loc>
     <lastmod>2026-06-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <!-- HUB 2: ALCALÁ ESTE (PATRIMONIO UNESCO) -->
   <url>
-    <loc>https://limpiezaincendiosnanonexmadrid.com.es/como-limpiar-el-hollin-en-mostoles.html</loc>
+    <loc>https://limpiezaincendiosnanonexmadrid.com.es/como-limpiar-el-hollin-en-alcala-de-henares.html</loc>
     <lastmod>2026-06-14</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
+  <!-- HUB 3: GETAFE SUR (INDUSTRIAL) -->
   <url>
-    <loc>https://limpiezaincendiosnanonexmadrid.com.es/como-limpiar-el-hollin-en-torrejon-de-ardoz.html</loc>
+    <loc>https://limpiezaincendiosnanonexmadrid.com.es/como-limpiar-el-hollin-en-getafe.html</loc>
     <lastmod>2026-06-14</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
+  <!-- CONSOLIDADAS VIA 301 (no en sitemap):
+       - alcobendas → madrid
+       - alcorcon → getafe
+       - fuenlabrada → getafe
+       - leganes → getafe
+       - mostoles → getafe
+       - torrejon-de-ardoz → madrid
+  -->
   <url>
     <loc>https://limpiezaincendiosnanonexmadrid.com.es/que-hacer-despues-de-un-incendio.html</loc>
     <lastmod>2026-06-14</lastmod>

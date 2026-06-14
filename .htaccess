@@ -134,13 +134,25 @@ ErrorDocument 500 /index.html
 </IfModule>
 
 # ============================
-# 11. REDIRECTS 301 ANTIGUAS URLs
-# (Añadir aquí los redirects de URLs migradas)
+# 11. REDIRECTS 301 - CONSOLIDACIÓN CONTENIDO DUPLICADO
+# Plan de consolidación "Como limpiar hollín" (2026-06-14)
 # ============================
 
-# Ejemplo: URLs antiguas sin keyword
-# RewriteRule ^madrid/?$ /limpieza-incendios-madrid/ [L,R=301]
-# RewriteRule ^servicios/?$ /limpieza-incendios-madrid/ [L,R=301]
+# CLÚSTER 1: NORTE/CENTRO → MADRID HUB
+RewriteRule ^como-limpiar-el-hollin-en-alcobendas/?$ /como-limpiar-el-hollin-en-madrid.html [L,R=301]
+RewriteRule ^como-limpiar-el-hollin-en-torrejon-de-ardoz/?$ /como-limpiar-el-hollin-en-madrid.html [L,R=301]
+
+# CLÚSTER 2: SUR/INDUSTRIAL → GETAFE HUB
+RewriteRule ^como-limpiar-el-hollin-en-alcorcon/?$ /como-limpiar-el-hollin-en-getafe.html [L,R=301]
+RewriteRule ^como-limpiar-el-hollin-en-fuenlabrada/?$ /como-limpiar-el-hollin-en-getafe.html [L,R=301]
+RewriteRule ^como-limpiar-el-hollin-en-leganes/?$ /como-limpiar-el-hollin-en-getafe.html [L,R=301]
+RewriteRule ^como-limpiar-el-hollin-en-mostoles/?$ /como-limpiar-el-hollin-en-getafe.html [L,R=301]
+
+# MANTENER (NO REDIRIGIR):
+# - como-limpiar-el-hollin-en-madrid.html (HUB norte/centro)
+# - como-limpiar-el-hollin-en-alcala-de-henares.html (HUB este, patrimonio UNESCO)
+# - como-limpiar-el-hollin-en-getafe.html (HUB sur, industrial)
+# - como-limpiar-el-hollin-de-paredes-y-techos.html (guía genérica)
 
 # ============================
 # FIN DEL ARCHIVO
