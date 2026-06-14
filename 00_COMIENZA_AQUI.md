@@ -215,7 +215,7 @@ Crea estas 3 landings usando TEMPLATE_MUNICIPIO_GETAFE.html como base:
 ☐ Subí 404.html
 ☐ Subí llms.txt
 ☐ Probé https://limpiezaincendiosnanonexmadrid.com.es/ (homepage)
-☐ Probé formulario (debe enviar a info@nano-nex.es)
+☐ Probé formulario (debe enviar a info@nanonex.es)
 ☐ Probé botones flotantes (llamada + WhatsApp)
 ☐ Probé URL inexistente (debe mostrar 404.html)
 ☐ Probé HTTPS redirect (http → https)
@@ -237,8 +237,8 @@ Crea estas 3 landings usando TEMPLATE_MUNICIPIO_GETAFE.html como base:
 - Interlinking roto → Verifica URLs exactas en plantillas
 
 **Contacto urgente**:
-- 📧 info@nano-nex.es
-- 📞 911 086 565
+- 📧 info@nanonex.es
+- 📞 632 107 272
 
 ---
 
@@ -300,8 +300,8 @@ Tu web de limpieza por incendio en Madrid está lista para explotar en Google.
 El éxito depende de que implementes FASE 1 esta semana y crées las 25 landings en las próximas 2 semanas.
 
 **¿Preguntas?**
-📧 info@nano-nex.es
-📞 911 086 565
+📧 info@nanonex.es
+📞 632 107 272
 
 ---
 

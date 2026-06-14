@@ -54,8 +54,8 @@
 ## ❌ PROBLEMAS DETECTADOS
 
 ### 1. **CONTACTO DESACTUALIZADO**
-- ❌ Teléfono: 911 086 565 (DEBE SER: 632 107 272)
-- ❌ Email: info@nano-nex.es (DEBE SER: info@nanonex.es)
+- ❌ Teléfono: 632 107 272 (DEBE SER: 632 107 272)
+- ❌ Email: info@nanonex.es (DEBE SER: info@nanonex.es)
 - ❌ WhatsApp: No configurado correctamente
 
 ### 2. **TEXTOS NO HUMANIZADOS**

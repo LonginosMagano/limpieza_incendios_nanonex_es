@@ -301,8 +301,8 @@
 - ❓ "Favicon no aparece" → Borra caché del navegador (Ctrl+F5)
 
 **Contacto**:
-- 📧 info@nano-nex.es
-- 📞 911 086 565 (L-V 07:00-22:00, Sáb-Dom 08:00-16:00)
+- 📧 info@nanonex.es
+- 📞 632 107 272 (L-V 07:00-22:00, Sáb-Dom 08:00-16:00)
 
 ---
 

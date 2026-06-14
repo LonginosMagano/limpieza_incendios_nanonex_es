@@ -4,7 +4,7 @@
 **Documento**: Plan integral de optimización SEO + contenido + técnica
 **Dominio**: `limpiezaincendiosnanonexmadrid.com.es`
 **Grupo**: Nano Nex (https://nano-nex.es)
-**Email**: info@nano-nex.es
+**Email**: info@nanonex.es
 **Keyword Principal**: "Limpieza por incendio"
 **Alcance Geográfico**: SOLO Comunidad de Madrid (capital + barrios + municipios)
 
@@ -40,7 +40,7 @@
 #### 1.1 Index.html v2.0 (SEO-Optimizado)
 - ✅ H1: "Limpieza por incendio en Madrid | Urgente 24/7"
 - ✅ Title: "Limpieza por Incendio en Madrid | Nano Nex - Urgente 24h"
-- ✅ Meta description: "Especialistas en limpieza por incendio en Madrid. Servicio urgente 24h, eliminación de hollín y olor. Presupuesto gratis. ☎ 911 086 565."
+- ✅ Meta description: "Especialistas en limpieza por incendio en Madrid. Servicio urgente 24h, eliminación de hollín y olor. Presupuesto gratis. ☎ 632 107 272."
 - ✅ Schema Organization (raíz) + BreadcrumbList
 - ✅ Open Graph completo
 - ✅ Twitter Card
@@ -49,7 +49,7 @@
 - ✅ Favicon actualizado (relativo)
 
 #### 1.2 Botones Flotantes Mejorados
-- ✅ Llamada (911 086 565) - derecha inferior, sticky
+- ✅ Llamada (632 107 272) - derecha inferior, sticky
 - ✅ WhatsApp (oficial, no SVG deprecado)
 - ✅ No desaparecer al scroll
 - ✅ Responsive móvil (no solapan con CTA)
@@ -222,7 +222,7 @@ Sitemap: https://limpiezaincendiosnanonexmadrid.com.es/sitemap.xml
 #### 4.6 Formulario FormSubmit (NO Formspree)
 
 ```html
-<form action="https://formsubmit.co/info@nano-nex.es" method="POST">
+<form action="https://formsubmit.co/info@nanonex.es" method="POST">
   <input type="hidden" name="_subject" value="Presupuesto Limpieza - limpiezaincendiosnanonexmadrid.com.es">
   <input type="hidden" name="_captcha" value="false">
   <!-- Campos nombre, tel, población -->
@@ -289,9 +289,9 @@ En cada artículo:
 - Fuentes: Montserrat (headings) + Open Sans (body)
 
 ### Contacto
-- **Teléfono**: 911 086 565
+- **Teléfono**: 632 107 272
 - **WhatsApp**: +34 6321072** (verificar)
-- **Email**: info@nano-nex.es
+- **Email**: info@nanonex.es
 - **Grupo**: Nano Nex (https://nano-nex.es)
 - **Dirección**: Plaza de Castilla, 3, 28046 Madrid
 
@@ -315,10 +315,10 @@ En cada artículo:
 ### Ejemplos
 
 **Home**:
-"Especialistas en limpieza por incendio en Madrid. Servicio urgente 24/7, eliminación de hollín y olor. Tu seguro puede cubrirlo 100%. Presupuesto gratis. ☎ 911 086 565"
+"Especialistas en limpieza por incendio en Madrid. Servicio urgente 24/7, eliminación de hollín y olor. Tu seguro puede cubrirlo 100%. Presupuesto gratis. ☎ 632 107 272"
 
 **Barrio (Salamanca)**:
-"Limpieza por incendio en Salamanca, Madrid. Urgente 24h, descontaminación profesional. Edificios modernistas y zonas residenciales. Informe para seguro incluido. ☎ 911 086 565"
+"Limpieza por incendio en Salamanca, Madrid. Urgente 24h, descontaminación profesional. Edificios modernistas y zonas residenciales. Informe para seguro incluido. ☎ 632 107 272"
 
 **Municipio (Getafe)**:
 "Limpieza por incendio en Getafe (Madrid). Zona industrial + residencial. Servicio rápido, presupuesto gratuito. Gestionamos tu seguro. Disponible 24/7."

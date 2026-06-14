@@ -3,14 +3,14 @@
 ## CICLO 1: CONTACTO Y CONFIGURACIÓN BÁSICA (Hoy - 2h)
 
 ### Microtarea 1.1: Actualizar Teléfono Global
-- [ ] Buscar y reemplazar `911 086 565` → `632 107 272` en TODOS los HTML
-- [ ] Validar con: `grep -r "911 086 565" .`
+- [ ] Buscar y reemplazar `632 107 272` → `632 107 272` en TODOS los HTML
+- [ ] Validar con: `grep -r "632 107 272" .`
 - [ ] Verificar WhatsApp wa.me link: `https://wa.me/34632107272`
 
 ### Microtarea 1.2: Actualizar Email
-- [ ] Buscar y reemplazar `info@nano-nex.es` → `info@nanonex.es`
+- [ ] Buscar y reemplazar `info@nanonex.es` → `info@nanonex.es`
 - [ ] Actualizar en FormSubmit _subject
-- [ ] Validar: `grep -r "info@nano-nex.es" .`
+- [ ] Validar: `grep -r "info@nanonex.es" .`
 
 ### Microtarea 1.3: Validar FormSubmit
 - [ ] Verificar FormSubmit en index.html

@@ -323,7 +323,7 @@ Contenido: 1000-1200 palabras únicas
 </div>
 
 <h2>¿Necesitas ayuda urgente?</h2>
-<a href="tel:911086565">911 086 565</a>
+<a href="tel:911086565">632 107 272</a>
 ```
 
 **Artículos a crear (6 páginas)**:
@@ -380,7 +380,7 @@ El nuevo index.html usa **FormSubmit** en lugar de Formspree:
 <form action="https://formspree.io/f/xqarnldw" method="POST">
 
 <!-- NUEVO (FormSubmit) -->
-<form action="https://formsubmit.co/info@nano-nex.es" method="POST">
+<form action="https://formsubmit.co/info@nanonex.es" method="POST">
     <input type="hidden" name="_subject" value="Presupuesto Limpieza - limpiezaincendiosnanonexmadrid.com.es">
 ```
 
@@ -392,7 +392,7 @@ El nuevo index.html usa **FormSubmit** en lugar de Formspree:
 
 **Verificación**:
 1. Prueba el formulario en homepage
-2. Verifica email en info@nano-nex.es
+2. Verifica email en info@nanonex.es
 3. Confirma que aparezca el campo "Origen: limpiezaincendiosnanonexmadrid.com.es"
 
 ---
@@ -417,7 +417,7 @@ El nuevo index.html usa **FormSubmit** en lugar de Formspree:
 - [ ] Index.html reemplazado y funciona
 - [ ] Todas las imágenes cargan correctamente
 - [ ] Links internos funcionan (sin errores 404)
-- [ ] Formulario envía correos a info@nano-nex.es
+- [ ] Formulario envía correos a info@nanonex.es
 - [ ] Botones flotantes (llamada + WhatsApp) visibles en móvil
 - [ ] Cookie banner aparece (delay 2seg)
 - [ ] HTTPS forzado funciona
@@ -447,7 +447,7 @@ ls -la public_html/*.jpg
 ```
 
 ### El formulario no envía correos
-**Solución**: Cambia `info@nano-nex.es` en form action a un email verificado.
+**Solución**: Cambia `info@nanonex.es` en form action a un email verificado.
 ```html
 <form action="https://formsubmit.co/TU_EMAIL_VERIFICADO@email.com">
 ```
@@ -472,8 +472,8 @@ ErrorDocument 404 /404.html
 
 Si tienes dudas durante la implementación:
 
-- **Email**: info@nano-nex.es
-- **Teléfono**: 911 086 565
+- **Email**: info@nanonex.es
+- **Teléfono**: 632 107 272
 - **Horario**: L-V 07:00-22:00, Sáb-Dom 08:00-16:00
 
 ---

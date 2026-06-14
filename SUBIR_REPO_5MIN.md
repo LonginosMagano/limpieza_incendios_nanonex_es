@@ -76,7 +76,7 @@ cd limpiezaincendiosnanonexmadrid
 
 PASO 2: Configurar git
 ```bash
-git config user.email "info@nano-nex.es"
+git config user.email "info@nanonex.es"
 git config user.name "Nano Nex Team"
 ```
 
@@ -236,8 +236,8 @@ Impacto:
 ═══════════════════════════════════════════════════════════════════════════════
 
 ¿Problemas con el push?
-  Email: info@nano-nex.es
-  Tel: 911 086 565
+  Email: info@nanonex.es
+  Tel: 632 107 272
   Horario: L-V 07:00-22:00, Sáb-Dom 08:00-16:00
 
 ═══════════════════════════════════════════════════════════════════════════════

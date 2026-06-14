@@ -82,7 +82,7 @@ exacto del repo; incluye `.htaccess` y dotfiles).
 
 - **Razón social:** Limpieza Incendios Nano Nex S.L. · **CIF:** B-10541001
 - **Dirección:** Plaza de Castilla, 3, 28046 Madrid
-- **Teléfono:** 911 086 565 · **WhatsApp:** +34 632 107 272 · **Email:** info@nanonex.es
+- **Teléfono:** 632 107 272 · **WhatsApp:** +34 632 107 272 · **Email:** info@nanonex.es
 - **Horario:** L-V 07:00-22:00 · Sáb-Dom 08:00-16:00 · Urgencias 24/7
 - **Google Business Profile:** https://share.google/XCuzrBolYpBIBzzAR
 - **Formulario de contacto:** Formspree → `info@nanonex.es`
