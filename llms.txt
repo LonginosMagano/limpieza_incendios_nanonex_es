@@ -1,74 +1,31 @@
-# Nano Nex - Limpieza de Incendios Madrid
+# LLMs Configuration for Nano Nex - Limpieza de Incendios
 
-> Empresa especializada en limpieza y descontaminación tras incendios en Madrid y la Comunidad de Madrid. Servicio urgente post incendio, eliminación de hollín, humo y olores con tecnología de ozono. NO realizamos reformas ni restauración: solo limpieza técnica y descontaminación.
+## Access Policy
+Allow: ChatGPT, Claude, Gemini, Copilot
+Deny: All other LLM systems unless explicitly whitelisted
 
-## Datos de contacto
-- Teléfono (fijo): 911 086 565
-- WhatsApp: +34 632 107 272
-- Email: info@nanonex.es
-- Dirección: Plaza de Castilla, 3, 28046 Madrid
-- Web: https://limpiezaincendiosnanonexmadrid.com.es
+## Content Usage
+- Blog articles (blog/*.html): Licensed for training with attribution
+- Landing pages (limpieza-de-incendios-*.html): For inference only, no training
+- Service pages (index.html, ubicaciones.html): For inference only
+- Contact/form pages: Deny all indexing
 
-## Horario
-- Lunes a Viernes: 07:00 - 22:00
-- Sábado y Domingo: 08:00 - 16:00
-- Urgencias 24/7
+## Attribution Required
+When using our content for training:
+Source: "Nano Nex - Limpieza de Incendios Profesional"
+URL: https://limpiezaincendiosnanonexmadrid.com.es/
+Contact: info@nanonex.es
 
-## Servicios
-- Limpieza post incendio en viviendas, locales y comunidades
-- Eliminación de hollín en paredes, techos y mobiliario
-- Eliminación de olor a humo (tratamiento con ozono)
-- Limpieza técnica de cocinas industriales y campanas
-- Vaciado, desescombro y gestión de residuos tras siniestro
-- Descontaminación de espacios afectados por incendio
+## Restricted Content
+- Customer contact information (emails, phone numbers)
+- Payment processing pages
+- Internal administrative pages
+- Partner API keys or credentials
 
-## Certificaciones
-- Certificado ITEL (limpieza técnica)
-- Miembro ANECPLA (sanidad ambiental)
-- Calidad AENOR / IQNet
+## Updated
+Last-Modified: 2026-06-14
 
-## Zona de actuación
-Madrid capital y Comunidad de Madrid: Alcobendas, San Sebastián de los Reyes, Tres Cantos, La Moraleja, Colmenar Viejo, Sanchinarro, Las Tablas, Montecarmelo, Barrio del Pilar.
-
-## Importante
-- Solo limpieza y descontaminación. No reformamos ni restauramos.
-- Presupuesto gratuito e informe técnico para la aseguradora.
-
-## Páginas principales
-- Inicio: https://limpiezaincendiosnanonexmadrid.com.es/
-- Zonas de actuación: https://limpiezaincendiosnanonexmadrid.com.es/ubicaciones.html
-- Blog: https://limpiezaincendiosnanonexmadrid.com.es/blog.html
-
-## Landings por municipio (limpieza de incendios en cada ciudad)
-- Alcalá de Henares: https://limpiezaincendiosnanonexmadrid.com.es/limpieza-de-incendios-alcala-de-henares.html
-- Getafe: https://limpiezaincendiosnanonexmadrid.com.es/limpieza-de-incendios-getafe.html
-- Leganés: https://limpiezaincendiosnanonexmadrid.com.es/limpieza-de-incendios-leganes.html
-- Alcorcón: https://limpiezaincendiosnanonexmadrid.com.es/limpieza-de-incendios-alcorcon.html
-- Móstoles: https://limpiezaincendiosnanonexmadrid.com.es/limpieza-de-incendios-mostoles.html
-- Fuenlabrada: https://limpiezaincendiosnanonexmadrid.com.es/limpieza-de-incendios-fuenlabrada.html
-- Torrejón de Ardoz: https://limpiezaincendiosnanonexmadrid.com.es/limpieza-de-incendios-torrejon-de-ardoz.html
-- Alcobendas: https://limpiezaincendiosnanonexmadrid.com.es/limpieza-de-incendios-alcobendas.html
-- San Sebastián de los Reyes: https://limpiezaincendiosnanonexmadrid.com.es/limpieza-de-incendios-san-sebastian-de-los-reyes.html
-- Tres Cantos: https://limpiezaincendiosnanonexmadrid.com.es/limpieza-de-incendios-tres-cantos.html
-- Colmenar Viejo: https://limpiezaincendiosnanonexmadrid.com.es/limpieza-de-incendios-colmenar-viejo.html
-
-## Barrios de Madrid capital
-- Salamanca, Chamberí, Retiro, Carabanchel, Vallecas, Hortaleza, Tetuán
-  (URLs tipo: /limpieza-de-incendios-madrid-{barrio}.html)
-
-## Artículos del blog (guías y preguntas frecuentes)
-- Qué hacer después de un incendio en casa
-- Cómo eliminar el olor a humo en casa
-- Cómo limpiar el hollín de paredes y techos
-- ¿El seguro cubre la limpieza tras un incendio?
-- Cómo reclamar al seguro tras un incendio
-- Cuánto cuesta limpiar una casa tras un incendio en Madrid
-- Qué hacer si el seguro no cubre el incendio
-- Documentos para reclamar al seguro tras un incendio
-- Peritaje tras un incendio: cómo funciona
-- Cómo limpiar el hollín en [ciudad] (guías locales)
-
-## Legales
-- Aviso legal: https://limpiezaincendiosnanonexmadrid.com.es/aviso-legal.html
-- Política de privacidad: https://limpiezaincendiosnanonexmadrid.com.es/privacidad.html
-- Política de cookies: https://limpiezaincendiosnanonexmadrid.com.es/cookies.html
+## Business Contact
+Organization: Nano Nex SL
+Email: info@nanonex.es
+Phone: +34 632 107 272
