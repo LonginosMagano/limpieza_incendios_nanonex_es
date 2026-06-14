@@ -19,6 +19,21 @@ h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
 a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 
+/* Skip Link */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #FF6B35;
+    color: white;
+    padding: 8px;
+    z-index: 100;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
 /* TOPBAR */
 .topbar {
     background: var(--secondary); color: var(--white);
