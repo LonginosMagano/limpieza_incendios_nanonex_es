@@ -693,9 +693,9 @@ CACHÉ (.htaccess):
         @media (max-width: 900px) {
             .menu-toggle { display: block; }
             .nav-menu {
-                display: none; position: fixed; top: 124px; left: 0; width: 100%;
+                display: none; position: fixed; top: 124px; left: 0; right: 0; width: auto;
                 background: var(--white); flex-direction: column; gap: 0;
-                box-shadow: 0 8px 20px rgba(0,0,0,0.15); padding: 10px 0; z-index: 1001;
+                box-shadow: 0 8px 20px rgba(0,0,0,0.15); padding: 10px 0; z-index: 1001; margin: 0;
             }
             .nav-menu.open { display: flex; }
             .nav-menu a { padding: 15px 8%; border-bottom: 1px solid #f0f0f0; font-size: 1.1rem; }
