@@ -19,13 +19,13 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get install -y lftp
 
-          lftp -e "
+          lftp -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASSWORD }} sftp://${{ secrets.FTP_HOST }} <<EOF
           set sftp:auto-confirm yes
           set ssl:verify-certificate no
-          open -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASSWORD }} sftp://${{ secrets.FTP_HOST }}
-          mirror -R ./ ./
+          cd /home/${{ secrets.FTP_USER }}/limpiezaincendiosnanonex_es
+          mirror -R --delete ./ ./
           bye
-          "
+          EOF
 
       - name: Create deployment summary
         run: |
