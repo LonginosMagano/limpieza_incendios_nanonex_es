@@ -15,25 +15,26 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Deploy to FTP
-        uses: SamKirkland/FTP-Deploy-Action@4.3.4
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: sftp
-          port: 22
-          local-dir: ./
-          local-dir-delete: true
-          server-dir: ./
+      - name: Deploy via SFTP with lftp
+        run: |
+          sudo apt-get update && sudo apt-get install -y lftp
+
+          lftp -e "
+          set sftp:auto-confirm yes
+          set ssl:verify-certificate no
+          open -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASSWORD }} sftp://${{ secrets.FTP_HOST }}
+          mirror -R ./ ./
+          bye
+          "
 
       - name: Create deployment summary
         run: |
-          echo "✅ **Deployment completado**" >> $GITHUB_STEP_SUMMARY
+          echo "✅ **Deployment a SFTP completado**" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "📤 Archivos subidos a FTP:" >> $GITHUB_STEP_SUMMARY
+          echo "📤 Archivos subidos via SFTP:" >> $GITHUB_STEP_SUMMARY
           echo "- Host: ${{ secrets.FTP_HOST }}" >> $GITHUB_STEP_SUMMARY
           echo "- Usuario: ${{ secrets.FTP_USER }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Puerto: 22 (SFTP)" >> $GITHUB_STEP_SUMMARY
           echo "- Directorio: / (raíz)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "🔄 Este workflow se ejecuta automáticamente en cada push a \`claude/fervent-dirac-6b6fxv\`" >> $GITHUB_STEP_SUMMARY
