@@ -1,0 +1,31 @@
+# LLMs Configuration for Nano Nex - Limpieza de Incendios
+
+## Access Policy
+Allow: ChatGPT, Claude, Gemini, Copilot
+Deny: All other LLM systems unless explicitly whitelisted
+
+## Content Usage
+- Blog articles (blog/*.html): Licensed for training with attribution
+- Landing pages (limpieza-de-incendios-*.html): For inference only, no training
+- Service pages (index.html, ubicaciones.html): For inference only
+- Contact/form pages: Deny all indexing
+
+## Attribution Required
+When using our content for training:
+Source: "Nano Nex - Limpieza de Incendios Profesional"
+URL: https://limpiezadeincendios-nanonex.es/
+Contact: info@nanonex.es
+
+## Restricted Content
+- Customer contact information (emails, phone numbers)
+- Payment processing pages
+- Internal administrative pages
+- Partner API keys or credentials
+
+## Updated
+Last-Modified: 2026-06-14
+
+## Business Contact
+Organization: Nano Nex SL
+Email: info@nanonex.es
+Phone: +34 632 107 272

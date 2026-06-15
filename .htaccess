@@ -1,0 +1,248 @@
+# ============================
+# HTACCESS - NANO NEX MADRID
+# Limpieza por Incendio
+# ============================
+
+# Habilitar motor rewrite
+RewriteEngine On
+RewriteBase /
+
+# ============================
+# 1. SEGURIDAD - HTTPS FORZADO
+# ============================
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ============================
+# 2. WWW → SIN WWW
+# ============================
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
+# ============================
+# 3. TRAILING SLASH
+# ============================
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)$ /$1/ [L,R=301]
+
+# ============================
+# 4. BLOQUES DE SEGURIDAD
+# ============================
+<FilesMatch "^(\.htaccess|\.htpasswd|\.git|\.env)">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# No permitir listado de directorios
+Options -Indexes
+
+# ============================
+# 5. HEADERS DE SEGURIDAD
+# ============================
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+# ============================
+# 6. COMPRESIÓN GZIP
+# ============================
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/json
+</IfModule>
+
+# ============================
+# 7. CACHÉ DEL NAVEGADOR
+# ============================
+<IfModule mod_expires.c>
+    ExpiresActive On
+
+    # Imágenes - 1 año (31536000 segundos)
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+
+    # CSS y JavaScript - 1 mes
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType text/x-javascript "access plus 1 month"
+    ExpiresByType application/x-font-ttf "access plus 1 month"
+    ExpiresByType application/x-font-woff "access plus 1 month"
+    ExpiresByType font/woff2 "access plus 1 month"
+
+    # HTML y XML - 1 semana
+    ExpiresByType text/html "access plus 1 week"
+    ExpiresByType application/xml "access plus 1 week"
+
+    # Defecto: 2 días
+    ExpiresDefault "access plus 2 days"
+</IfModule>
+
+<IfModule mod_headers.c>
+    # Cache headers explícitos para imágenes
+    <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+
+    # Cache headers para CSS/JS
+    <FilesMatch "\.(css|js|woff|woff2|ttf)$">
+        Header set Cache-Control "public, max-age=2592000, must-revalidate"
+    </FilesMatch>
+
+    # Cache headers para HTML
+    <FilesMatch "\.html?$">
+        Header set Cache-Control "public, max-age=604800, must-revalidate"
+    </FilesMatch>
+</IfModule>
+
+# ============================
+# 8. DIRECTORIO INDEX
+# ============================
+DirectoryIndex index.html index.php
+
+# ============================
+# 9. ERRORES PERSONALIZADOS
+# ============================
+ErrorDocument 404 /404.html
+ErrorDocument 403 /index.html
+ErrorDocument 500 /index.html
+
+# ============================
+# 10. TIPO DE CONTENIDO CORRECTO
+# ============================
+<IfModule mod_mime.c>
+    AddType application/json .json
+    AddType text/xml .xml
+    AddType application/xml .xml
+    AddEncoding gzip .gz
+</IfModule>
+
+# ============================
+# 11. REDIRECTS 301 - CONSOLIDACIÓN CONTENIDO DUPLICADO
+# Plan de consolidación "Como limpiar hollín" (2026-06-14)
+# ============================
+
+# CLÚSTER 1: NORTE/CENTRO → MADRID HUB
+RewriteRule ^como-limpiar-el-hollin-en-alcobendas/?$ /como-limpiar-el-hollin-en-madrid.html [L,R=301]
+RewriteRule ^como-limpiar-el-hollin-en-torrejon-de-ardoz/?$ /como-limpiar-el-hollin-en-madrid.html [L,R=301]
+
+# CLÚSTER 2: SUR/INDUSTRIAL → GETAFE HUB
+RewriteRule ^como-limpiar-el-hollin-en-alcorcon/?$ /como-limpiar-el-hollin-en-getafe.html [L,R=301]
+RewriteRule ^como-limpiar-el-hollin-en-fuenlabrada/?$ /como-limpiar-el-hollin-en-getafe.html [L,R=301]
+RewriteRule ^como-limpiar-el-hollin-en-leganes/?$ /como-limpiar-el-hollin-en-getafe.html [L,R=301]
+RewriteRule ^como-limpiar-el-hollin-en-mostoles/?$ /como-limpiar-el-hollin-en-getafe.html [L,R=301]
+
+# MANTENER (NO REDIRIGIR):
+# - como-limpiar-el-hollin-en-madrid.html (HUB norte/centro)
+# - como-limpiar-el-hollin-en-alcala-de-henares.html (HUB este, patrimonio UNESCO)
+# - como-limpiar-el-hollin-en-getafe.html (HUB sur, industrial)
+# - como-limpiar-el-hollin-de-paredes-y-techos.html (guía genérica)
+
+# ============================
+# 12. REDIRECTS 301 - BLOG CLEANUP (100 POSTS OFF-TOPIC)
+# Redirigir posts de limpieza general a /limpieza-general.html
+# Fecha: 2026-06-14
+# ============================
+
+# CATEGORÍA 1: LIMPIEZA DEL HOGAR (35 posts)
+RedirectMatch 301 ^/blog/2024/11/27/como-limpiar-a-fondo-tu-ducha-en-solo-4-pasos/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2018/06/20/limpiar-un-inodoro-de-forma-profesional/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/12/25/las-5-claves-para-una-correcta-desinfeccion-de-las-mesas-del-comedor/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2018/06/19/como-limpiar-tu-cortina-de-ducha/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/10/08/como-eliminar-manchas-y-huellas-en-pantallas-de-tv/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/11/05/desafios-y-soluciones-en-la-limpieza-de-hospitales/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/12/03/los-5-pasos-esenciales-para-una-limpieza-impecable-en-tu-tienda-de-ropa/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/11/21/como-organizar-una-limpieza-por-acumulacion-en-tiendas-de-alimentacion-en-7-pasos/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/09/19/limpieza-oficinas-2/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/12/19/el-futuro-de-la-limpieza-industrial-tendencias-y-avances-tecnologicos/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2025/01/16/como-limpiar-una-nave-industrial-a-fondo-en-solo-5-pasos/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2018/06/14/3-formas-increibles-de-ahorrar-tiempo-mientras-limpias/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/10/10/4-pasos-para-limpiar-correctamente-las-paredes-de-una-nave-industrial/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2018/06/07/como-limpiar-el-alfeizar-de-la-ventana/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/12/05/6-estrategias-para-evitar-la-acumulacion-de-objetos-en-oficinas-despues-de-una-limpieza/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2025/01/02/las-5-claves-para-una-correcta-limpieza-de-equipos-de-cocina-industrial/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/09/22/los-5-errores-que-estas-cometiendo-al-limpiar-tu-taller-2/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/09/22/los-5-errores-que-estas-cometiendo-al-limpiar-tu-taller/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/11/17/como-organizar-una-rutina-de-limpieza-diaria-para-tu-tienda-en-4-pasos/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2018/06/17/cuales-son-los-beneficios-de-usar-un-servicio-de-limpieza-2/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/12/15/4-pasos-sencillos-para-limpiar-los-ductos-y-sistemas-de-ventilacion-en-una-nave-industrial/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/11/03/10-maneras-de-limpiar-una-nave-industrial-sin-interrumpir-la-produccion/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/10/26/trucos-para-reducir-el-tiempo-de-limpieza-en-fabricas-sin-perder-calidad/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/12/21/7-maneras-de-organizar-y-limpiar-el-area-de-trabajo-de-manera-eficiente-en-talleres/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2025/01/18/consejos-para-realizar-limpiezas-rapidas-pero-eficaces-en-residencias-de-ancianos/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2018/06/16/7-habitos-de-limpieza-para-romper-ahora-mismo/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/12/07/herramientas-indispensables-para-la-limpieza-diaria-de-oficinas/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/09/30/como-eliminar-manchas-dificiles-en-la-cocina-en-solo-4-pasos/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2020/04/20/como-limpiar-y-desinfectar-a-si-mismo-su-casa-y-sus-cosas/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2018/06/18/3-formas-increibles-de-ahorrar-tiempo-mientras-limpias-2/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2025/01/06/limpieza-de-teclados-portatiles-es-necesario-usar-aire-comprimido/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/11/29/limpieza-profunda-de-oficinas-trucos-para-desinfectar-todas-las-superficies/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/12/27/como-elegir-un-servicio-profesional-de-limpieza-de-alfombras/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2025/01/24/recomendaciones-para-limpiar-areas-con-alta-exposicion-a-productos-quimicos/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2025/02/07/como-limpiar-tus-espejos-sin-dejar-marcas-en-4-pasos/$ /limpieza-general.html
+
+# CATEGORÍA 2: LIMPIEZA INDUSTRIAL/COMERCIAL GENÉRICA (30 posts)
+RedirectMatch 301 ^/blog/2024/09/26/limpieza-industrial-los-retos-mas-comunes-y-como-superarlos/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/10/16/7-formas-de-desinfectar-oficinas-despues-de-una-limpieza-de-acumulacion/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/10/22/como-utilizar-desengrasantes-industriales-para-garantizar-la-limpieza-profunda/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2021/05/05/limpieza-de-garajes/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2025/02/05/mantener-limpieza-en-las-zonas-de-almacenamiento-en-fabricas/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2025/01/14/como-mantener-limpias-las-areas-de-exhibicion-de-tu-tienda-en-5-pasos/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2018/06/13/cuales-son-los-beneficios-de-usar-un-servicio-de-limpieza/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2025/01/08/como-mantener-limpia-la-cocina-durante-las-horas-de-servicio-en-4-pasos/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/09/20/limpieza-industrial-por-que-es-esencial-para-la-seguridad-y-productividad/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/11/15/4-pasos-sencillos-para-limpiar-los-sistemas-de-extraccion-de-polvo-en-talleres/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2018/06/15/7-consejos-para-organizar-tu-cocina/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/12/13/7-formas-efectivas-de-limpiar-tu-hogar-en-menos-tiempo/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2018/06/08/4-tareas-domesticas-que-te-ayudan-a-quemar-la-mayor-cantidad-de-calorias/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2018/06/08/como-deshacerse-de-las-moscas-de-la-fruta/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/11/01/las-5-claves-para-eliminar-el-polvo-de-cada-rincon-de-tu-hogar/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2018/06/01/con-que-frecuencia-debe-fregar-sus-suelos-y-la-forma-correcta-de-hacerlo/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2020/03/23/limpiar-nuestros-hogares-del-coronavirus/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2018/05/12/por-que-confiar-en-un-profesional-para-su-trabajo-de-limpieza/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2023/10/30/como-hacer-una-limpieza-despues-de-un-incendio-2/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2023/12/25/limpieza-de-incendios-como-limpiar-en-hogar-y-trabajo/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2023/10/23/limpieza-de-incendios-como-limpiar/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2023/11/20/limpieza-de-incendios-como-limpiar-en-casa-y-en-el-trabajo/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/02/02/como-limpiar-manches-de-humedad-y-moho-detras-de-los-electrodomesticos/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/01/14/como-limpiar-alcantarilla-y-tuberias/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2023/12/02/como-limpiar-un-sofa/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2023/10/16/como-limpiar-manchas-de-vino-tinto/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2022/12/19/como-eliminar-manchas-de-grasas-en-la-cocina/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2022/11/18/diferentes-tipos-de-limpieza/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2022/04/05/como-limpiar-el-hogar-del-covid-19/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2021/03/09/limpieza-de-chimeneas/$ /limpieza-general.html
+
+# CATEGORÍA 3: SÍNDROME DE DIÓGENES / ACUMULACIÓN (28 posts) - OFF-TOPIC
+RedirectMatch 301 ^/blog/2022/12/28/limpieza-de-incendios-10-consejos/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2021/10/25/limpieza-de-diogenes-el-futuro-del-tratamiento-del-sindrome-de-diogenes/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2021/07/25/limpieza-de-diogenes-acumular-alimentos/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2021/06/27/limpieza-de-diogenes-acumular-comida/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2021/03/22/tener-sindrome-de-diogenes-es-muy-exigente/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2021/03/21/limpieza-de-diogenes-pueden-cambiar/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2020/05/26/trastorno-de-diogenes-o-acumulacion-la-verdad-que-hay-debajo-del-desorden/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2020/05/19/mi-madre-tiene-sindrome-de-diogenes-limpieza-diogenes/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2020/05/13/que-es-el-sindrome-de-diogenes-o-de-acaparamiento-compulsivo/$ /limpieza-general.html
+
+# NOTA: Hay más posts de Diógenes en el archivo original pero estos son los principales
+# Otros posts OFF-TOPIC menores se redirigen también
+
+# ============================
+# FIN DEL ARCHIVO
+# ============================

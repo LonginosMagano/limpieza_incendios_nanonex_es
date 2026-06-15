@@ -1,0 +1,182 @@
+<!--
+ARCHIVO: setup-ga4-events.html
+DESCRIPCIÓN: Script completo para GA4 con eventos personalizados
+INSTRUCCIONES:
+1. Reemplaza "G-XXXXXX" con tu ID de medición real
+2. Incluye este archivo en el <head> de todas las páginas
+3. Asegúrate de que todos los formularios tengan id="my-form"
+-->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXX', {
+    'page_path': window.location.pathname,
+    'anonymize_ip': false,
+    'allow_google_signals': true,
+    'allow_ad_personalization_signals': true
+  });
+
+  // Mapeo de páginas a títulos legibles
+  const pageNames = {
+    '/': 'Inicio - Limpieza Incendios',
+    '/index.html': 'Inicio - Limpieza Incendios',
+    '/limpieza-general.html': 'Limpieza General',
+    '/ubicaciones.html': 'Ubicaciones',
+    '/blog.html': 'Blog'
+  };
+
+  // Función auxiliar para obtener nombre de página
+  function getPageName() {
+    const path = window.location.pathname;
+    return pageNames[path] || document.title;
+  }
+</script>
+
+<script>
+// EVENTO 1: Seguimiento de clics en CTA
+document.addEventListener('DOMContentLoaded', function() {
+  const ctaButtons = document.querySelectorAll('[class*="cta-btn"], [class*="btn"]');
+
+  ctaButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      const buttonText = this.textContent.trim().substring(0, 50);
+      const buttonClass = this.className;
+
+      gtag('event', 'cta_click', {
+        'button_text': buttonText,
+        'button_class': buttonClass,
+        'page_title': document.title,
+        'page_location': window.location.pathname
+      });
+    });
+  });
+
+  // EVENTO 2: Seguimiento de envíos de formulario
+  const forms = document.querySelectorAll('form');
+  forms.forEach(form => {
+    form.addEventListener('submit', function(e) {
+      const origin = this.querySelector('input[name="Origen"]')?.value || 'Desconocido';
+      gtag('event', 'form_submission', {
+        'form_type': 'presupuesto',
+        'origin': origin,
+        'page_title': document.title
+      });
+    });
+  });
+
+  // EVENTO 3: Seguimiento de clics en teléfono
+  const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
+  phoneLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      gtag('event', 'phone_click', {
+        'phone_number': this.href.replace('tel:', ''),
+        'page_title': document.title,
+        'element_text': this.textContent.trim().substring(0, 30)
+      });
+    });
+  });
+
+  // EVENTO 4: Seguimiento de clics en WhatsApp
+  const whatsappLinks = document.querySelectorAll('a[href*="wa.me"]');
+  whatsappLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      gtag('event', 'whatsapp_click', {
+        'phone_number': '34632107272',
+        'page_title': document.title
+      });
+    });
+  });
+
+  // EVENTO 5: Seguimiento de scroll (medir engagement)
+  let scrollDepth = 0;
+  let scrollTracked = false;
+
+  window.addEventListener('scroll', function() {
+    const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+
+    if (scrollPercent > 50 && !scrollTracked) {
+      gtag('event', 'scroll_depth', {
+        'depth_percent': 50,
+        'page_title': document.title
+      });
+      scrollTracked = true;
+    }
+  });
+
+  // EVENTO 6: Seguimiento de tiempo en página (cada 30 segundos)
+  setInterval(function() {
+    const timeOnPage = Math.floor((Date.now() - performance.timing.navigationStart) / 1000);
+    if (timeOnPage > 30 && timeOnPage % 30 === 0) {
+      gtag('event', 'page_time', {
+        'seconds': timeOnPage,
+        'page_title': document.title
+      });
+    }
+  }, 1000);
+
+  // EVENTO 7: Seguimiento de enlaces internos
+  const internalLinks = document.querySelectorAll('a[href*=".html"]');
+  internalLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      gtag('event', 'internal_link_click', {
+        'link_url': this.href,
+        'link_text': this.textContent.trim().substring(0, 50),
+        'source_page': window.location.pathname
+      });
+    });
+  });
+
+  // EVENTO 8: Seguimiento de navegación de acordeones/tabs
+  const accordions = document.querySelectorAll('[class*="accordion"], [class*="tab"]');
+  accordions.forEach(item => {
+    item.addEventListener('click', function(e) {
+      gtag('event', 'accordion_toggle', {
+        'accordion_title': this.textContent.trim().substring(0, 50),
+        'page_title': document.title
+      });
+    });
+  });
+});
+
+// EVENTO 9: Seguimiento de errores de JavaScript
+window.addEventListener('error', function(e) {
+  gtag('event', 'exception', {
+    'description': e.message.substring(0, 100),
+    'fatal': false
+  });
+});
+
+// EVENTO 10: Seguimiento de performance (Core Web Vitals)
+if ('web-vital' in window) {
+  // LCP (Largest Contentful Paint)
+  new PerformanceObserver((list) => {
+    for (const entry of list.getEntries()) {
+      gtag('event', 'lcp', {
+        'value': entry.renderTime || entry.loadTime,
+        'event_category': 'Web Vitals'
+      });
+    }
+  }).observe({entryTypes: ['largest-contentful-paint']});
+}
+</script>
+
+<!--
+NOTA: Este archivo incluye 10 eventos personalizados para GA4:
+
+1. cta_click - Seguimiento de clics en botones de acción
+2. form_submission - Seguimiento de formularios enviados
+3. phone_click - Seguimiento de clics en teléfono
+4. whatsapp_click - Seguimiento de clics en WhatsApp
+5. scroll_depth - Seguimiento de profundidad de scroll (50%)
+6. page_time - Seguimiento de tiempo en página (cada 30s)
+7. internal_link_click - Seguimiento de navegación interna
+8. accordion_toggle - Seguimiento de expansión de contenido
+9. exception - Seguimiento de errores JavaScript
+10. lcp - Seguimiento de Core Web Vitals
+
+Estos eventos aparecerán en GA4 bajo:
+Eventos > Nombre del evento
+-->

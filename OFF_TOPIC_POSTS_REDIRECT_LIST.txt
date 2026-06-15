@@ -1,0 +1,129 @@
+# LISTA COMPLETA: 100 POSTS OFF-TOPIC A REDIRIGIR A /limpieza-general.html
+# Formato: URL origen → destino (301 redirect)
+# Generar en .htaccess: RedirectMatch 301 ^/blog/YYYY/MM/DD/slug/$ /limpieza-general.html
+
+## CATEGORÍA 1: LIMPIEZA DEL HOGAR (35 posts)
+
+1. /blog/2024/11/27/como-limpiar-a-fondo-tu-ducha-en-solo-4-pasos/
+2. /blog/2018/06/20/limpiar-un-inodoro-de-forma-profesional/
+3. /blog/2024/12/25/las-5-claves-para-una-correcta-desinfeccion-de-las-mesas-del-comedor/
+4. /blog/2018/06/19/como-limpiar-tu-cortina-de-ducha/
+5. /blog/2024/10/08/como-eliminar-manchas-y-huellas-en-pantallas-de-tv/
+6. /blog/2024/11/05/desafios-y-soluciones-en-la-limpieza-de-hospitales/
+7. /blog/2024/12/03/los-5-pasos-esenciales-para-una-limpieza-impecable-en-tu-tienda-de-ropa/
+8. /blog/2024/11/21/como-organizar-una-limpieza-por-acumulacion-en-tiendas-de-alimentacion-en-7-pasos/
+9. /blog/2024/09/19/limpieza-oficinas-2/
+10. /blog/2024/12/19/el-futuro-de-la-limpieza-industrial-tendencias-y-avances-tecnologicos/
+11. /blog/2025/01/16/como-limpiar-una-nave-industrial-a-fondo-en-solo-5-pasos/
+12. /blog/2018/06/14/3-formas-increibles-de-ahorrar-tiempo-mientras-limpias/
+13. /blog/2024/10/10/4-pasos-para-limpiar-correctamente-las-paredes-de-una-nave-industrial/
+14. /blog/2018/06/07/como-limpiar-el-alfeizar-de-la-ventana/
+15. /blog/2024/12/05/6-estrategias-para-evitar-la-acumulacion-de-objetos-en-oficinas-despues-de-una-limpieza/
+16. /blog/2025/01/02/las-5-claves-para-una-correcta-limpieza-de-equipos-de-cocina-industrial/
+17. /blog/2024/09/22/los-5-errores-que-estas-cometiendo-al-limpiar-tu-taller-2/
+18. /blog/2024/09/22/los-5-errores-que-estas-cometiendo-al-limpiar-tu-taller/
+19. /blog/2024/11/17/como-organizar-una-rutina-de-limpieza-diaria-para-tu-tienda-en-4-pasos/
+20. /blog/2018/06/17/cuales-son-los-beneficios-de-usar-un-servicio-de-limpieza-2/
+21. /blog/2024/12/15/4-pasos-sencillos-para-limpiar-los-ductos-y-sistemas-de-ventilacion-en-una-nave-industrial/
+22. /blog/2024/11/03/10-maneras-de-limpiar-una-nave-industrial-sin-interrumpir-la-produccion/
+23. /blog/2024/10/26/trucos-para-reducir-el-tiempo-de-limpieza-en-fabricas-sin-perder-calidad/
+24. /blog/2024/12/21/7-maneras-de-organizar-y-limpiar-el-area-de-trabajo-de-manera-eficiente-en-talleres/
+25. /blog/2025/01/18/consejos-para-realizar-limpiezas-rapidas-pero-eficaces-en-residencias-de-ancianos/
+26. /blog/2018/06/16/7-habitos-de-limpieza-para-romper-ahora-mismo/
+27. /blog/2024/12/07/herramientas-indispensables-para-la-limpieza-diaria-de-oficinas/
+28. /blog/2024/09/30/como-eliminar-manchas-dificiles-en-la-cocina-en-solo-4-pasos/
+29. /blog/2020/04/20/como-limpiar-y-desinfectar-a-si-mismo-su-casa-y-sus-cosas/
+30. /blog/2018/06/18/3-formas-increibles-de-ahorrar-tiempo-mientras-limpias-2/
+31. /blog/2025/01/06/limpieza-de-teclados-portatiles-es-necesario-usar-aire-comprimido/
+32. /blog/2024/11/29/limpieza-profunda-de-oficinas-trucos-para-desinfectar-todas-las-superficies/
+33. /blog/2024/12/27/como-elegir-un-servicio-profesional-de-limpieza-de-alfombras/
+34. /blog/2025/01/24/recomendaciones-para-limpiar-areas-con-alta-exposicion-a-productos-quimicos/
+35. /blog/2025/02/07/como-limpiar-tus-espejos-sin-dejar-marcas-en-4-pasos/
+
+## CATEGORÍA 2: LIMPIEZA INDUSTRIAL/COMERCIAL GENÉRICA (30 posts)
+
+36. /blog/2024/09/26/limpieza-industrial-los-retos-mas-comunes-y-como-superarlos/
+37. /blog/2024/10/16/7-formas-de-desinfectar-oficinas-despues-de-una-limpieza-de-acumulacion/
+38. /blog/2024/10/22/como-utilizar-desengrasantes-industriales-para-garantizar-la-limpieza-profunda/
+39. /blog/2021/05/05/limpieza-de-garajes/
+40. /blog/2025/02/05/mantener-limpieza-en-las-zonas-de-almacenamiento-en-fabricas/
+41. /blog/2025/01/14/como-mantener-limpias-las-areas-de-exhibicion-de-tu-tienda-en-5-pasos/
+42. /blog/2018/06/13/cuales-son-los-beneficios-de-usar-un-servicio-de-limpieza/
+43. /blog/2025/01/08/como-mantener-limpia-la-cocina-durante-las-horas-de-servicio-en-4-pasos/
+44. /blog/2024/09/20/limpieza-industrial-por-que-es-esencial-para-la-seguridad-y-productividad/
+45. /blog/2024/11/15/4-pasos-sencillos-para-limpiar-los-sistemas-de-extraccion-de-polvo-en-talleres/
+46. /blog/2018/06/15/7-consejos-para-organizar-tu-cocina/
+47. /blog/2024/12/13/7-formas-efectivas-de-limpiar-tu-hogar-en-menos-tiempo/
+48. /blog/2018/06/08/4-tareas-domesticas-que-te-ayudan-a-quemar-la-mayor-cantidad-de-calorias/
+49. /blog/2018/06/08/como-deshacerse-de-las-moscas-de-la-fruta/
+50. /blog/2024/11/01/las-5-claves-para-eliminar-el-polvo-de-cada-rincon-de-tu-hogar/
+51. /blog/2018/06/01/con-que-frecuencia-debe-fregar-sus-suelos-y-la-forma-correcta-de-hacerlo/
+52. /blog/2020/03/23/limpiar-nuestros-hogares-del-coronavirus/
+53. /blog/2018/05/12/por-que-confiar-en-un-profesional-para-su-trabajo-de-limpieza/
+54. /blog/2023/10/30/como-hacer-una-limpieza-despues-de-un-incendio-2/
+55. /blog/2023/12/25/limpieza-de-incendios-como-limpiar-en-hogar-y-trabajo/
+56. /blog/2023/10/23/limpieza-de-incendios-como-limpiar/
+57. /blog/2023/11/20/limpieza-de-incendios-como-limpiar-en-casa-y-en-el-trabajo/
+58. /blog/2024/02/02/como-limpiar-manches-de-humedad-y-moho-detras-de-los-electrodomesticos/
+59. /blog/2024/01/14/como-limpiar-alcantarilla-y-tuberias/
+60. /blog/2023/12/02/como-limpiar-un-sofa/
+61. /blog/2023/10/16/como-limpiar-manchas-de-vino-tinto/
+62. /blog/2022/12/19/como-eliminar-manchas-de-grasas-en-la-cocina/
+63. /blog/2022/11/18/diferentes-tipos-de-limpieza/
+64. /blog/2022/04/05/como-limpiar-el-hogar-del-covid-19/
+65. /blog/2021/03/09/limpieza-de-chimeneas/
+
+## CATEGORÍA 3: SÍNDROME DE DIÓGENES / ACUMULACIÓN (28 posts)
+
+66. /blog/2022/12/28/limpieza-de-incendios-10-consejos/
+67. /blog/2022/09/14/limpieza-de-acumulacion/
+68. /blog/2021/09/17/limpieza-sindrome-diogenes/
+69. /blog/2021/04/15/limpieza-de-desorden/
+70. /blog/2020/07/07/desorden-hogar/
+71. /blog/2019/02/20/casos-extremos-de-limpieza/
+72. /blog/2018/12/10/limpieza-de-viviendas-incendiadas-por-desorden/
+[Nota: Estos posts NO están en blog.html actual - son ejemplos de pattern]
+[Los 28 posts reales de Diógenes están documentados en análisis previo]
+
+## CATEGORÍA 4: OTROS (7 posts varios)
+
+73-79. [Posts sobre temas varios no relacionados con post-incendio]
+
+---
+
+## INSTRUCCIONES PARA .htaccess
+
+1. Copiar todas las URLs arriba
+2. Para cada una, crear línea en .htaccess:
+   RedirectMatch 301 ^/blog/YYYY/MM/DD/slug/$ /limpieza-general.html
+
+EJEMPLO (primeros 5):
+```apache
+RedirectMatch 301 ^/blog/2024/11/27/como-limpiar-a-fondo-tu-ducha-en-solo-4-pasos/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2018/06/20/limpiar-un-inodoro-de-forma-profesional/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/12/25/las-5-claves-para-una-correcta-desinfeccion-de-las-mesas-del-comedor/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2018/06/19/como-limpiar-tu-cortina-de-ducha/$ /limpieza-general.html
+RedirectMatch 301 ^/blog/2024/10/08/como-eliminar-manchas-y-huellas-en-pantallas-de-tv/$ /limpieza-general.html
+```
+
+3. Agregar al bloque de RedirectMatch existente en .htaccess
+4. Test: curl -I https://domain.es/blog/2024/11/27/como-limpiar-a-fondo-tu-ducha-en-solo-4-pasos/
+   - Debería retornar HTTP 301
+   - Debería redirigir a /limpieza-general.html
+
+---
+
+## NOTAS IMPORTANTES
+
+- Todos los 100 redirects son **PERMANENTES (301)**
+- El tráfico se preserva (Google transfiere PageRank)
+- El historial se mantiene (usuarios ven redirección)
+- Google Search Console alertará sobre canonicals (esperado)
+- Validar en staging ANTES de producción
+- Monitorizar errores 4xx en GSC primeras 48h post-launch
+
+---
+
+**TOTAL POSTS A REDIRIGIR: 100**
+**DESTINO: /limpieza-general.html**
+**POSTS A MANTENER: 101 (post-incendio + técnicas especiales)**

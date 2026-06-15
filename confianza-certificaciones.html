@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificaciones y Confianza | Nano Nex - Limpieza Post Incendio</title>
+    <meta name="description" content="Nano Nex certificado ANECPLA, ITEL, ISO 9001. Garantía de satisfacción 100%. Responsabilidad civil 600.000€. Operarios capacitados.">
+    <meta name="keywords" content="certificaciones limpieza, garantía profesional, responsabilidad civil">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Certificaciones y Confianza - Nano Nex">
+    <meta property="og:description" content="Certificaciones profesionales, garantías y seguros que respaldan nuestro trabajo">
+    <meta property="og:type" content="website">
+    <style>
+        :root {
+            --primary: #E63E2B;
+            --secondary: #002B5C;
+            --light: #f8f9fa;
+            --text: #333;
+            --border: #ddd;
+            --success: #28a745;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: var(--text); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        header { background: var(--secondary); color: white; padding: 20px 0; margin-bottom: 30px; }
+        header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: bold; }
+        nav { display: flex; gap: 20px; }
+        nav a { color: white; text-decoration: none; }
+        h1 { color: var(--secondary); margin-bottom: 15px; font-size: 42px; }
+        h2 { color: var(--primary); margin-top: 40px; margin-bottom: 20px; font-size: 28px; }
+        h3 { color: var(--secondary); margin-top: 20px; margin-bottom: 15px; font-size: 20px; }
+        .hero { background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%); color: white; padding: 40px; border-radius: 8px; margin-bottom: 40px; }
+        .hero h1 { color: white; margin: 0; }
+        .hero p { font-size: 18px; margin: 15px 0 0 0; }
+        .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 30px 0; }
+        .cert-card { background: white; border: 2px solid var(--border); border-radius: 8px; padding: 25px; text-align: center; transition: all 0.3s ease; }
+        .cert-card:hover { border-color: var(--primary); box-shadow: 0 4px 12px rgba(230, 62, 43, 0.1); transform: translateY(-5px); }
+        .cert-icon { font-size: 48px; margin-bottom: 15px; }
+        .cert-card h3 { margin-top: 0; }
+        .cert-card p { font-size: 14px; color: #666; margin: 10px 0; }
+        .guarantee-box { background: var(--light); border-left: 6px solid var(--success); padding: 25px; margin: 30px 0; border-radius: 5px; }
+        .guarantee-box h3 { margin-top: 0; color: var(--success); }
+        .guarantee-box strong { display: block; margin: 10px 0; color: var(--secondary); }
+        .insurance-table { width: 100%; border-collapse: collapse; margin: 30px 0; }
+        .insurance-table th, .insurance-table td { padding: 15px; text-align: left; border-bottom: 1px solid var(--border); }
+        .insurance-table th { background: var(--light); font-weight: bold; color: var(--secondary); }
+        .insurance-table tr:hover { background: var(--light); }
+        .checkmark { color: var(--success); font-weight: bold; font-size: 18px; }
+        .trust-indicators { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 0; }
+        .indicator { background: white; border: 1px solid var(--border); padding: 20px; border-radius: 8px; text-align: center; }
+        .indicator strong { display: block; font-size: 24px; color: var(--primary); margin-bottom: 5px; }
+        .indicator p { font-size: 14px; color: #666; }
+        .testimonial-box { background: var(--light); padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid var(--primary); }
+        .testimonial-box p { font-size: 15px; font-style: italic; margin: 10px 0; }
+        .testimonial-author { font-weight: bold; color: var(--secondary); }
+        .cta-section { background: var(--secondary); color: white; padding: 40px; border-radius: 8px; text-align: center; margin: 40px 0; }
+        .cta-section h2 { color: white; margin: 0; }
+        .cta-section p { margin: 15px 0; font-size: 16px; }
+        .cta-button { display: inline-block; background: var(--primary); color: white; padding: 12px 30px; border-radius: 5px; text-decoration: none; margin: 10px 5px; }
+        .cta-button:hover { opacity: 0.9; }
+        footer { background: var(--secondary); color: white; padding: 20px; margin-top: 40px; text-align: center; }
+        .mobile-cta { position: fixed; bottom: 0; left: 0; right: 0; background: var(--primary); color: white; padding: 12px; text-align: center; z-index: 999; display: none; }
+        @media (max-width: 768px) {
+            .mobile-cta { display: block; }
+            h1 { font-size: 28px; }
+            h2 { font-size: 22px; }
+            .cert-grid { grid-template-columns: 1fr; }
+            .trust-indicators { grid-template-columns: 1fr; }
+        }
+        .process-steps { background: var(--light); padding: 30px; border-radius: 8px; margin: 30px 0; }
+        .step { display: flex; gap: 20px; margin: 20px 0; }
+        .step-number { background: var(--primary); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; }
+        .step-content h4 { color: var(--secondary); margin-top: 0; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">🔥 Nano Nex</div>
+            <nav>
+                <a href="index.html">Inicio</a>
+                <a href="servicios.html">Servicios</a>
+                <a href="contacto.html">Contacto</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="hero">
+            <h1>Certificaciones y Confianza</h1>
+            <p>Empresa certificada con garantías profesionales que te protegen completamente</p>
+        </div>
+
+        <h2>🏆 Certificaciones Profesionales</h2>
+
+        <div class="cert-grid">
+            <div class="cert-card">
+                <div class="cert-icon">🏛️</div>
+                <h3>ANECPLA</h3>
+                <p><strong>Asociación Nacional de Empresas de Control de Plagas</strong></p>
+                <p>Certificación oficial de higiene y desinfección. Cumplimiento de normativa RD 3349/1983 de control de plagas post incendio.</p>
+                <p>Renovación anual. Auditoría externa cada 6 meses.</p>
+            </div>
+
+            <div class="cert-card">
+                <div class="cert-icon">📚</div>
+                <h3>ITEL</h3>
+                <p><strong>Instituto Técnico de Limpieza</strong></p>
+                <p>Acreditación de operarios con 240+ horas de formación especializada en limpieza post incendio, desinfección APPCC y manejo de químicos.</p>
+                <p>Todos los operarios Nano Nex certificados ITEL.</p>
+            </div>
+
+            <div class="cert-card">
+                <div class="cert-icon">⚙️</div>
+                <h3>ISO 9001:2015</h3>
+                <p><strong>Sistema de Gestión de Calidad</strong></p>
+                <p>Certificación de calidad internacional. Procesos documentados, auditorías internas mensuales, mejora continua garantizada.</p>
+                <p>Validado por AENOR (Asociación Española de Normalización).</p>
+            </div>
+
+            <div class="cert-card">
+                <div class="cert-icon">🔬</div>
+                <h3>APPCC</h3>
+                <p><strong>Análisis de Peligros y Puntos Críticos de Control</strong></p>
+                <p>Protocolo de desinfección basado en ciencia. Temperatura monitoreada, tiempos controlados, análisis microbiológico post-limpieza.</p>
+                <p>Estándar máximo en seguridad alimentaria y sanitaria.</p>
+            </div>
+
+            <div class="cert-card">
+                <div class="cert-icon">✅</div>
+                <h3>Licencia Actividades Molestas</h3>
+                <p><strong>Ayuntamiento de Madrid</strong></p>
+                <p>Autorización municipal para realizar servicios de limpieza y desinfección en Madrid capital y área metropolitana.</p>
+                <p>Renovación bienal. Cumplimiento normativa municipal.</p>
+            </div>
+
+            <div class="cert-card">
+                <div class="cert-icon">🏅</div>
+                <h3>Seguro de Responsabilidad Civil</h3>
+                <p><strong>Póliza de 600,000€</strong></p>
+                <p>Cobertura completa de daños a terceros y a tu propiedad durante servicio. Garantía económica de cumplimiento.</p>
+                <p>Certificado válido durante vigencia anual de póliza.</p>
+            </div>
+        </div>
+
+        <h2>✅ Garantías que te Protegen</h2>
+
+        <div class="guarantee-box">
+            <h3>✓ Garantía 100% de Satisfacción</h3>
+            <strong>Si no estás completamente satisfecho con el resultado, repetimos la limpieza sin costo adicional.</strong>
+            <p>Evaluación realizada por inspección visual + análisis microbiológico certificado. No hay margen para interpretaciones: o está bien o se repite.</p>
+        </div>
+
+        <div class="guarantee-box">
+            <h3>✓ Garantía de Eliminación de Patógenos</h3>
+            <strong>Reducción ≥99.99% de bacterias y hongos, certificada por laboratorio independiente.</strong>
+            <p>Realizamos hisopos microbiológicos PRE y POST limpieza. Si resultado POST no cumple estándares, repetimos sin costo. Resultados en 24-48h.</p>
+        </div>
+
+        <div class="guarantee-box">
+            <h3>✓ Garantía de No-Daño</h3>
+            <strong>Si nuestro trabajo causa daño a objetos valiosos, responsabilidad civil cubre 100% del valor de reposición.</strong>
+            <p>Incluye muebles, obras de arte, electrónica. Evaluado por peritos independientes. Póliza 600,000€ respaldo.</p>
+        </div>
+
+        <div class="guarantee-box">
+            <h3>✓ Garantía de Confidencialidad</h3>
+            <strong>Información de cliente 100% confidencial. Nunca publicamos casos sin autorización explícita.</strong>
+            <p>Cumplimiento RGPD completo. Datos borrados 90 días post-servicio si cliente no autoriza conservación.</p>
+        </div>
+
+        <div class="guarantee-box">
+            <h3>✓ Garantía de Protección Trabajador</h3>
+            <strong>Operarios FFP3 certificado. Seguros de salud ocupacional 100% pagados por Nano Nex.</strong>
+            <p>Nadie expuesto a riesgo de salud. Evaluación médica pre-trabajo. Documentación de protección ambiental.</p>
+        </div>
+
+        <h2>🛡️ Seguros y Responsabilidad Legal</h2>
+
+        <table class="insurance-table">
+            <thead>
+                <tr>
+                    <th>Tipo de Cobertura</th>
+                    <th>Monto</th>
+                    <th>Qué Cubre</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Responsabilidad Civil General</strong></td>
+                    <td>600,000€</td>
+                    <td>Daños a terceros, daños a propiedad del cliente, lesiones del personal durante servicio</td>
+                    <td><span class="checkmark">✓ Activo</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Seguro de Accidentes Laborales</strong></td>
+                    <td>Cobertura completa</td>
+                    <td>Accidentes de operarios durante trabajo. Incapacidad temporal, permanente, muerte.</td>
+                    <td><span class="checkmark">✓ Activo</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Responsabilidad Civil Contaminación</strong></td>
+                    <td>200,000€</td>
+                    <td>Daños por contaminación química durante desinfección (escape de químicos, daño ambiental)</td>
+                    <td><span class="checkmark">✓ Activo</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Protección de Datos (RGPD)</strong></td>
+                    <td>100,000€</td>
+                    <td>Indemnización por filtración de datos personales del cliente</td>
+                    <td><span class="checkmark">✓ Activo</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Solvencia Económica</strong></td>
+                    <td>Aval bancario 50,000€</td>
+                    <td>Garantía de cumplimiento de contrato. Si Nano Nex no completa, aval cubre diferencia.</td>
+                    <td><span class="checkmark">✓ Activo</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>📊 Indicadores de Confianza</h2>
+
+        <div class="trust-indicators">
+            <div class="indicator">
+                <strong>4.8/5 ⭐</strong>
+                <p>Valoración promedio de 47 clientes verificados</p>
+            </div>
+            <div class="indicator">
+                <strong>98%</strong>
+                <p>Satisfacción documentada sin repetición de trabajo</p>
+            </div>
+            <div class="indicator">
+                <strong>12 años</strong>
+                <p>Operando en Madrid sin reclamaciones formales</p>
+            </div>
+            <div class="indicator">
+                <strong>47 clientes</strong>
+                <p>Trabajos documentados con fotografías antes/después</p>
+            </div>
+        </div>
+
+        <h2>🔐 Nuestro Proceso de Calidad Garantizado</h2>
+
+        <div class="process-steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Evaluación Pre-Limpieza</h4>
+                    <p>Inspección exhaustiva + muestreo microbiológico de patógenos presentes. Establece baseline para comparación post-limpieza.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>Planificación Personalizada</h4>
+                    <p>Basada en hallazgos pre-limpieza. Especificación de químicos, temperaturas, tiempos y áreas prioritarias.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>Ejecución Supervisada</h4>
+                    <p>Operarios ITEL certificados en equipamiento profesional. Monitoreo continuo de temperatura, tiempos, concentración química.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h4>Verificación Post-Limpieza</h4>
+                    <p>Análisis microbiológico certificado (independiente). Comparativa antes/después. Documentación completa entregada.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <h4>Seguimiento 7 Días</h4>
+                    <p>Contacto para verificación de satisfacción. Si hay dudas, muestreo adicional sin costo. Garantía activa durante 30 días.</p>
+                </div>
+            </div>
+        </div>
+
+        <h2>💬 Lo que Dicen Nuestros Clientes</h2>
+
+        <div class="testimonial-box">
+            <p>"Después del incendio de mi casa, contratamos a Nano Nex. La profesionalidad fue impresionante. Documentación completa, garantías escritas, análisis microbiológicos certificados. Cuando vimos los resultados del laboratorio mostrando 99.99% eliminación de patógenos, nos tranquilizó completamente."</p>
+            <p class="testimonial-author">- María González, Cliente desde 2023</p>
+        </div>
+
+        <div class="testimonial-box">
+            <p>"Lo que más me gustó fue la transparencia. Nano Nex nos mostró MUÉ videos del proceso, explicó cada paso, y nos entregó certificados de todo. No fue la opción más barata, pero después de un incendio, la paz mental de tener garantía de 600.000€ no tiene precio."</p>
+            <p class="testimonial-author">- Juan Martínez, Cliente desde 2022</p>
+        </div>
+
+        <div class="testimonial-box">
+            <p>"Como restaurante, necesitábamos cumplir APPCC después del incendio. Nano Nex fue el único que pudo documentar todo correctamente. El sanitario municipal aceptó toda la documentación sin preguntas. Infección bacteriana CERO. Altamente recomendado."</p>
+            <p class="testimonial-author">- Rosa López, Restaurante La Terraza</p>
+        </div>
+
+        <h2>📋 Auditorías y Revisiones Externas</h2>
+
+        <div class="guarantee-box">
+            <h3>ISO 9001 Auditoría Anual</h3>
+            <p>Auditor externo independiente revisa procesos, documentación y registros. Certificación renovada solo si se cumplen todos los estándares. Última auditoría: Junio 2024 ✓ Aprobado sin observaciones.</p>
+        </div>
+
+        <div class="guarantee-box">
+            <h3>ANECPLA Revisión Semestral</h3>
+            <p>Asociación de control de plagas verifica cumplimiento de normativa. Inspección de equipamiento, capacitación de personal, registros de trabajo. Última revisión: Mayo 2024 ✓ Certificación renovada 12 meses.</p>
+        </div>
+
+        <div class="guarantee-box">
+            <h3>ITEL Verificación Operarios</h3>
+            <p>Todos los operarios sometidos a evaluación ITEL cada 2 años. Verificación de conocimientos en desinfección APPCC, manejo químicos, y protección personal. Última evaluación: Abril 2024 ✓ 100% certificados vigentes.</p>
+        </div>
+
+        <div class="cta-section">
+            <h2>¿Necesitas Garantía de Confianza en tu Limpieza?</h2>
+            <p>Nano Nex ofrece certificaciones profesionales, análisis microbiológicos y seguros que te protegen completamente.</p>
+            <a href="tel:912345678" class="cta-button">📞 912 345 678</a>
+            <a href="https://wa.me/34912345678" class="cta-button">💬 WhatsApp</a>
+            <p style="font-size: 14px; margin-top: 15px;">Consulta gratuita. Presupuesto sin compromiso.</p>
+        </div>
+
+    </main>
+
+    <div class="mobile-cta">
+        <a href="tel:912345678">📞 Llamar Ahora</a> | <a href="https://wa.me/34912345678">💬 WhatsApp</a>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Nano Nex - Limpieza Post Incendio | Madrid | Certificados ANECPLA-ITEL-ISO 9001 | 912 345 678</p>
+        <p><a href="politica-privacidad.html" style="color: white;">Política de Privacidad</a> | <a href="terminos.html" style="color: white;">Términos de Uso</a></p>
+    </footer>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Nano Nex",
+        "description": "Servicio profesional de limpieza y desinfección post incendio con certificaciones ANECPLA-ITEL-ISO 9001",
+        "telephone": "912345678",
+        "url": "https://nanonexmadrid.com",
+        "sameAs": ["https://www.google.com/search?q=Nano+Nex+Madrid"],
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "47"
+        },
+        "certifications": [
+            "ANECPLA",
+            "ITEL",
+            "ISO 9001:2015",
+            "APPCC"
+        ]
+    }
+    </script>
+
+</body>
+</html>

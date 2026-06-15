@@ -1,0 +1,55 @@
+Prioridad,Tier,Semana,Ciudad,Provincia,CCAA,Población,Estado_Actual,Context_Hook,Industrias_Principales,Clima_Caracteristicas,Municipios_Vecinos,URL_Archivo,Meta_Title,Meta_Description,Copy_Hero_Short,Notas_Copy,Search_Volume_Estimado,Status_Implementacion
+1,1,2,Valladolid,Valladolid,Castilla y León,305000,NUEVA,"Cuando la industria se detiene","Alimentaria, fabricación, transformación","Inviernos duros, sequedad interior","Tordesillas, Peñafiel, Medina del Campo",limpieza-de-incendios-valladolid.html,"Valladolid: Expertos limpieza post incendio - Técnica láser + ozono","Limpieza incendios Valladolid. Plantas, viviendas, comercios. Presupuesto gratis. 24/7.","Limpieza de incendios en Valladolid: Cuando la industria se detiene","Énfasis en humo industrial denso, corrosión acero, hollín grasiento","140-180/mes","PENDING"
+2,1,2,Burgos,Burgos,Castilla y León,178000,NUEVA,"Medieval con piedra antigua","Turismo, patrimonio, construcción","Humedad norte, ambiente interior denso","Aranda de Duero, Briviesca, Miranda de Ebro",limpieza-de-incendios-burgos.html,"Burgos: Expertos limpieza post incendio - Técnica láser + ozono","Limpieza incendios Burgos. Patrimonio medieval, viviendas antiguas. Presupuesto gratis. 24/7.","Limpieza de incendios en Burgos: Piedra antigua, humo persistente","Énfasis en preservación patrimonio, humedad norte","70-90/mes","PENDING"
+3,1,3,Toledo,Toledo,Castilla-La Mancha,84000,NUEVA,"Ciudad histórica UNESCO densa","Turismo cultural, artesanía, patrimonio","Calor interior, casas densas, ventilación limitada","Talavera de la Reina, Orgaz, Illescas",limpieza-de-incendios-toledo.html,"Toledo: Expertos limpieza post incendio - Técnica láser + ozono","Limpieza incendios Toledo. Turismo UNESCO, ciudad histórica. Presupuesto gratis. 24/7.","Limpieza de incendios en Toledo: Huerta de humo en ciudad medieval","Énfasis en turismo, patrimonio cultural, urgencia de reapertura","50-70/mes","PENDING"
+4,1,3,Murcia,Murcia,Región de Murcia,468000,EXISTENTE,"Huerta de ceniza","Agricultura, turismo residencial, comercio","Calor continentalizado, humedad variable","Cartagena, Lorca, Cieza, Yecla",limpieza-de-incendios-murcia.html,"Murcia: Expertos limpieza post incendio - Técnica láser + ozono","Limpieza incendios Murcia. Clima cálido, turismo. Presupuesto gratis. 24/7.","Limpieza de incendios en Murcia: Huerta de ceniza","Refuerzo de landing existente con mejor copy","90-120/mes","VERIFY_EXISTS"
+5,1,3,Jaén,Jaén,Andalucía,114000,NUEVA,"Olivadera rural andaluza","Olivicultura, agraria, pequeña industria","Calor seco, humedad baja, aislamiento","Linares, Andújar, Baeza, Úbeda",limpieza-de-incendios-jaen.html,"Jaén: Expertos limpieza post incendio - Técnica láser + ozono","Limpieza incendios Jaén. Olivadera, industria agraria. Presupuesto gratis. 24/7.","Limpieza de incendios en Jaén: Ceniza de almazara","Énfasis en industria agraria, aislamiento rural, urgencia","30-50/mes","PENDING"
+6,2,4,Huesca,Huesca,Aragón,52000,NUEVA,"Pirineo montaña turismo","Turismo Pirineo, esquí, montaña","Frío, humedad montaña, aislamiento","Jaca, Barbastro, Graus",limpieza-de-incendios-huesca.html,"Huesca: Expertos limpieza post incendio - Técnica láser + ozono","Limpieza incendios Huesca. Pirineo, montaña, turismo. Presupuesto gratis. 24/7.","Limpieza de incendios en Huesca: Montaña sin salida fácil","Énfasis en aislamiento, accesibilidad limitada, turismo","25-35/mes","PENDING"
+7,2,4,Teruel,Teruel,Aragón,35000,NUEVA,"Rural extremo despoblación","Rural, ganadería, pequeño comercio","Frío extremo, sequedad, viento fuerte","Alcañiz, Calamocha, Barbastro",limpieza-de-incendios-teruel.html,"Teruel: Expertos limpieza post incendio - Técnica láser + ozono","Limpieza incendios Teruel. Rural, despoblación. Presupuesto gratis. 24/7.","Limpieza de incendios en Teruel: Ayuda en la despoblación","Énfasis en urgencia, falta de servicios locales, valor comunitario","15-25/mes","PENDING"
+8,2,5,Salamanca,Salamanca,Castilla y León,143000,NUEVA,"Universitaria patrimonio","Educación, turismo, patrimonio, comercio","Inviernos suaves, humedad variable, viento","Ciudad Rodrigo, Guijuelo, Peñaranda de Bracamonte",limpieza-de-incendios-salamanca.html,"Salamanca: Expertos limpieza post incendio - Técnica láser + ozono","Limpieza incendios Salamanca. Universitaria, patrimonio. Presupuesto gratis. 24/7.","Limpieza de incendios en Salamanca: Arenisca y ceniza de estudiantes","Énfasis en ciudad joven, patrimonio renacentista, preservación","35-50/mes","PENDING"
+9,2,5,Cuenca,Cuenca,Castilla-La Mancha,54000,NUEVA,"Casas colgadas patrimonio","Turismo cultural, artesanía, patrimonio","Frío interior, humedad altitud, viento,"Requena, Tarancón, Alarcón",limpieza-de-incendios-cuenca.html,"Cuenca: Expertos limpieza post incendio - Técnica láser + ozono","Limpieza incendios Cuenca. Casas colgadas, patrimonio. Presupuesto gratis. 24/7.","Limpieza de incendios en Cuenca: Casas colgadas de ceniza","Énfasis en patrimonio único, fragilidad estructural, turismo","20-35/mes","PENDING"
+10,3,5,Alicante,Alicante,Comunidad Valenciana,330000,NUEVA,"Costa Blanca turismo marina","Turismo, comercio, segunda residencia","Humedad marina, calor seco, corrosión salina","Elche, Torrevieja, Orihuela, Santa Pola",limpieza-de-incendios-alicante.html,"Alicante: Expertos limpieza post incendio - Técnica láser + ozono","Limpieza incendios Alicante. Costa Blanca, turismo. Presupuesto gratis. 24/7.","Limpieza de incendios en Alicante: Turismo con sal marina","Énfasis en humedad marina, turismo residencial, economía impactada","80-120/mes","PENDING"
+11,3,5,Castellón,Castellón,Comunidad Valenciana,174000,NUEVA,"Cerámica Costa Dorada","Industria cerámica, turismo, comercio","Humedad costera, calor, polvo industrial","Oropesa del Mar, Vinarós, Alcalá de Xivert",limpieza-de-incendios-castellon.html,"Castellón: Expertos limpieza post incendio - Técnica láser + ozono","Limpieza incendios Castellón. Cerámica, Costa Dorada. Presupuesto gratis. 24/7.","Limpieza de incendios en Castellón: Ceniza de azulejos","Énfasis en industria cerámica, polvo tóxico, humedad costera","30-50/mes","PENDING"
+
+NOTAS_META:
+- Columna "Población": Datos INE 2024 aproximados
+- Columna "Estado_Actual": NUEVA=no existe, EXISTENTE=ya tiene landing, VERIFY_EXISTS=confirmar duplicado
+- Columna "Search_Volume_Estimado": búsquedas/mes potenciales (Semrush/Ahrefs estimate)
+- Columna "Status_Implementacion": PENDING=awaiting, IN_PROGRESS=siendo creado, DONE=completado, DEPLOYED=live
+
+TIMELINE_RESUMEN:
+- Semana 2 (Tier 1 P1): Valladolid, Burgos (2 landings, 4h dev)
+- Semana 3 (Tier 1 P2): Toledo, Murcia, Jaén (3 landings, 6h dev)
+- Semana 4 (Tier 2 P1): Huesca, Teruel, Salamanca (3 landings, 4.5h dev)
+- Semana 5 (Tier 2 P2 + 3): Cuenca, Alicante, Castellón (3 landings, 4.5h dev)
+- TOTAL: 11 landings, ~19h desarrollo puro, ~6 semanas con integración
+
+VALIDACIÓN_PRE_LAUNCH:
+- [ ] Verificar que ninguna ciudad ya existe en /ubicaciones.html
+- [ ] Verificar que no hay landings duplicadas de ciudades cercanas
+- [ ] Comprobar municipios vecinos: evitar crear landings para ciudades < 50K población
+- [ ] Validar ortografía de ciudades (Valladolid no Valladolid)
+- [ ] Confirmar acentos en metadata (Jaén, Córdoba, Salamanca, etc.)
+
+MUNICIPIOS_CANDIDATOS_FUTURA_EXPANSION:
+- Valladolid → Tordesillas, Peñafiel, Medina del Campo (Tier 2 futura)
+- Burgos → Aranda de Duero, Briviesca (Tier 2 futura)
+- Toledo → Talavera de la Reina (Tier 1 futura - población 83K)
+- Murcia → Cartagena (Tier 1 futura - población 214K)
+- Jaén → Linares (Tier 2 futura - población 60K)
+- Huesca → Jaca (Tier 2 futura - población 13K + turismo)
+- Teruel → Alcañiz (Tier 2 futura - población 16K)
+- Salamanca → Ciudad Rodrigo (Tier 2 futura - población 13K + patrimonio)
+- Cuenca → Requena (Tier 2 futura - población 40K)
+- Alicante → Elche (Tier 1 futura - población 235K, palmeral)
+- Castellón → Oropesa del Mar (Tier 2 futura - 5K+ turismo)
+
+---
+
+NOTA DE EXPORTACIÓN:
+Este CSV es maestro de referencia. Para implementación:
+1. Usar columnas URL_Archivo, Meta_Title, Meta_Description como guía
+2. Escribir Copy_Hero_Short + Notas_Copy en documento separado de copywriting
+3. Usar lista Municipios_Vecinos para crear links internos en sidebar
+4. Actualizar Status_Implementacion conforme avanza proyecto
+5. Guardar versiones históricas (cambios de status)

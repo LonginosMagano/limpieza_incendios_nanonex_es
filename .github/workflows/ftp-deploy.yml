@@ -1,0 +1,43 @@
+name: Deploy to SFTP - DreamHost
+
+on:
+  push:
+    branches:
+      - claude/fervent-dirac-6b6fxv
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openssh-client sshpass
+
+      - name: Sync files to DreamHost
+        run: |
+          export SSHPASS='${{ secrets.FTP_PASSWORD }}'
+          sshpass -e rsync -avz -e "ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no" \
+            ./ ${{ secrets.FTP_USER }}@${{ secrets.FTP_HOST }}:~/limpiezaincendiosnanonex.es/
+
+      - name: Verify deployment
+        run: |
+          export SSHPASS='${{ secrets.FTP_PASSWORD }}'
+          echo "Archivos en servidor:"
+          sshpass -e ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no \
+            ${{ secrets.FTP_USER }}@${{ secrets.FTP_HOST }} \
+            'ls -lah ~/limpiezaincendiosnanonex.es/ | head -20'
+
+      - name: Deployment Summary
+        run: |
+          echo "✅ **Deployment completado**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📤 Archivos sincronizados:" >> $GITHUB_STEP_SUMMARY
+          echo "- Host: ${{ secrets.FTP_HOST }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Usuario: ${{ secrets.FTP_USER }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Método: rsync via SSH" >> $GITHUB_STEP_SUMMARY
