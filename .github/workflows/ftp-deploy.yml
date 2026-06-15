@@ -8,55 +8,42 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Deploy via SSH/SFTP
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: 22
-          script: |
-            cd ~/limpiezaincendiosnanonex.es
-            rm -rf !(.|..)
-            exit
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openssh-client sshpass
 
-      - name: Upload all files via SCP (including images)
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: 22
-          source: "."
-          target: "~/limpiezaincendiosnanonex.es"
-          overwrite: true
+      - name: Sync files to DreamHost
+        run: |
+          export SSHPASS='${{ secrets.FTP_PASSWORD }}'
+          sshpass -e ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no \
+            ${{ secrets.FTP_USER }}@${{ secrets.FTP_HOST }} \
+            'cd ~/limpiezaincendiosnanonex.es && rm -rf * && exit'
 
-      - name: Verify images uploaded
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: 22
-          script: |
-            echo "Archivos en servidor:"
-            ls -lh ~/limpiezaincendiosnanonex.es/*.{webp,jpg,png} 2>/dev/null | head -10
-            echo "Total de imágenes:"
-            find ~/limpiezaincendiosnanonex.es -type f \( -name "*.webp" -o -name "*.jpg" -o -name "*.png" \) | wc -l
+          sleep 2
+
+          sshpass -e rsync -avz --delete -e "ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no" \
+            ./ ${{ secrets.FTP_USER }}@${{ secrets.FTP_HOST }}:~/limpiezaincendiosnanonex.es/
+
+      - name: Verify deployment
+        run: |
+          export SSHPASS='${{ secrets.FTP_PASSWORD }}'
+          echo "Archivos en servidor:"
+          sshpass -e ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no \
+            ${{ secrets.FTP_USER }}@${{ secrets.FTP_HOST }} \
+            'ls -lah ~/limpiezaincendiosnanonex.es/ | head -20'
 
       - name: Deployment Summary
         run: |
-          echo "✅ **Deployment SFTP completado**" >> $GITHUB_STEP_SUMMARY
+          echo "✅ **Deployment completado**" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "📤 Archivos sincronizados via SFTP (Puerto 22):" >> $GITHUB_STEP_SUMMARY
+          echo "📤 Archivos sincronizados:" >> $GITHUB_STEP_SUMMARY
           echo "- Host: ${{ secrets.FTP_HOST }}" >> $GITHUB_STEP_SUMMARY
           echo "- Usuario: ${{ secrets.FTP_USER }}" >> $GITHUB_STEP_SUMMARY
-          echo "- Puerto: 22 (SFTP)" >> $GITHUB_STEP_SUMMARY
-          echo "- Carpeta: ~/limpiezaincendiosnanonex.es" >> $GITHUB_STEP_SUMMARY
+          echo "- Método: rsync via SSH" >> $GITHUB_STEP_SUMMARY
