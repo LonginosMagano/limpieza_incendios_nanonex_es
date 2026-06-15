@@ -1,4 +1,4 @@
-name: Deploy to FTP - DreamHost
+name: Deploy to SFTP - DreamHost
 
 on:
   push:
@@ -15,33 +15,34 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install FTP tools
-        run: sudo apt-get update && sudo apt-get install -y lftp
+      - name: Deploy via SSH/SFTP
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 22
+          script: |
+            cd ~/limpiezaincendiosnanonex.es
+            rm -rf !(.|..)
+            exit
 
-      - name: Test FTP Connection
-        run: |
-          echo "Testing FTP connection to ${{ secrets.FTP_HOST }}..."
-          lftp -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASSWORD }} \
-            -e "open ${{ secrets.FTP_HOST }}; pwd; bye" \
-            2>&1 | head -20
-
-      - name: Deploy via FTP (Puerto 21)
-        run: |
-          echo "Starting FTP mirror sync..."
-          lftp -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASSWORD }} \
-            ${{ secrets.FTP_HOST }} <<'FTPCMD'
-          set ftp:ssl-allow no
-          set ftp:passive-mode yes
-          cd /home/${{ secrets.FTP_USER }}/limpiezaincendiosnanonex.es
-          mirror -R --delete --verbose ./ ./
-          quit
-          FTPCMD
+      - name: Upload files via SCP
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 22
+          source: "."
+          target: "~/limpiezaincendiosnanonex.es"
 
       - name: Deployment Summary
         run: |
-          echo "✅ **Deployment FTP completado**" >> $GITHUB_STEP_SUMMARY
+          echo "✅ **Deployment SFTP completado**" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "📤 Archivos sincronizados via FTP:" >> $GITHUB_STEP_SUMMARY
+          echo "📤 Archivos sincronizados via SFTP (Puerto 22):" >> $GITHUB_STEP_SUMMARY
           echo "- Host: ${{ secrets.FTP_HOST }}" >> $GITHUB_STEP_SUMMARY
           echo "- Usuario: ${{ secrets.FTP_USER }}" >> $GITHUB_STEP_SUMMARY
-          echo "- Carpeta: /home/${{ secrets.FTP_USER }}/limpiezaincendiosnanonex.es" >> $GITHUB_STEP_SUMMARY
+          echo "- Puerto: 22 (SFTP)" >> $GITHUB_STEP_SUMMARY
+          echo "- Carpeta: ~/limpiezaincendiosnanonex.es" >> $GITHUB_STEP_SUMMARY
