@@ -1,40 +1,15 @@
-name: Deploy to FTP - DreamHost
+# Este workflow está deshabilitado temporalmente
+# El deploy a DreamHost se puede hacer manualmente via SFTP
+# El GitHub Pages workflow (deploy.yml) sigue activo y funcionando correctamente
+
+name: Deploy SFTP (Deshabilitado)
 
 on:
-  push:
-    branches:
-      - claude/fervent-dirac-6b6fxv
+  workflow_dispatch:
 
 jobs:
-  deploy:
+  info:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Deploy via rsync over SSH
-        env:
-          DEPLOY_HOST: ${{ secrets.FTP_HOST }}
-          DEPLOY_USER: ${{ secrets.FTP_USER }}
-          DEPLOY_PASS: ${{ secrets.FTP_PASSWORD }}
-        run: |
-          sudo apt-get update && sudo apt-get install -y sshpass rsync
-
-          sshpass -p "$DEPLOY_PASS" rsync -avz --delete \
-            --rsh="ssh -o StrictHostKeyChecking=no" \
-            ./ $DEPLOY_USER@$DEPLOY_HOST:/home/$DEPLOY_USER/limpiezaincendiosnanonex_es/
-
-      - name: Create deployment summary
-        run: |
-          echo "✅ **Deployment a SFTP completado**" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "📤 Archivos subidos via SFTP:" >> $GITHUB_STEP_SUMMARY
-          echo "- Host: ${{ secrets.FTP_HOST }}" >> $GITHUB_STEP_SUMMARY
-          echo "- Usuario: ${{ secrets.FTP_USER }}" >> $GITHUB_STEP_SUMMARY
-          echo "- Puerto: 22 (SFTP)" >> $GITHUB_STEP_SUMMARY
-          echo "- Directorio: / (raíz)" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "🔄 Este workflow se ejecuta automáticamente en cada push a \`claude/fervent-dirac-6b6fxv\`" >> $GITHUB_STEP_SUMMARY
+      - name: Info
+        run: echo "Workflow deshabilitado. Usa deploy.yml para GitHub Pages o sube manualmente a DreamHost"
