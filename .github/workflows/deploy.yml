@@ -7,34 +7,29 @@ on:
       - claude/fervent-dirac-6b6fxv
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  contents: write
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
-      - name: Checkout
+      - name: Checkout source branch
         uses: actions/checkout@v4
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          fetch-depth: 0
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+      - name: Deploy to gh-pages
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "bot@github.com"
+
+          # Create a new branch from current HEAD
+          git checkout --orphan gh-pages-new
+
+          # Add all files
+          git add -A
+          git commit -m "Deploy from ${{ github.ref }}"
+
+          # Force update gh-pages
+          git push origin gh-pages-new:gh-pages --force
