@@ -15,17 +15,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Deploy via SFTP with lftp
+      - name: Deploy via rsync over SSH
+        env:
+          DEPLOY_HOST: ${{ secrets.FTP_HOST }}
+          DEPLOY_USER: ${{ secrets.FTP_USER }}
+          DEPLOY_PASS: ${{ secrets.FTP_PASSWORD }}
         run: |
-          sudo apt-get update && sudo apt-get install -y lftp
+          sudo apt-get update && sudo apt-get install -y sshpass rsync
 
-          lftp -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASSWORD }} sftp://${{ secrets.FTP_HOST }} <<EOF
-          set sftp:auto-confirm yes
-          set ssl:verify-certificate no
-          cd /home/${{ secrets.FTP_USER }}/limpiezaincendiosnanonex_es
-          mirror -R --delete ./ ./
-          bye
-          EOF
+          sshpass -p "$DEPLOY_PASS" rsync -avz --delete \
+            --rsh="ssh -o StrictHostKeyChecking=no" \
+            ./ $DEPLOY_USER@$DEPLOY_HOST:/home/$DEPLOY_USER/limpiezaincendiosnanonex_es/
 
       - name: Create deployment summary
         run: |
