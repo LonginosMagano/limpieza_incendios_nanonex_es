@@ -22,13 +22,7 @@ jobs:
       - name: Sync files to DreamHost
         run: |
           export SSHPASS='${{ secrets.FTP_PASSWORD }}'
-          sshpass -e ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no \
-            ${{ secrets.FTP_USER }}@${{ secrets.FTP_HOST }} \
-            'cd ~/limpiezaincendiosnanonex.es && rm -rf * && exit'
-
-          sleep 2
-
-          sshpass -e rsync -avz --delete -e "ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no" \
+          sshpass -e rsync -avz -e "ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no" \
             ./ ${{ secrets.FTP_USER }}@${{ secrets.FTP_HOST }}:~/limpiezaincendiosnanonex.es/
 
       - name: Verify deployment
