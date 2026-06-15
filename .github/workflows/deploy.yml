@@ -3,16 +3,25 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - claude/fervent-dirac-6b6fxv
       - main
+      - claude/fervent-dirac-6b6fxv
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Checkout
