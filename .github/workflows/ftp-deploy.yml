@@ -1,15 +1,33 @@
-# Este workflow está deshabilitado temporalmente
-# El deploy a DreamHost se puede hacer manualmente via SFTP
-# El GitHub Pages workflow (deploy.yml) sigue activo y funcionando correctamente
-
-name: Deploy SFTP (Deshabilitado)
+name: Deploy to FTP - DreamHost
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - claude/fervent-dirac-6b6fxv
 
 jobs:
-  info:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Info
-        run: echo "Workflow deshabilitado. Usa deploy.yml para GitHub Pages o sube manualmente a DreamHost"
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Deploy via FTP (Puerto 21)
+        run: |
+          sudo apt-get update && sudo apt-get install -y lftp
+
+          lftp -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASSWORD }} \
+            -e "set ftp:ssl-allow no; cd /home/${{ secrets.FTP_USER }}/limpiezaincendiosnanonex.es; mirror -R --delete ./ ./; bye" \
+            ${{ secrets.FTP_HOST }}
+
+      - name: Deployment Summary
+        run: |
+          echo "✅ **Deployment FTP completado**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📤 Archivos subidos via FTP (Puerto 21):" >> $GITHUB_STEP_SUMMARY
+          echo "- Host: ${{ secrets.FTP_HOST }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Puerto: 21 (FTP)" >> $GITHUB_STEP_SUMMARY
+          echo "- Carpeta: /home/${{ secrets.FTP_USER }}/limpiezaincendiosnanonex.es" >> $GITHUB_STEP_SUMMARY
