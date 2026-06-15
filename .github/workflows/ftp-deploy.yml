@@ -1,0 +1,37 @@
+name: Deploy to FTP - DreamHost
+
+on:
+  push:
+    branches:
+      - claude/fervent-dirac-6b6fxv
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Deploy to FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.3.4
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./
+          local-dir-delete: true
+          server-dir: ./
+
+      - name: Create deployment summary
+        run: |
+          echo "✅ **Deployment completado**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📤 Archivos subidos a FTP:" >> $GITHUB_STEP_SUMMARY
+          echo "- Host: ${{ secrets.FTP_HOST }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Usuario: ${{ secrets.FTP_USER }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Directorio: / (raíz)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "🔄 Este workflow se ejecuta automáticamente en cada push a \`claude/fervent-dirac-6b6fxv\`" >> $GITHUB_STEP_SUMMARY
